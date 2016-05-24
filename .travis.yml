@@ -2,6 +2,11 @@ language: ruby
 ruby:
   - 2.2
 
+services:
+  -postgresql
+
 script: 
+  - bundle exec rake db:test:prepare
   - bundle exec rspec
+
 #need to add key  
