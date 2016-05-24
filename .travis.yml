@@ -2,5 +2,6 @@ language: ruby
 ruby:
   - 2.2
 
-script: spec/controllers/games_controller_spec.rb
-#need to add key 
+script: 
+  - bundle exec rspec
+#need to add key  
