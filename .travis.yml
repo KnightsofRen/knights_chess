@@ -1,7 +1,6 @@
 language: ruby
-rvm:
+ruby:
   - 2.2
-  - jruby
-  - rbx-2
 
-#need to add key
+script: spec/controllers/games_controller_spec.rb
+#need to add key 
