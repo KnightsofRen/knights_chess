@@ -5,7 +5,8 @@ ruby:
 services:
   -postgresql
 
-script: 
+script:
+  - rake db:migrate 
   - bundle exec rake db:test:prepare
   - bundle exec rspec
 
