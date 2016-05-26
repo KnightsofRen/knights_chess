@@ -48,3 +48,5 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+gem 'rubocop', '~> 0.40.0', require: false
