@@ -1,4 +1,5 @@
 KnightsChess::Application.routes.draw do
+  devise_for :users
   root 'games#index'
   resources :games
 
