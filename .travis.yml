@@ -2,7 +2,7 @@ language: ruby
 ruby:
   - 2.2
 
-services: 
+services:
   -postgresql
 
 script:
@@ -13,4 +13,4 @@ deploy:
   provider: heroku
   api_key:
     secure: qHQ+Z04FuvkecAR/ij6Ysomo6StzPtVF1UuszCvTA+NBWTKFN+uDKEHVFY8mzaDTin/rTZBvgoFpamvQS7uN/mNhO52Iz3iqNWyJByuV5Hxn+Njqx1KxSf7/Wk5A0lvhSQ6F9qOEld548Y4iHuzc/sZMi4rAesfhsmTAvmi61LHtBKp29MW0BX6tSKA0bO8BtDSdDmp2a+YtE2MGaf0dTlzOik+oi+JCxgz8esrHaqh7aHQp+pmBLJFcFFIs2FG4MWPhwVChoV6AetvcEJFujAzfJ/jWHKGFwk0ljzbyy2LkoEAaOeXYh05+OAzo+lTOCZbnW9lzDevUbW2pjuIRXt7RabCRnkU79yImQE9671GlrUoA1u99WNAvxokTY/nHZAuNC8ALr8dRi5V6k95u6mlF/e7U7/vrpWXLJdRieCs9L72qAZ0TLOLMf+oSVP+qyPRnYs48/Z63k3ROCUc1Y0QZ0tKLZFLtHJQ791qmSznmZjvn9OUPWFcVUg8oCTTK3b52mIQcQBwL8d2R3wRZ6F81x1Vz4KBRwTv6iP3EfYxkcN0RuC0KxEeJD51HUJAlt44VWmwEweo2GRW8txYri9RKheouWGCwtLG4G+JBVBuwheEaZem3CbKdpoKxDiD0BhyoxWsMb6SrPX8uyzIRJ5ZFIzhT7I2YP8Wyeow2vhs=
-  run: rake db:migrate  
+  run: rake db:migrate
