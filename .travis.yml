@@ -8,6 +8,7 @@ services:
 script:
   - bundle exec rake db:test:prepare
   - bundle exec rspec
+  - rubocop
 
 deploy:
   provider: heroku
