@@ -28,7 +28,7 @@ class GamesController < ApplicationController
     redirect_to root_path
   end
 
-  private 
+  private
 
   def game_params
     params.require(:game).permit(:name)
@@ -38,5 +38,4 @@ class GamesController < ApplicationController
   def current_game
     @current_game = Game.find(params[:id])
   end
-
 end
