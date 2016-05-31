@@ -2,12 +2,12 @@ source 'https://rubygems.org'
 # Use simple form
 gem 'simple_form' 
 
-#twitter bootstrap
+# twitter bootstrap
 gem 'bootstrap-sass', '~> 3.3.5.1'
 gem 'sprockets', '2.11.0'
 gem 'sass-rails'
 
-#devise for users
+# devise for users
 gem 'devise', '>= 3.2.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -59,3 +59,5 @@ gem 'travis', '~> 1.8', '>= 1.8.2'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+gem 'rubocop', '~> 0.40.0', require: false

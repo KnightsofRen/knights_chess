@@ -1,0 +1,1 @@
+[{"severity":"convention","location":{"begin_pos":2219,"end_pos":4340},"message":"Do not use block comments.","cop_name":"Style/BlockComments","status":"uncorrected"}]
