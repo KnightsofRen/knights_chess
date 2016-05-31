@@ -1,0 +1,1 @@
+[{"severity":"convention","location":{"begin_pos":48,"end_pos":49},"message":"Space inside square brackets detected.","cop_name":"Style/SpaceInsideBrackets","status":"uncorrected"},{"severity":"convention","location":{"begin_pos":74,"end_pos":75},"message":"Space inside square brackets detected.","cop_name":"Style/SpaceInsideBrackets","status":"uncorrected"}]
