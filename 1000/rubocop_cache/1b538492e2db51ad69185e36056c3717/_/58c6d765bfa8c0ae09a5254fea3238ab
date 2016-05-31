@@ -1,0 +1,1 @@
+[{"severity":"warning","location":{"begin_pos":140,"end_pos":147},"message":"`File.exists?` is deprecated in favor of `File.exist?`.","cop_name":"Lint/DeprecatedClassMethods","status":"uncorrected"}]

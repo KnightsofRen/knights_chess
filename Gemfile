@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
-#twitter bootstrap
+# twitter bootstrap
 gem 'bootstrap-sass', '~> 3.3.5.1'
 gem 'sprockets', '2.11.0'
 gem 'sass-rails'
 
-#devise for users
+# devise for users
 gem 'devise', '>= 3.2.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
