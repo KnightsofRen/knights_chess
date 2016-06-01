@@ -38,4 +38,7 @@ class GamesController < ApplicationController
   def current_game
     @current_game = Game.find(params[:id])
   end
+  
+  def show
+  end
 end
