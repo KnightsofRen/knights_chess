@@ -1,1 +1,0 @@
-[{"severity":"convention","location":{"begin_pos":120,"end_pos":121},"message":"Unnecessary spacing detected.","cop_name":"Style/ExtraSpacing","status":"uncorrected"}]

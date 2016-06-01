@@ -1,28 +1,26 @@
 .chessboard {
-   width: 640px;
-   height: 640px;
-   margin: 20px;
-   border: 25px solid #333;
+    width: 640px;
+    height: 640px;
+    margin: 20px;
+    border: 25px solid #333;
 }
-
 .black-tile {
-   float: left;
-   width: 80px;
-   height: 80px;
-   background-color: black;
-   font-size:50px;
-   text-align:center;
-   display: table-cell;
-   vertical-align:middle;
+    float: left;
+    width: 80px;
+    height: 80px;
+    background-color: black;
+    font-size:50px;
+    text-align:center;
+    display: table-cell;
+    vertical-align:middle;
 }
-
 .white-tile {
-   float: left;
-   width: 80px;
-   height: 80px;
-   background-color: white;
-   font-size:50px;
-   text-align:center;
-   display: table-cell;
-   vertical-align:middle;
+    float: left;
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    font-size:50px;
+    text-align:center;
+    display: table-cell;
+    vertical-align:middle;
 }
