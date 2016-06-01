@@ -1,4 +1,6 @@
 source 'https://rubygems.org'
+# Use simple form
+gem 'simple_form'
 
 # twitter bootstrap
 gem 'bootstrap-sass', '~> 3.3.5.1'

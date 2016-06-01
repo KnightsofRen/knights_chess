@@ -1,0 +1,8 @@
+<h1>Edit Game</h1>
+<div>
+  <%= simple_form_for current_game do |f| %>
+    <%= f.input :name %>
+    <br/>
+    <%= f.submit 'Update' %>
+  <% end %>
+</div>
