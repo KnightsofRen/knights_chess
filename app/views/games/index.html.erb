@@ -1,5 +1,8 @@
 <h1>Knights of Ren</h1>
 
+<%= link_to "New Game", new_game_path %>
+
 <% @games.each do |game| %>
   <p><%= link_to game.name, game_path(game) %></p>
 <% end %>
+
