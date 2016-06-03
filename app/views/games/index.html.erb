@@ -4,10 +4,16 @@
 <h2>Create New Game</h2>
 <%= link_to "New Game", new_game_path %>
 <hr />
+<br />
 
 <h2>Available Games</h2>
-<% @games.available.each do |game| %>
-  <p><%= link_to game.name, game_path(game) %></p>
+<% @games.each do |game| %>
+    <%= game.name %>
+    <%= form_tag game_path(game), :method => :put do %>
+        <% hidden_field_tag :black_player_id, current_user %>
+        <%= submit_tag("Join Game") %>
+    <% end %>
+    <hr />
 <% end %>
 <hr />
 
