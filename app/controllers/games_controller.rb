@@ -40,7 +40,7 @@ class GamesController < ApplicationController
   end
   
   def add_player(game)
-    game.player_black_id = current_user_id
+    game.update(player_black_id: current_user)
     game_path(game)
   end
 end
