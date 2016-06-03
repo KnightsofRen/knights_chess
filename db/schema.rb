@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20160530013256) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "games", force: true do |t|
+  create_table "games", force: :cascade do |t|
     t.string   "name"
     t.integer  "player_white_id"
     t.integer  "player_black_id"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20160530013256) do
     t.datetime "updated_at"
   end
 
-  create_table "pieces", force: true do |t|
+  create_table "pieces", force: :cascade do |t|
     t.string   "type"
     t.string   "color"
     t.integer  "x_coordinate"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20160530013256) do
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
