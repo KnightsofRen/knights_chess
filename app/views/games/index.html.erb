@@ -3,6 +3,6 @@
 <%= link_to "New Game", new_game_path %>
 
 <% @games.each do |game| %>
-  <p><%= link_to game.name, game_path(game) %></p>
+  <p><%= link_to game.name, add_player(game) %></p>
 <% end %>
 
