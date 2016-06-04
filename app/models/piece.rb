@@ -1,24 +1,27 @@
 class Piece < ActiveRecord::Base
-  enum color: [:black, :white]
   belongs_to :game
 
-  def invalid_input?(x1,y1,x2,y2,move)
+  enum color: [:black, :white]
+
+  def obstructed?(destination_x, destination_y)
+    return "Error: invalid input" if invalid_input?(self.x_coordinate,self.y_coordinate,destination_x,destination_y)
+    if (destination_x-self.x_coordinate).abs == (destination_y-self.y_coordinate).abs
+      path = diagonal_path(self.x_coordinate,self.y_coordinate,destination_x,destination_y)
+    else
+      path = horizontal_and_vertical_path(self.x_coordinate,self.y_coordinate,destination_x,destination_y)
+    end
+    compare_to_board_state(path)
+  end
+
+  def invalid_input?(x1,y1,x2,y2)
     current = [x1, y1]
     target = [x2, y2]
     #invalid if target destination same as current position
     return true if current == target 
     #invalid if target destination out of range
     return true if !(0..7).include?(target[0]) || !(0..7).include?(target[1])
-    #invalid if target is not a possible horizontal or vertical move (rook)
-    if move == 'hv'
-      return true if x2 != x1 && y2 != y1
-    #invalid it target is not a possible diagonal move (bishop)
-    elsif move == 'd'
-      return true if (x2-x1).abs != (y2-y1).abs
-    #invalid if target is not a possible hvd move (queen)
-    elsif move == 'hvd'
-      return true if x2 != x1 && y2 != y1 && (x2-x1).abs != (y2-y1).abs
-    end
+    #invalid if target is not a possible horizontal, vertical, or diagonal move 
+    return true if x2 != x1 && y2 != y1 && (x2-x1).abs != (y2-y1).abs
   end
 
   def diagonal_path(x1,y1,x2,y2)
