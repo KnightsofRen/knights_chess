@@ -3,17 +3,17 @@ require 'rails_helper'
 RSpec.describe Piece, type: :model do
   it 'should return invalid input if destination is same as current position' do
     current_piece = FactoryGirl.create(:piece)
-    expect(current_piece.obstructed?(3, 3)).to eq("Error: invalid input")
+    expect(current_piece.obstructed?(3, 3)).to eq('Error: invalid input')
   end
 
   it 'should return invalid input if destination is out of bounds' do
     current_piece = FactoryGirl.create(:piece)
-    expect(current_piece.obstructed?(3, 8)).to eq("Error: invalid input")
+    expect(current_piece.obstructed?(3, 8)).to eq('Error: invalid input')
   end
 
   it 'should return invalid input if destination is not a valid hvd move' do
     current_piece = FactoryGirl.create(:piece)
-    expect(current_piece.obstructed?(5, 4)).to eq("Error: invalid input")
+    expect(current_piece.obstructed?(5, 4)).to eq('Error: invalid input')
   end
 
   it 'should return true if there is an obstruction (horizontal)' do
