@@ -4,11 +4,11 @@ class Piece < ActiveRecord::Base
   enum color: [:black, :white]
 
   def obstructed?(destination_x, destination_y)
-    return "Error: invalid input" if invalid_input?(self.x_coordinate,self.y_coordinate,destination_x,destination_y)
-    if (destination_x-self.x_coordinate).abs == (destination_y-self.y_coordinate).abs
-      path = diagonal_path(self.x_coordinate,self.y_coordinate,destination_x,destination_y)
+    return "Error: invalid input" if invalid_input?(x_coordinate, y_coordinate, destination_x, destination_y)
+    if (destination_x - x_coordinate).abs == (destination_y - y_coordinate).abs
+      path = diagonal_path(x_coordinate, y_coordinate, destination_x, destination_y)
     else
-      path = horizontal_and_vertical_path(self.x_coordinate,self.y_coordinate,destination_x,destination_y)
+      path = horizontal_and_vertical_path(x_coordinate, y_coordinate, destination_x, destination_y)
     end
     compare_to_board_state(path)
   end
@@ -102,6 +102,6 @@ class Piece < ActiveRecord::Base
 
   def compare_to_board_state(path)
     board = Game.board_state
-    (path & board).length > 0 ? true : false
+    (path & board).empty? ? false : true
   end
 end
