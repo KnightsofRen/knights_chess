@@ -38,5 +38,4 @@ RSpec.describe Piece, type: :model do
     current_piece = FactoryGirl.create(:piece)
     expect(current_piece.obstructed?(3,0)).to eq(false)
   end
-
 end
