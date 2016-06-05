@@ -1,8 +1,17 @@
 <h1>Knights of Ren</h1>
+<hr />
 
+<h2>Create New Game</h2>
 <%= link_to "New Game", new_game_path %>
+<hr />
 
+<h2>Available Games</h2>
+<% @games.available.each do |game| %>
+  <p><%= link_to game.name, game_path(game) %></p>
+<% end %>
+<hr />
+
+<h2>All Games</h2>
 <% @games.each do |game| %>
   <p><%= link_to game.name, game_path(game) %></p>
 <% end %>
-
