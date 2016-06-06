@@ -19,5 +19,5 @@
 
 <h2>All Games</h2>
 <% @games.each do |game| %>
-  <p><%= link_to game.name, add_player(game) %></p>
+  <p><%= link_to game.name, game_path(game) %></p>
 <% end %>
