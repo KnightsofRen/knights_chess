@@ -34,13 +34,8 @@ class GamesController < ApplicationController
     params.require(:game).permit(:name, :black_player_id)
   end
 
-  helper_method :current_game, :add_player
+  helper_method :current_game
   def current_game
     @current_game = Game.find(params[:id])
-  end
-
-  def add_player(game)
-    game.update(player_black_id: current_user)
-    game_path(game)
   end
 end
