@@ -7,7 +7,7 @@
 <br />
 
 <h2>Available Games</h2>
-<% @games.each do |game| %>
+<% @games.available.each do |game| %>
     <%= game.name %>
     <%= form_tag game_path(game), :method => :put do %>
         <% hidden_field_tag :black_player_id, current_user %>

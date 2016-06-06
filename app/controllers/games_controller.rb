@@ -38,7 +38,7 @@ class GamesController < ApplicationController
   def current_game
     @current_game = Game.find(params[:id])
   end
-  
+
   def add_player(game)
     game.update(player_black_id: current_user)
     game_path(game)
