@@ -17,7 +17,6 @@ RSpec.describe Piece, type: :model do
       expect(current_piece.obstructed?(5, 4)).to eq('Error: invalid input')
     end
 
-    
     it 'should return true if there is an obstruction (horizontal)' do
       game = FactoryGirl.create(:game)
       current_piece = FactoryGirl.create(:piece, game_id: game.id)
