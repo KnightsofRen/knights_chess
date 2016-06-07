@@ -9,9 +9,11 @@
 <h2>Available Games</h2>
 <% @games.available.each do |game| %>
     <%= game.name %>
-    <%= form_tag game_path(game), :method => :put do %>
-        <% hidden_field_tag :black_player_id, current_user %>
-        <%= submit_tag("Join Game") %>
+    <% if user_signed_in? %>
+      <%= simple_form_for game, :url => game_path(game), :method => :put do |f| %>
+          <%= f.hidden_field :player_black_id, value: current_user.id %>
+          <%= f.submit 'Join Game' %>
+      <% end %>
     <% end %>
     <hr />
 <% end %>
