@@ -20,7 +20,7 @@ class GamesController < ApplicationController
 
   def update
     current_game.update_attributes(game_params)
-    redirect_to root_path
+    redirect_to game_path(current_game)
   end
 
   def destroy
@@ -31,7 +31,7 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:name)
+    params.require(:game).permit(:name, :player_black_id)
   end
 
   helper_method :current_game
