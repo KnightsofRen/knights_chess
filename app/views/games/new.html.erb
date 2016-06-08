@@ -2,6 +2,8 @@
 <div>
   <%= simple_form_for @game do |f| %>
     <%= f.input :name %>
+    <%= f.hidden_field :player_white_id, value: current_user.id %>
+
     <br/>
     <%= f.submit 'Create Game' %>
   <% end %>
