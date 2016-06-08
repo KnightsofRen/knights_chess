@@ -9,7 +9,7 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.create(game_params)
-    redirect_to root_path
+    redirect_to game_path(Game.last)
   end
 
   def show
@@ -31,7 +31,7 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:name, :player_black_id)
+    params.require(:game).permit(:name, :player_black_id, :player_white_id)
   end
 
   helper_method :current_game
