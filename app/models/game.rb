@@ -32,7 +32,7 @@ class Game < ActiveRecord::Base
 
   def create_non_pawn_pieces(id, color)
     non_pawn_pieces = [
-      Rook.create(x_coordinate: 0), 
+      Rook.create(x_coordinate: 0),
       Knight.create(x_coordinate: 1),
       Bishop.create(x_coordinate: 2),
       Queen.create(x_coordinate: 3),
@@ -54,7 +54,7 @@ class Game < ActiveRecord::Base
 
   def create_pawn_pieces(id, color)
     pawn_pieces = []
-    for n in 0..7
+    (0..7).each do |n|
       pawn_pieces << Pawn.create(x_coordinate: n)
     end
     if color == 'white'
@@ -67,5 +67,4 @@ class Game < ActiveRecord::Base
       end
     end
   end
-
 end

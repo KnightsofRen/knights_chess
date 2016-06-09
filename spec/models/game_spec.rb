@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
-  describe "populate_board!" do
-    it "should create all 32 pieces with their initial X/Y coordinates" do
+  describe 'populate_board!' do
+    it 'should create all 32 pieces with their initial X/Y coordinates' do
       game = FactoryGirl.create(:game)
       expected = [
         [0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0],
