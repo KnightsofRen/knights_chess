@@ -12,6 +12,8 @@ class King < Piece
     true
   end
 
+  # private
+
   def position_on_board?(x, y)
     return false if x >= 8
     return false if x < 0
@@ -27,6 +29,6 @@ class King < Piece
   end
 
   def move_into_position_under_attack?(_x, _y)
-    false # need each opponent pieces to implement?
+    false # implement
   end
 end
