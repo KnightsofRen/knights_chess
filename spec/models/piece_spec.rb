@@ -42,7 +42,7 @@ RSpec.describe Piece, type: :model do
       game = FactoryGirl.create(:game)
       current_piece = FactoryGirl.create(:piece, game_id: game.id)
       FactoryGirl.create(:piece, x_coordinate: 5, y_coordinate: 4, game_id: game.id)
-      expect(current_piece.obstructed?(3, 0)).to eq(false)
+      expect(current_piece.obstructed?(3, 5)).to eq(false)
     end
   end
 end
