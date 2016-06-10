@@ -14,10 +14,10 @@ class Game < ActiveRecord::Base
     # rook: [0,7],[7,7]; knight: [1,7],[6,7]; bishop: [2,7][5,7]; queen: [3,7]; king[4,7]
     # pawns: [0->7,6]
     # white: 0, black: 1
-    create_non_pawn_pieces(id, 0)
-    create_non_pawn_pieces(id, 1)
-    create_pawn_pieces(id, 0)
-    create_pawn_pieces(id, 1)
+    create_non_pawn_pieces(0)
+    create_non_pawn_pieces(1)
+    create_pawn_pieces(0)
+    create_pawn_pieces(1)
   end
 
   def board_state
@@ -30,40 +30,40 @@ class Game < ActiveRecord::Base
 
   private
 
-  def create_non_pawn_pieces(id, color)
+  def create_non_pawn_pieces(color)
     non_pawn_pieces = [
-      Rook.create(x_coordinate: 0),
-      Knight.create(x_coordinate: 1),
-      Bishop.create(x_coordinate: 2),
-      Queen.create(x_coordinate: 3),
-      King.create(x_coordinate: 4),
-      Bishop.create(x_coordinate: 5),
-      Knight.create(x_coordinate: 6),
-      Rook.create(x_coordinate: 7)
+      pieces.new(x_coordinate: 0, type: 'Rook'),
+      pieces.new(x_coordinate: 1, type: 'Knight'),
+      pieces.new(x_coordinate: 2, type: 'Bishop'),
+      pieces.new(x_coordinate: 3, type: 'Queen'),
+      pieces.new(x_coordinate: 4, type: 'King'),
+      pieces.new(x_coordinate: 5, type: 'Bishop'),
+      pieces.new(x_coordinate: 6, type: 'Knight'),
+      pieces.new(x_coordinate: 7, type: 'Rook')
     ]
     if color == 0
       non_pawn_pieces.each do |piece|
-        piece.update_attributes(y_coordinate: 0, game_id: id, color: color, captured: false)
+        piece.update_attributes(y_coordinate: 0, color: color, captured: false)
       end
     elsif color == 1
       non_pawn_pieces.each do |piece|
-        piece.update_attributes(y_coordinate: 7, game_id: id, color: color, captured: false)
+        piece.update_attributes(y_coordinate: 7, color: color, captured: false)
       end
     end
   end
 
-  def create_pawn_pieces(id, color)
+  def create_pawn_pieces(color)
     pawn_pieces = []
     (0..7).each do |n|
-      pawn_pieces << Pawn.create(x_coordinate: n)
+      pawn_pieces << pieces.new(x_coordinate: n, type: 'Pawn')
     end
     if color == 0
       pawn_pieces.each do |piece|
-        piece.update_attributes(y_coordinate: 1, game_id: id, color: color, captured: false)
+        piece.update_attributes(y_coordinate: 1, color: color, captured: false)
       end
     elsif color == 1
       pawn_pieces.each do |piece|
-        piece.update_attributes(y_coordinate: 6, game_id: id, color: color, captured: false)
+        piece.update_attributes(y_coordinate: 6, color: color, captured: false)
       end
     end
   end
