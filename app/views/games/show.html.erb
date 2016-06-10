@@ -7,86 +7,16 @@
 
    <div class="chessboard">
       
-      <!-- 1st row -->
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      
-      <!-- 2nd row -->
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      
-      <!-- 3rd row -->
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      
-      <!-- 4th row -->
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      
-      <!-- 5th row -->
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      
-      <!-- 6th row -->
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      
-      <!-- 7th row -->
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      
-      <!-- 8th row -->
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      <div class="white-tile"></div>
-      <div class="black-tile"></div>
-      
+      <% (0..7).each do |y| %>
+        <% (0..7).each do |x| %>
+          <% if (x.even? && y.odd?) || (x.odd? && y.even?) %>
+            <div class="black-tile"><%= render_piece(x,(y-7).abs) %></div>
+          <% else %>
+            <div class="white-tile"><%= render_piece(x,(y-7).abs) %></div>
+          <% end %>
+        <% end %>
+      <% end %>
+
       <br class="clr" />
    </div>
 </div>

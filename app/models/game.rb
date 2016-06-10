@@ -7,17 +7,17 @@ class Game < ActiveRecord::Base
   after_create :populate_board!
 
   def populate_board!
-    # !! board needs to be rearranged so that a white square is on bottom right (7, 7)
-    # white pieces (bottom)
+    # WHITE pieces (bottom)
     # rook: [0,0],[7,0]; knight: [1,0],[6,0]; bishop: [2,0][5,0]; queen: [3,0]; king[4,0]
     # pawns: [0->7,1]
-    # black pieces (top)
+    # BLACK pieces (top)
     # rook: [0,7],[7,7]; knight: [1,7],[6,7]; bishop: [2,7][5,7]; queen: [3,7]; king[4,7]
-    # pawns: [0->7,7]
-    create_non_pawn_pieces(id, 'white')
-    create_non_pawn_pieces(id, 'black')
-    create_pawn_pieces(id, 'white')
-    create_pawn_pieces(id, 'black')
+    # pawns: [0->7,6]
+    # white: 0, black: 1
+    create_non_pawn_pieces(id, 0)
+    create_non_pawn_pieces(id, 1)
+    create_pawn_pieces(id, 0)
+    create_pawn_pieces(id, 1)
   end
 
   def board_state
@@ -41,11 +41,11 @@ class Game < ActiveRecord::Base
       Knight.create(x_coordinate: 6),
       Rook.create(x_coordinate: 7)
     ]
-    if color == 'white'
+    if color == 0
       non_pawn_pieces.each do |piece|
         piece.update_attributes(y_coordinate: 0, game_id: id, color: color, captured: false)
       end
-    elsif color == 'black'
+    elsif color == 1
       non_pawn_pieces.each do |piece|
         piece.update_attributes(y_coordinate: 7, game_id: id, color: color, captured: false)
       end
@@ -57,11 +57,11 @@ class Game < ActiveRecord::Base
     (0..7).each do |n|
       pawn_pieces << Pawn.create(x_coordinate: n)
     end
-    if color == 'white'
+    if color == 0
       pawn_pieces.each do |piece|
         piece.update_attributes(y_coordinate: 1, game_id: id, color: color, captured: false)
       end
-    elsif color == 'black'
+    elsif color == 1
       pawn_pieces.each do |piece|
         piece.update_attributes(y_coordinate: 6, game_id: id, color: color, captured: false)
       end

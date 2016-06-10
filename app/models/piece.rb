@@ -1,7 +1,14 @@
 class Piece < ActiveRecord::Base
   belongs_to :game
 
-  enum color: [:black, :white]
+  enum color: [:white, :black]
+
+  # def move_to!(new_x, new_y)
+  #   # Pice => x_coord, y_coord, game_id, color, captured,
+  #   target = [new_x, new_y] 
+  #   board = Game.find(game_id).board_state
+  #   (target & board).empty? ? 
+  # end
 
   def obstructed?(destination_x, destination_y)
     return 'Error: invalid input' if invalid_input?(x_coordinate, y_coordinate, destination_x, destination_y)
