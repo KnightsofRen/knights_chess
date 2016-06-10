@@ -1,7 +1,7 @@
 class Piece < ActiveRecord::Base
   belongs_to :game
 
-  enum color: [:black, :white]
+  enum color: [:white, :black]
 
   def obstructed?(destination_x, destination_y)
     return 'Error: invalid input' if invalid_input?(x_coordinate, y_coordinate, destination_x, destination_y)

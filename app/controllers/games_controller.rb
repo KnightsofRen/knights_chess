@@ -1,4 +1,6 @@
 class GamesController < ApplicationController
+  include GamesHelper
+
   def index
     @games = Game.all
   end
