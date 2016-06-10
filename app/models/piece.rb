@@ -106,4 +106,37 @@ class Piece < ActiveRecord::Base
     board = Game.find(game_id).board_state
     (path & board).empty? ? false : true
   end
+
+    #create Capture method
+  def move_to!(new_x, new_y)
+    #check to see if there is a piece it's moving to
+     target = [new_x, new_y]
+     current = [x, y]
+     return true if current == target
+     end
+
+     #if there is an opposing color piece, remove piece from board
+    if target.check_color(color) !== current.check_color(color)
+      target.destroy
+    end
+    # if same color, raise error
+    if target.check_color(color) == current.check_color(color)
+      return piece.obstructed?(target)
+    end
+    #call update_attributes
+    return piece.update_attributes
+  end 
+
+  
+  def update_attributes
+    return piece.board_state
+  end
+
+
+  def check_color(color)
+    @color = piece.color
+    return color
+  end
+
+
 end
