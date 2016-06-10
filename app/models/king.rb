@@ -12,7 +12,7 @@ class King < Piece
     true
   end
 
-  # private
+  private
 
   def position_on_board?(x, y)
     return false if x >= 8
@@ -29,6 +29,8 @@ class King < Piece
   end
 
   def move_into_position_under_attack?(_x, _y)
-    false # implement
+    # return true if ?--> thinking this would be depending on piece and path
+    # example bishop or queen have more range in comparison to the rest of the pieces
+    false
   end
 end
