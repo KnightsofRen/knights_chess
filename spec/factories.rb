@@ -7,4 +7,10 @@ FactoryGirl.define do
     y_coordinate 3
     association :game
   end
+
+  factory :king do
+    x_coordinate 4
+    y_coordinate 0
+    association :game
+  end
 end
