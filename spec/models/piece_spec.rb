@@ -1,6 +1,36 @@
 require 'rails_helper'
 
 RSpec.describe Piece, type: :model do
+  describe 'move_to! method' do
+    it 'should return error if target piece has same color as current piece' do
+      game = FactoryGirl.create(:game)
+      current_piece = FactoryGirl.create(:piece, color: 0, game_id: game.id)
+      target_piece = FactoryGirl.create(:piece, x_coordinate: 4, y_coordinate: 4, color: 0, game_id: game.id)
+      expect(current_piece.move_to!(4, 4)).to eq('Error')
+    end
+    
+    it 'should capture if target piece has the opposite color as current piece' do
+      game = FactoryGirl.create(:game)
+      current_piece = FactoryGirl.create(:piece, color: 0, game_id: game.id) 
+      FactoryGirl.create(:piece, x_coordinate: 4, y_coordinate: 4, color: 1, game_id: game.id) 
+      current_piece.move_to!(4, 4) 
+      expect(game.pieces.size).to eq(33)
+    end
+
+    it 'should update to the new_x, new_y coordinates (no piece at target)' do
+      game = FactoryGirl.create(:game)
+      FactoryGirl.create(:piece, color: 0, game_id: game.id).move_to!(4, 4)
+      expect(game.pieces.find_by(x_coordinate: 4, y_coordinate: 4) != nil).to eq(true)
+    end
+
+    it 'should update to the new_x, new_y coordinates (piece at target)' do
+      game = FactoryGirl.create(:game)
+      FactoryGirl.create(:piece, color: 0, game_id: game.id).move_to!(4, 4)
+      FactoryGirl.create(:piece, x_coordinate: 4, y_coordinate: 4, color: 1, game_id: game.id)
+      expect(game.pieces.find_by(x_coordinate: 4, y_coordinate: 4) != nil).to eq(true)
+    end
+  end
+
   describe 'obstructed method' do
     it 'should return invalid input if destination is same as current position' do
       current_piece = FactoryGirl.create(:piece)
