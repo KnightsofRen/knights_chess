@@ -5,15 +5,15 @@ class Piece < ActiveRecord::Base
 
   def move_to!(new_x, new_y)
     piece = Game.find(game_id).pieces.find_by(x_coordinate: new_x, y_coordinate: new_y)
-    if piece != nil
+    if !piece.nil?
       if piece.color == color
         'Error'
       elsif piece.color != color
         Game.find(game_id).pieces.find_by(x_coordinate: new_x, y_coordinate: new_y).delete
-        self.update_attributes(x_coordinate: new_x, y_coordinate: new_y)
+        update_attributes(x_coordinate: new_x, y_coordinate: new_y)
       end
     else
-      self.update_attributes(x_coordinate: new_x, y_coordinate: new_y)
+      update_attributes(x_coordinate: new_x, y_coordinate: new_y)
     end
   end
 
