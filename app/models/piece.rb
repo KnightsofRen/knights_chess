@@ -10,8 +10,10 @@ class Piece < ActiveRecord::Base
            else
              horizontal_and_vertical_path(x_coordinate, y_coordinate, destination_x, destination_y)
            end
-    compare_to_board_state(path, game_id)
+    compare_to_board_state(path)
   end
+
+  private
 
   def invalid_input?(x1, y1, x2, y2)
     current = [x1, y1]
@@ -102,8 +104,8 @@ class Piece < ActiveRecord::Base
     path
   end
 
-  def compare_to_board_state(path, game_id)
-    board = Game.find(game_id).board_state
+  def compare_to_board_state(path)
+    board = game.board_state
     (path & board).empty? ? false : true
   end
 end
