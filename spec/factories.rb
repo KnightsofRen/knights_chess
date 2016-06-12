@@ -14,13 +14,13 @@ FactoryGirl.define do
     association :game
   end
 
-  factory :rook do 
+  factory :rook do
     x_coordinate 4
     y_coordinate 4
     association :game
   end
 
-  factory :bishop do 
+  factory :bishop do
     x_coordinate 4
     y_coordinate 4
     association :game
