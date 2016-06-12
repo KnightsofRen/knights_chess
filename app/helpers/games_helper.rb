@@ -1,5 +1,4 @@
 module GamesHelper
-  # rubocop:disable Metrics/AbcSize
   def render_piece(x, y)
     piece = current_game.pieces.find_by(x_coordinate: x, y_coordinate: y)
     choice = piece.type unless piece.nil?
@@ -33,5 +32,4 @@ module GamesHelper
       piece.white? ? white_pawn : black_pawn
     end
   end
-  # rubocop:enable Metrics/AbcSize
 end
