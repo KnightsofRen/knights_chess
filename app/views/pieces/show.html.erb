@@ -1,0 +1,29 @@
+<h1> temp show page for pieces </h1>
+
+<p><%= @piece.x_coordinate %></p>
+<p><%= @piece.y_coordinate %></p>
+
+<div class="game-background">
+   <br class="clr" />
+
+   <div class="chessboard">
+
+      <% (0..7).each do |y| %>
+        <% (0..7).each do |x| %>
+          <% if (x.even? && y.odd?) || (x.odd? && y.even?) %>
+            <div class="<%= tile_class(x,(y-7).abs) %>">
+              <%= render_piece(@game, x,(y-7).abs) %>
+              <%= render partial: 'pieces/form', :locals => { :pos => [x,(y-7).abs] } %>
+            </div>
+          <% else %>
+            <div class="<%= tile_class(x,(y-7).abs, false) %>">
+              <%= render_piece(@game, x,(y-7).abs) %>
+              <%= render partial: 'pieces/form', :locals => { :pos => [x,(y-7).abs] } %>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <br class="clr" />
+   </div>
+</div>
