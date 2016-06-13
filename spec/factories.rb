@@ -19,4 +19,16 @@ FactoryGirl.define do
     y_coordinate 3
     association :game
   end
+
+  factory :rook do
+    x_coordinate 4
+    y_coordinate 4
+    association :game
+  end
+
+  factory :bishop do
+    x_coordinate 4
+    y_coordinate 4
+    association :game
+  end
 end
