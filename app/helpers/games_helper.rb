@@ -36,8 +36,8 @@ module GamesHelper
   def player(color)
     if color == 'white'
       User.find(current_game.player_white_id)
-    elsif color == 'black' && current_game.player_black_id.present? 
-      User.find(current_game.player_black_id) 
+    elsif color == 'black' && current_game.player_black_id.present?
+      User.find(current_game.player_black_id)
     end
   end
 end

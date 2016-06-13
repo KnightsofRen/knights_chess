@@ -9,18 +9,18 @@
         <%= image_tag player('white').gravatar_url %>
       </div>
       <div class="col-xs-3 text-left">
-        <%= player('white').username %>
+        <h5><%= player('white').username %></h5>
         <hr class="hr-style">
-        <small style="font-style: italic">white</small>
+        <small>white</small>
       </div>
       <div class="col-xs-2 text-center">
-        <h1 style="font-style: italic">vs.</h1>
+        <h1>vs.</h1>
       </div>
       <div class="col-xs-3 text-right">
-        <%= "?" if player('white').nil? %>
-        <%= player('black').username if player('black').present? %>
+        <h5><%= "?" if player('white').nil? %></h5>
+        <h5><%= player('black').username if player('black').present? %></h5>
         <hr class="hr-style">
-        <small style="font-style: italic">black</small>
+        <small>black</small>
       </div>
       <div class="col-xs-2 text-right">
         <%= image_tag player('black').gravatar_url if player('black').present? %>
