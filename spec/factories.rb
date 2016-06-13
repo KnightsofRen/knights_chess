@@ -14,6 +14,12 @@ FactoryGirl.define do
     association :game
   end
 
+  factory :knight do
+    x_coordinate 4
+    y_coordinate 3
+    association :game
+  end
+
   factory :rook do
     x_coordinate 4
     y_coordinate 4
