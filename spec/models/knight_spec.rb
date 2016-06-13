@@ -17,12 +17,16 @@ RSpec.describe Knight, type: :model do
           test += 1 if knight4.valid_move?(x, y) == true # => 2
         end
       end
-      test += 1 if knight4.valid_move?(6, 2) == true   # top left move
-      test += 1 if knight3.valid_move?(4, 0) == true   # bottom left
-      test += 1 if knight2.valid_move?(7, 4) == true   # top right
-      test += 1 if knight.valid_move?(5, 1) == true    # bottom right
-      test += 1 if knight.valid_move?(4, 7) == false
-      expect(test).to eq(25)
+      expect(test).to eq(20)
+      expect(knight.valid_move?(3, 5)).to eq true
+      expect(knight.valid_move?(2, 4)).to eq true
+      expect(knight.valid_move?(2, 2)).to eq true
+      expect(knight.valid_move?(3, 1)).to eq true
+      expect(knight.valid_move?(5, 5)).to eq true
+      expect(knight.valid_move?(6, 4)).to eq true
+      expect(knight.valid_move?(6, 2)).to eq true
+      expect(knight.valid_move?(5, 1)).to eq true
+      expect(knight.valid_move?(2, 5)).to eq false
     end
   end
 end
