@@ -1,0 +1,42 @@
+.panel {
+    width: 700px;
+    margin: 0 auto;
+}
+
+/* http://www.onextrapixel.com/2013/10/25/40-stunning-website-designs-with-great-color-schemes/ */
+/* http://www.w3schools.com/css/tryit.asp?filename=trycss3_gradient-linear */
+
+.panel-default {
+  border-color: #293E6A;
+}
+
+.panel-default > .panel-heading {
+  color: white;
+  background: -webkit-linear-gradient(#293E6A, #3B5998); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#293E6A, #3B5998); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#293E6A, #3B5998); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#293E6A, #3B5998); /* Standard syntax (must be last) */
+  border-color: #293E6A;
+}
+
+.panel-default > .panel-body {
+  color: #333;
+  background-color: #F5EACD;
+  border-color: #293E6A;
+}
+
+/* https://css-tricks.com/snippets/css/css-box-shadow/ */
+
+.shadow {
+  -moz-box-shadow:    3px 3px 5px 6px #639BF1;
+  -webkit-box-shadow: 3px 3px 5px 6px #639BF1;
+  box-shadow:         3px 3px 5px 6px #639BF1;
+}
+
+.hr-style {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+
