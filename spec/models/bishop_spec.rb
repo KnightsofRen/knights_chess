@@ -10,15 +10,20 @@ RSpec.describe Bishop, type: :model do
       FactoryGirl.create(:piece, x_coordinate: 2, y_coordinate: 2, game_id: game.id)
       FactoryGirl.create(:piece, x_coordinate: 5, y_coordinate: 3, game_id: game.id)
       test = 0
-      test += 1 if bishop.valid_move?(4, 4) == false     # destination same as current position
-      test += 1 if bishop.valid_move?(8, 8) == false     # off board
-      test += 1 if bishop.valid_move?(7, 4) == false     # horizontal
-      test += 1 if bishop.valid_move?(4, 7) == false     # vertical
-      test += 1 if bishop.valid_move?(2, 5) == false     # not diagonal
-      test += 1 if bishop.valid_move?(6, 2) == false     # obstructed
-      test += 1 if bishop.valid_move?(1, 1) == false     # obstructed
-      test += 1 if bishop.valid_move?(2, 6) == true      # valid
-      expect(test).to eq(8)
+      (-1..8).each do |y|
+        (-1..8).each do |x|
+          test += 1 if bishop.valid_move?(x, y) == true # => 9
+        end
+      end
+      expect(test).to eq(9)
+      expect(bishop.valid_move?(4, 4)).to eq false    # destination same as current position
+      expect(bishop.valid_move?(8, 8)).to eq false    # off board
+      expect(bishop.valid_move?(7, 4)).to eq false    # horizontal
+      expect(bishop.valid_move?(4, 7)).to eq false    # vertical
+      expect(bishop.valid_move?(2, 5)).to eq false    # not diagonal
+      expect(bishop.valid_move?(6, 2)).to eq false    # obstructed
+      expect(bishop.valid_move?(1, 1)).to eq false    # obstructed
+      expect(bishop.valid_move?(2, 6)).to eq true     # valid
     end
   end
 end
