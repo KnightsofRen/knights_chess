@@ -1,7 +1,7 @@
 class Pawn < Piece
   # First move, allowed to move 2
   # All moves allowed to move 1
-  # Can’t capture vertically
+  # Cant capture vertically
   # Up one, horizontal 1 to capture
 
   def valid_move?(x, y)
@@ -38,5 +38,5 @@ class Pawn < Piece
     return false if y < 0
     return false if y >= 8
     true
- end
+  end
 end
