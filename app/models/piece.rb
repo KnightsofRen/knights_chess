@@ -9,11 +9,11 @@ class Piece < ActiveRecord::Base
       if destination_piece.color == color
         'Error'
       else destination_piece.color != color
-        destination_piece.delete
-        self.update_attributes(x_coordinate: new_x, y_coordinate: new_y)
-    end
-      else
-        self.update_attributes(x_coordinate: new_x, y_coordinate: new_y)
+           destination_piece.delete
+           update_attributes(x_coordinate: new_x, y_coordinate: new_y)
+      end
+    else
+      update_attributes(x_coordinate: new_x, y_coordinate: new_y)
     end
   end
 
