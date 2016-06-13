@@ -4,16 +4,16 @@ class Piece < ActiveRecord::Base
   enum color: [:white, :black]
 
   def move_to!(new_x, new_y)
-    piece = Game.find(game_id).pieces.find_by(x_coordinate: new_x, y_coordinate: new_y)
-    if !piece.nil?
-      if piece.color == color
+    destination_piece = game.pieces.find_by(x_coordinate: new_x, y_coordinate: new_y)
+    if destination_piece.present?
+      if destination_piece.color == color
         'Error'
-      elsif piece.color != color
-        Game.find(game_id).pieces.find_by(x_coordinate: new_x, y_coordinate: new_y).delete
-        update_attributes(x_coordinate: new_x, y_coordinate: new_y)
-      end
-    else
-      update_attributes(x_coordinate: new_x, y_coordinate: new_y)
+      else destination_piece.color != color
+        destination_piece.delete
+        self.update_attributes(x_coordinate: new_x, y_coordinate: new_y)
+    end
+      else
+        self.update_attributes(x_coordinate: new_x, y_coordinate: new_y)
     end
   end
 
