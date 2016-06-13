@@ -9,6 +9,8 @@ class Pawn < Piece
     return false if first_move?(x, y)
     return false if allowed?(x, y)
     return false unless position_on_board?(x, y)
+    return false if move_too_far?(x, y)
+    return false if obstructed?(x, y)
     true
   end
 
@@ -38,5 +40,10 @@ class Pawn < Piece
     return false if y < 0
     return false if y >= 8
     true
+  end
+
+  def move_too_far?(x, y)
+    return true if (y_coordinate - y).abs > 1 && y_coordinate != 2 && x_coordinate != x
+    false
   end
 end
