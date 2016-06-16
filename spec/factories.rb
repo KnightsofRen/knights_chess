@@ -5,6 +5,7 @@ FactoryGirl.define do
   factory :piece do
     x_coordinate 3
     y_coordinate 3
+    captured false
     association :game
   end
 
@@ -17,6 +18,24 @@ FactoryGirl.define do
   factory :pawn do
     x_coordinate 0
     y_coordinate 1
+    association :game
+  end
+
+  factory :knight do
+    x_coordinate 4
+    y_coordinate 3
+    association :game
+  end
+
+  factory :rook do
+    x_coordinate 4
+    y_coordinate 4
+    association :game
+  end
+
+  factory :bishop do
+    x_coordinate 4
+    y_coordinate 4
     association :game
   end
 end
