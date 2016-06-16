@@ -33,6 +33,14 @@ module GamesHelper
     end
   end
 
+  def player(color)
+    if color == 'white'
+      User.find(current_game.player_white_id)
+    elsif color == 'black' && current_game.player_black_id.present?
+      User.find(current_game.player_black_id)
+    end
+  end
+
   def piece_id(x, y)
     piece = current_game.pieces.find_by(x_coordinate: x, y_coordinate: y)
     return piece.id if piece.present?

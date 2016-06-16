@@ -2,6 +2,9 @@ source 'https://rubygems.org'
 # Use simple form
 gem 'simple_form'
 
+# gravtastic - a Ruby wrapper for gravatar urls
+gem 'gravtastic', '~> 3.2', '>= 3.2.6'
+
 # twitter bootstrap
 gem 'bootstrap-sass', '~> 3.3.5.1'
 gem 'sprockets', '2.11.0'

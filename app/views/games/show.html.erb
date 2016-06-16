@@ -1,16 +1,42 @@
-<h1><%= current_game.inspect %></h1>
-<p><%= current_game.name %></p>
-<br class="clr" />
+<div class="background">
+  <br class="clr" />
+  <div class="panel panel-default shadow">
+    <div class="panel-heading">
+      <h3 class="panel-title text-center"><%= current_game.name %></h3>
+    </div>
+    <div class="panel-body">
+      <div class="col-xs-2 text-left">
+        <%= image_tag player('white').gravatar_url %>
+      </div>
+      <div class="col-xs-3 text-left">
+        <h5><%= player('white').username %></h5>
+        <hr class="hr-style">
+        <small>white</small>
+      </div>
+      <div class="col-xs-2 text-center">
+        <h1>vs.</h1>
+      </div>
+      <div class="col-xs-3 text-right">
+        <h5><%= "?" if player('white').nil? %></h5>
+        <h5><%= player('black').username if player('black').present? %></h5>
+        <hr class="hr-style">
+        <small>black</small>
+      </div>
+      <div class="col-xs-2 text-right">
+        <%= image_tag player('black').gravatar_url if player('black').present? %>
+      </div>
+    </div>
+  </div>
 
-<div class="game-background">
-   <br class="clr" />
+  <br class="clr" />
 
-   <div class="chessboard">
-
+  <div class="game-background">
+    <br class="clr" />
+    <div class="chessboard">
       <% (0..7).each do |y| %>
         <% (0..7).each do |x| %>
           <% if (x.even? && y.odd?) || (x.odd? && y.even?) %>
-           <div class="black-tile">
+            <div class="black-tile">
               <%= link_to "#{render_piece(current_game, x,(y-7).abs)}", game_piece_path(game_id: current_game.id, id: "#{piece_id(x,(y-7).abs)}") %>
             </div>
           <% else %>
@@ -20,10 +46,16 @@
           <% end %>
         <% end %>
       <% end %>
-
       <br class="clr" />
-   </div>
+     </div>
+  </div>
+  <br class="clr" />
 </div>
+
+
+
 <br class="clr" />
 <p><%= link_to 'Edit/Update', edit_game_path(current_game) %></p>
 <p><%= link_to 'Delete', '#', method: :delete %></p>
+
+<%= current_game.inspect %>
