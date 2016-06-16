@@ -15,6 +15,12 @@ FactoryGirl.define do
     association :game
   end
 
+  factory :queen do
+    x_coordinate 3
+    y_coordinate 0
+    association :game
+  end
+
   factory :pawn do
     x_coordinate 0
     y_coordinate 1
@@ -36,6 +42,5 @@ FactoryGirl.define do
   factory :bishop do
     x_coordinate 4
     y_coordinate 4
-    association :game
   end
 end
