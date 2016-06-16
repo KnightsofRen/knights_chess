@@ -31,18 +31,22 @@
   <br class="clr" />
 
   <div class="game-background">
-     <br class="clr" />
-     <div class="chessboard">
-        <% (0..7).each do |y| %>
-          <% (0..7).each do |x| %>
-            <% if (x.even? && y.odd?) || (x.odd? && y.even?) %>
-              <div class="black-tile"><%= render_piece(x,(y-7).abs) %></div>
-            <% else %>
-              <div class="white-tile"><%= render_piece(x,(y-7).abs) %></div>
-            <% end %>
+    <br class="clr" />
+    <div class="chessboard">
+      <% (0..7).each do |y| %>
+        <% (0..7).each do |x| %>
+          <% if (x.even? && y.odd?) || (x.odd? && y.even?) %>
+            <div class="black-tile">
+              <%= link_to "#{render_piece(current_game, x,(y-7).abs)}", game_piece_path(game_id: current_game.id, id: "#{piece_id(x,(y-7).abs)}") %>
+            </div>
+          <% else %>
+            <div class="white-tile">
+              <%= link_to "#{render_piece(current_game, x,(y-7).abs)}", game_piece_path(game_id: current_game.id, id: "#{piece_id(x,(y-7).abs)}") %>
+            </div>
           <% end %>
         <% end %>
-        <br class="clr" />
+      <% end %>
+      <br class="clr" />
      </div>
   </div>
   <br class="clr" />
@@ -53,3 +57,5 @@
 <br class="clr" />
 <p><%= link_to 'Edit/Update', edit_game_path(current_game) %></p>
 <p><%= link_to 'Delete', '#', method: :delete %></p>
+
+<%= current_game.inspect %>
