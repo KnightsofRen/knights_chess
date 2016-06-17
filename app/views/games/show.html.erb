@@ -36,12 +36,16 @@
       <% (0..7).each do |y| %>
         <% (0..7).each do |x| %>
           <% if (x.even? && y.odd?) || (x.odd? && y.even?) %>
-            <div class="black-tile">
-              <%= link_to "#{render_piece(current_game, x,(y-7).abs)}", game_piece_path(game_id: current_game.id, id: "#{piece_id(x,(y-7).abs)}") %>
+            <div class="black-tile tile">
+              <div class="piece">
+                <%= render_piece(current_game, x,(y-7).abs) %>
+              </div>
             </div>
           <% else %>
-            <div class="white-tile">
-              <%= link_to "#{render_piece(current_game, x,(y-7).abs)}", game_piece_path(game_id: current_game.id, id: "#{piece_id(x,(y-7).abs)}") %>
+            <div class="white-tile tile">
+              <div class="piece">
+                <%= render_piece(current_game, x,(y-7).abs) %>
+              </div>
             </div>
           <% end %>
         <% end %>
@@ -52,7 +56,26 @@
   <br class="clr" />
 </div>
 
-
+<script>
+    $(function(){
+      
+      $('.piece').draggable();
+      
+    });
+    
+    $(function(){
+      
+      $('.tile').droppable( {
+        drop: itWorkedAlert
+      });
+      
+    });
+    
+    function itWorkedAlert() {
+      alert('it worked');
+    }
+    
+  </script>
 
 <br class="clr" />
 <p><%= link_to 'Edit/Update', edit_game_path(current_game) %></p>
