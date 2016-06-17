@@ -5,45 +5,43 @@ class Pawn < Piece
   # Up one, horizontal 1 to capture
 
   def valid_move?(x, y)
-    return false if move_backwards?(x, y)
-    return false if first_move?(x, y)
-    return false if allowed?(x, y)
-    return false unless position_on_board?(x, y)
-    return false if move_too_far?(x, y)
-    return false if obstructed?(x, y)
+    return false if obstructed?(x, y) == 'Error: invalid input'
+    return true if first_move?(x,y) unless obstructed?(x,y)
+    return false if backward_sideway_or_over_one_move?(x, y)
+    return false if piece_present_at_target_vertical_destination?(x,y)
+    return false if piece_not_present_at_target_diagonal_destination?(x,y)
     true
   end
 
   private
 
-  def move_backwards?(_x, y)
-    # cannot move backwards
-    return false if (y_coordinate - y) < 0
-    true
-  end
-
   def first_move?(x, y)
-    # initial spot 0,1 => 0,2 0,3
-    # can move 2 spaces first move
-    return true if y == (y_coordinate + 2) && y_coordinate == 2 && x_coordinate == x
+    return false if piece_present_at_target_vertical_destination?(x,y)
+    if color == 'white'
+      return true if y == (y_coordinate + 2) && y_coordinate == 1 && x_coordinate == x 
+    else
+      return true if y == (y_coordinate - 2) && y_coordinate == 6 && x_coordinate == x
+    end
     false
   end
 
-  def allowed?(x, y)
-    return true if x_coordinate == x && y_coordinate - y == 1
-    false
-  end
-
-  def position_on_board?(x, y)
-    return false if x >= 8
-    return false if x < 0
-    return false if y < 0
-    return false if y >= 8
+  def backward_sideway_or_over_one_move?(x, y)
+    if color == 'white'
+      return false if (y - y_coordinate) == 1
+    else
+      return false if (y - y_coordinate) == -1 
+    end 
     true
   end
 
-  def move_too_far?(x, y)
-    return true if (y_coordinate - y).abs > 1 && y_coordinate != 2 && x_coordinate != x
+  def piece_present_at_target_vertical_destination?(x,y)
+    return true if x_coordinate == x && Game.find(game_id).pieces.find_by(x_coordinate: x, y_coordinate: y).present?
     false
   end
+
+  def piece_not_present_at_target_diagonal_destination?(x,y)
+    return true if x_coordinate != x && Game.find(game_id).pieces.find_by(x_coordinate: x, y_coordinate: y).nil?
+    false
+  end
+
 end

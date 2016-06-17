@@ -24,22 +24,22 @@
     text-align:center;
     display: table-cell;
     vertical-align:middle;
+    
 }
-/* https://css-tricks.com/snippets/css/css-box-shadow/ */
-.black-tile-highlighted {
-    float: left;
-    width: 80px;
-    height: 80px;
-    background-color: silver;
-    font-size:50px;
-    text-align:center;
-    display: table-cell;
-    vertical-align:middle;
+
+.highlight-dark {
     -moz-box-shadow:    inset 0 0 10px #000000;
     -webkit-box-shadow: inset 0 0 10px #000000;
     box-shadow:         inset 0 0 10px #000000;
-    color: #1D62D1;
+    color: #1D62D1;  
 }
+
+.highlight-light {
+    -moz-box-shadow:    inset 0 0 14px #9dff2c;
+    -webkit-box-shadow: inset 0 0 14px #9dff2c;
+    box-shadow:         inset 0 0 14px #9dff2c;   
+}
+
 .white-tile {
     float: left;
     width: 80px;
@@ -49,20 +49,6 @@
     text-align:center;
     display: table-cell;
     vertical-align:middle;
-}
-.white-tile-highlighted {
-    float: left;
-    width: 80px;
-    height: 80px;
-    background-color: white;
-    font-size:50px;
-    text-align:center;
-    display: table-cell;
-    vertical-align:middle;
-    -moz-box-shadow:    inset 0 0 10px #000000;
-    -webkit-box-shadow: inset 0 0 10px #000000;
-    box-shadow:         inset 0 0 10px #000000;
-    color: #1D62D1;
 }
 
 .black-tile a:link, .black-tile a:visited, .black-tile a:active,  { 
