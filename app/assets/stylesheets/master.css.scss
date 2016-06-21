@@ -28,16 +28,16 @@
 }
 
 .highlight-dark {
+    box-shadow:         inset 0 0 10px #000000;
     -moz-box-shadow:    inset 0 0 10px #000000;
     -webkit-box-shadow: inset 0 0 10px #000000;
-    box-shadow:         inset 0 0 10px #000000;
     color: #1D62D1;  
 }
 
 .highlight-light {
+    box-shadow:         inset 0 0 14px #9dff2c;   
     -moz-box-shadow:    inset 0 0 14px #9dff2c;
     -webkit-box-shadow: inset 0 0 14px #9dff2c;
-    box-shadow:         inset 0 0 14px #9dff2c;   
 }
 
 .white-tile {

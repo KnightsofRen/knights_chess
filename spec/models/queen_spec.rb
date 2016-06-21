@@ -13,10 +13,10 @@ RSpec.describe Queen, type: :model do
       test = 0
       (-1..8).each do |y|
         (-1..8).each do |x|
-          test += 1 if queen.valid_move?(x, y) == true # => 22
+          test += 1 if queen.valid_move?(x, y) == true # => 19
         end
       end
-      expect(test).to eq(22)
+      expect(test).to eq(19)
       expect(queen.valid_move?(4, 4)).to eq false     # destination same as current position
       expect(queen.valid_move?(8, 4)).to eq false     # off board
       expect(queen.valid_move?(5, 2)).to eq false     # not hvd

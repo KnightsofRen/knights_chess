@@ -19,12 +19,12 @@ RSpec.describe Pawn, type: :model do
 
       # white pawn4 at (6, 1), pieces at (5, 2) and (7, 2) ==> 4 valid moves
       pawn4 = FactoryGirl.create(:pawn, x_coordinate: 6, y_coordinate: 1, game_id: game.id)
-      FactoryGirl.create(:piece, x_coordinate: 5, y_coordinate: 2, game_id: game.id)
-      FactoryGirl.create(:piece, x_coordinate: 7, y_coordinate: 2, game_id: game.id)
+      FactoryGirl.create(:piece, color: 'black', x_coordinate: 5, y_coordinate: 2, game_id: game.id)
+      FactoryGirl.create(:piece, color: 'black', x_coordinate: 7, y_coordinate: 2, game_id: game.id)
 
       # white pawn5 at (6, 4), piece (7, 5) ==> 2 valid moves
       pawn5 = FactoryGirl.create(:pawn, x_coordinate: 6, y_coordinate: 4, game_id: game.id)
-      FactoryGirl.create(:piece, x_coordinate: 7, y_coordinate: 5, game_id: game.id)
+      FactoryGirl.create(:piece, color: 'black', x_coordinate: 7, y_coordinate: 5, game_id: game.id)
 
       test = 0
       (-1..8).each do |y|

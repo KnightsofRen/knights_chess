@@ -17,12 +17,21 @@ class Piece < ActiveRecord::Base
     end
   end
 
-  def obstructed?(destination_x, destination_y)
-    return 'Error: invalid input' if invalid_input?(x_coordinate, y_coordinate, destination_x, destination_y)
-    path = if (destination_x - x_coordinate).abs == (destination_y - y_coordinate).abs
-             diagonal_path(x_coordinate, y_coordinate, destination_x, destination_y)
+  def same_color_piece_present_at_target_destination?(x, y)
+    destination_piece = game.pieces.find_by(x_coordinate: x, y_coordinate: y)
+    if destination_piece.present?
+      return true if destination_piece.color == color
+    end
+    false
+  end
+
+  def obstructed?(x, y)
+    # (x, y) represents the target destination!
+    return 'Error' if invalid_input?(x_coordinate, y_coordinate, x, y)
+    path = if (x - x_coordinate).abs == (y - y_coordinate).abs
+             diagonal_path(x_coordinate, y_coordinate, x, y)
            else
-             horizontal_and_vertical_path(x_coordinate, y_coordinate, destination_x, destination_y)
+             horizontal_and_vertical_path(x_coordinate, y_coordinate, x, y)
            end
     compare_to_board_state(path)
   end

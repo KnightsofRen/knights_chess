@@ -33,16 +33,10 @@ RSpec.describe Piece, type: :model do
     let(:game) { FactoryGirl.create(:game) }
     let(:current_piece) { FactoryGirl.create(:piece, game_id: game.id) }
 
-    it 'should return invalid input if destination is same as current position' do
-      expect(current_piece.obstructed?(3, 3)).to eq('Error: invalid input')
-    end
-
-    it 'should return invalid input if destination is out of bounds' do
-      expect(current_piece.obstructed?(3, 8)).to eq('Error: invalid input')
-    end
-
-    it 'should return invalid input if destination is not a valid hvd move' do
-      expect(current_piece.obstructed?(5, 4)).to eq('Error: invalid input')
+    it 'should return error if destination is same, out of bounds, or not hvd move' do
+      expect(current_piece.obstructed?(3, 3)).to eq('Error')  # same as current location
+      expect(current_piece.obstructed?(3, 8)).to eq('Error')  # out of bounds
+      expect(current_piece.obstructed?(5, 4)).to eq('Error')  # not a valid hvd move
     end
 
     it 'should return true if there is an obstruction (horizontal)' do
