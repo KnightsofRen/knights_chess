@@ -57,4 +57,24 @@ RSpec.describe Game, type: :model do
       expect(test).to eq(32)
     end
   end
+  
+  describe 'in_check?' do
+    it 'returns true if game in_check?' do
+      game = FactoryGirl.create(:game)
+      FactoryGirl.create(:piece, x_coordinate: 4, y_coordinate: 4, color: 1, game_id: game.id)
+      FactoryGirl.create(:king, x_coordinate: 4, y_coordinate: 0, game_id: game.id)
+      
+      expect(game.in_check?(0)).to eq(true)
+    end 
+  
+    it 'returns false if game not in_check?' do
+      game = FactoryGirl.create(:game)
+      FactoryGirl.create(:piece, x_coordinate: 4, y_coordinate: 4, color: 1, game_id: game.id)
+      FactoryGirl.create(:king, x_coordinate: 5, y_coordinate: 0, game_id: game.id)
+      
+      expect(game.in_check?(0)).to eq(false)
+    end
+
+  end
+
 end
