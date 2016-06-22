@@ -1,5 +1,5 @@
-<%= simple_form_for @piece, :url => game_piece_path(game_id: @game.id, id: @piece.id), :method => :put do |f| %>
-  <%= f.hidden_field :x_coordinate, value: pos[0] %>
-  <%= f.hidden_field :y_coordinate, value: pos[1] %>
-  <%= f.submit '', :class => "button" %>
+<%= form_tag(game_piece_path(game_id: @game.id, id: @piece.id), :method => :put) do %>
+  <%= hidden_field_tag :x_pos, pos[0] %>
+  <%= hidden_field_tag :y_pos, pos[1] %>
+  <%= submit_tag '', class: "button" %>
 <% end %>

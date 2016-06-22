@@ -17,6 +17,4 @@ class Knight < Piece
     return true if (x_diff == 1 && y_diff == 2) || (x_diff == 2 && y_diff == 1)
     false
   end
-
-
 end

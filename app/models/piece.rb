@@ -3,18 +3,12 @@ class Piece < ActiveRecord::Base
 
   enum color: [:white, :black]
 
-  def move_to!(new_x, new_y)
-    destination_piece = game.pieces.find_by(x_coordinate: new_x, y_coordinate: new_y)
-    if destination_piece.present?
-      if destination_piece.color == color
-        'Error'
-      else
-        destination_piece.delete
-        update_attributes(x_coordinate: new_x, y_coordinate: new_y)
-      end
-    else
-      update_attributes(x_coordinate: new_x, y_coordinate: new_y)
-    end
+  # (x, y) represents the target destination!
+
+  def move_to!(x, y)
+    destination_piece = game.pieces.find_by(x_coordinate: x, y_coordinate: y)
+    destination_piece.delete if destination_piece.present?
+    update_attributes(x_coordinate: x, y_coordinate: y)
   end
 
   def same_color_piece_present_at_target_destination?(x, y)
@@ -26,7 +20,6 @@ class Piece < ActiveRecord::Base
   end
 
   def obstructed?(x, y)
-    # (x, y) represents the target destination!
     return 'Error' if invalid_input?(x_coordinate, y_coordinate, x, y)
     path = if (x - x_coordinate).abs == (y - y_coordinate).abs
              diagonal_path(x_coordinate, y_coordinate, x, y)
