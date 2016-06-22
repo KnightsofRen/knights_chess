@@ -3,12 +3,7 @@ require 'rails_helper'
 RSpec.describe Piece, type: :model do
   describe 'move_to! method' do
     let(:game) { FactoryGirl.create(:game) }
-    it 'should return error if target piece has same color as current piece' do
-      current_piece = FactoryGirl.create(:piece, color: 0, game_id: game.id)
-      FactoryGirl.create(:piece, x_coordinate: 4, y_coordinate: 4, color: 0, game_id: game.id)
-      expect(current_piece.move_to!(4, 4)).to eq('Error')
-    end
-
+    
     it 'should capture if target piece has the opposite color as current piece' do
       current_piece = FactoryGirl.create(:piece, color: 0, game_id: game.id)
       FactoryGirl.create(:piece, x_coordinate: 4, y_coordinate: 4, color: 1, game_id: game.id)
