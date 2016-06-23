@@ -64,17 +64,27 @@ RSpec.describe Game, type: :model do
       FactoryGirl.create(:piece, x_coordinate: 4, y_coordinate: 4, color: 1, game_id: game.id)
       FactoryGirl.create(:king, x_coordinate: 4, y_coordinate: 0, game_id: game.id)
       
-      expect(game.in_check?(0)).to eq(true)
+      expect(game.in_check?('white')).to eq(true)
     end 
   
-    it 'returns false if game not in_check?' do
+    it 'returns false if game NOT in_check?' do
       game = FactoryGirl.create(:game)
       FactoryGirl.create(:piece, x_coordinate: 4, y_coordinate: 4, color: 1, game_id: game.id)
-      FactoryGirl.create(:king, x_coordinate: 5, y_coordinate: 0, game_id: game.id)
+      FactoryGirl.create(:piece, x_coordinate: 4, y_coordinate: 1, color: 0, game_id: game.id)
+      FactoryGirl.create(:king, x_coordinate: 4, y_coordinate: 0, game_id: game.id)
       
-      expect(game.in_check?(0)).to eq(false)
+      expect(game.in_check?('white')).to eq(false)
     end
+  end
 
+  describe 'opp_color' do
+    it 'returns white if black and vice versa' do
+      game = FactoryGirl.create(:game)
+      FactoryGirl.create(:king, x_coordinate: 4, y_coordinate: 0, game_id: game.id)
+
+      expect(game.opp_color('white')).to eq('black')
+      expect(game.opp_color('black')).to eq('white')
+    end
   end
 
 end
