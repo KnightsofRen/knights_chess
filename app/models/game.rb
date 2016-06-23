@@ -3,7 +3,7 @@ class Game < ActiveRecord::Base
   enum status: [:safe, :check, :checkmate]
 
   has_many :pieces
-
+  belongs to :user
   after_create :populate_board!
 
   def populate_board!
@@ -20,6 +20,16 @@ class Game < ActiveRecord::Base
     create_pawn_pieces(1)
   end
 
+  def forfeit
+    @game = Game.find(params[:id])
+      return if active?
+      @game.forfeit(:user_id => current_user.id)
+      if user_id != current_user.id
+      user_id.update_attributes(:user_id => winning_player.id)
+  end
+end
+ 
+
   def board_state
     board = []
     pieces.each do |piece|
@@ -29,6 +39,12 @@ class Game < ActiveRecord::Base
   end
 
   private
+
+  helper_method: current_game
+
+  def current_game
+    @current_game ||= Game.find(params[:game_id]) 
+  end
 
   def create_non_pawn_pieces(color)
     non_pawn_pieces = [
