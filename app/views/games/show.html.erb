@@ -36,15 +36,15 @@
       <% (0..7).each do |y| %>
         <% (0..7).each do |x| %>
           <% if (x.even? && y.odd?) || (x.odd? && y.even?) %>
-            <div class="black-tile tile">
+            <div class="black-tile tile" data-x-coordinate="<% x %>" data-y-coordinate="<% y %>">
               <div class="piece">
                 <%= render_piece(current_game, x,(y-7).abs) %>
               </div>
             </div>
           <% else %>
-            <div class="white-tile tile">
+            <div class="white-tile tile" data-x-coordinate="<% x %>" data-y-coordinate="<% y %>">
               <div class="piece">
-                <%= render_piece(current_game, x,(y-7).abs) %>
+                <%= render_piece(current_game, x,(y-7).abs), data: { update_url: game_path(current_game) } %>
               </div>
             </div>
           <% end %>
@@ -72,7 +72,14 @@
     });
     
     function itWorkedAlert() {
-      alert('it worked');
+      $.ajax({
+        type: 'PUT',
+        url: ui.draggable.data('update-url'),
+        dataType: 'json',
+        data: {piece: {x_coordinate: ui.droppable.data(x-coordinate), y_coordinate: ui.droppable.data(y-coordinate)}}
+      }).done(function( data ) {
+        // will have to eventually remove any captured pieces here
+      });
     }
   </script>
 
