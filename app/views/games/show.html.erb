@@ -37,14 +37,14 @@
         <% (0..7).each do |x| %>
           <% if (x.even? && y.odd?) || (x.odd? && y.even?) %>
             <div class="black-tile tile" data-x-coordinate="<% x %>" data-y-coordinate="<% y %>">
-              <div class="piece">
+              <div class="piece" data-update-url="<% game_path(current_game) %>" data-current-piece="<% render_piece(current_game, x,(y-7).abs) %>">
                 <%= render_piece(current_game, x,(y-7).abs) %>
               </div>
             </div>
           <% else %>
             <div class="white-tile tile" data-x-coordinate="<% x %>" data-y-coordinate="<% y %>">
-              <div class="piece">
-                <%= render_piece(current_game, x,(y-7).abs), data: { update_url: game_path(current_game) } %>
+              <div class="piece" data-update-url="<% game_path(current_game) %>" data-current-piece="<% current_game.pieces.find_by(x_coordinate: x, y_coordinate: y) %>">
+                <%= render_piece(current_game, x,(y-7).abs) %>
               </div>
             </div>
           <% end %>
@@ -66,17 +66,19 @@
     $(function(){
       
       $('.tile').droppable( {
-        drop: itWorkedAlert
+        drop: updatePieceLocation
       });
       
     });
     
-    function itWorkedAlert() {
+    var current_piece = ui.draggable.data('current-piece');
+    
+    function updatePieceLocation() {
       $.ajax({
         type: 'PUT',
         url: ui.draggable.data('update-url'),
         dataType: 'json',
-        data: {piece: {x_coordinate: ui.droppable.data(x-coordinate), y_coordinate: ui.droppable.data(y-coordinate)}}
+        data: {current_piece: {x_coordinate: ui.droppable.data(x-coordinate), y_coordinate: ui.droppable.data(y-coordinate)}}
       }).done(function( data ) {
         // will have to eventually remove any captured pieces here
       });
