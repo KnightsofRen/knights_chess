@@ -40,8 +40,6 @@ class Game < ActiveRecord::Base
     create_pawn_pieces(1)
   end
 
-  private
-
   def create_non_pawn_pieces(color)
     non_pawn_pieces = [
       pieces.new(x_coordinate: 0, type: 'Rook'),
