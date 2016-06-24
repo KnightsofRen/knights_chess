@@ -3,26 +3,28 @@ class Piece < ActiveRecord::Base
 
   enum color: [:white, :black]
 
-  def move_to!(new_x, new_y)
-    destination_piece = game.pieces.find_by(x_coordinate: new_x, y_coordinate: new_y)
-    if destination_piece.present?
-      if destination_piece.color == color
-        'Error'
-      else
-        destination_piece.delete
-        update_attributes(x_coordinate: new_x, y_coordinate: new_y)
-      end
-    else
-      update_attributes(x_coordinate: new_x, y_coordinate: new_y)
-    end
+  # (x, y) represents the target destination!
+
+  def move_to!(x, y)
+    destination_piece = game.pieces.find_by(x_coordinate: x, y_coordinate: y)
+    destination_piece.delete if destination_piece.present?
+    update_attributes(x_coordinate: x, y_coordinate: y)
   end
 
-  def obstructed?(destination_x, destination_y)
-    return 'Error: invalid input' if invalid_input?(x_coordinate, y_coordinate, destination_x, destination_y)
-    path = if (destination_x - x_coordinate).abs == (destination_y - y_coordinate).abs
-             diagonal_path(x_coordinate, y_coordinate, destination_x, destination_y)
+  def same_color_piece_present_at_target_destination?(x, y)
+    destination_piece = game.pieces.find_by(x_coordinate: x, y_coordinate: y)
+    if destination_piece.present?
+      return true if destination_piece.color == color
+    end
+    false
+  end
+
+  def obstructed?(x, y)
+    return 'Error' if invalid_input?(x_coordinate, y_coordinate, x, y)
+    path = if (x - x_coordinate).abs == (y - y_coordinate).abs
+             diagonal_path(x_coordinate, y_coordinate, x, y)
            else
-             horizontal_and_vertical_path(x_coordinate, y_coordinate, destination_x, destination_y)
+             horizontal_and_vertical_path(x_coordinate, y_coordinate, x, y)
            end
     compare_to_board_state(path)
   end
