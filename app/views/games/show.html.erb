@@ -37,13 +37,13 @@
         <% (0..7).each do |x| %>
           <% if (x.even? && y.odd?) || (x.odd? && y.even?) %>
             <div class="black-tile tile" data-x-coordinate="<% x %>" data-y-coordinate="<% y %>">
-              <div class="piece" data-update-url="<% game_path(current_game) %>" data-current-piece="<% render_piece(current_game, x,(y-7).abs) %>">
+              <div class="piece" <% if (piece_id(x,y) != nil) %> data-update-url="<% game_piece_path(current_game, piece_id(x,y)) %>" <% end %> data-current-piece="<% render_piece(current_game, x,(y-7).abs) %>">
                 <%= render_piece(current_game, x,(y-7).abs) %>
               </div>
             </div>
           <% else %>
             <div class="white-tile tile" data-x-coordinate="<% x %>" data-y-coordinate="<% y %>">
-              <div class="piece" data-update-url="<% game_path(current_game) %>" data-current-piece="<% current_game.pieces.find_by(x_coordinate: x, y_coordinate: y) %>">
+              <div class="piece" <% if (piece_id(x,y) != nil) %> data-update-url="<% game_piece_path(current_game, piece_id(x,y)) %>" <% end %> data-current-piece="<% current_game.pieces.find_by(x_coordinate: x, y_coordinate: y) %>">
                 <%= render_piece(current_game, x,(y-7).abs) %>
               </div>
             </div>
@@ -61,21 +61,17 @@
       
       $('.piece').draggable();
       
-    });
-    
-    $(function(){
-      
       $('.tile').droppable( {
         drop: updatePieceLocation
       });
       
     });
-    
+   
     var current_piece = ui.draggable.data('current-piece');
     
     function updatePieceLocation() {
       $.ajax({
-        type: 'PUT',
+        type: 'PATCH',
         url: ui.draggable.data('update-url'),
         dataType: 'json',
         data: {current_piece: {x_coordinate: ui.droppable.data(x-coordinate), y_coordinate: ui.droppable.data(y-coordinate)}}
@@ -84,6 +80,7 @@
       });
     }
   </script>
+ 
 
 <br class="clr" />
 <p><%= link_to 'Edit/Update', edit_game_path(current_game) %></p>
