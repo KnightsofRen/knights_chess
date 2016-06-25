@@ -1,12 +1,10 @@
-<h1>Knights of Ren</h1>
-<hr />
-
 <h2>Create New Game</h2>
   <% if user_signed_in? %>
     <%= link_to "New Game", new_game_path %>
+  <% else %>
+    <%= link_to "New Game", new_user_session_path %>
   <% end %>
 <hr />
-<br />
 
 <h2>Available Games</h2>
 <% @games.available.each do |game| %>
@@ -17,7 +15,6 @@
           <%= f.submit 'Join Game' %>
       <% end %>
     <% end %>
-    <hr />
 <% end %>
 <hr />
 

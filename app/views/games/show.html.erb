@@ -1,15 +1,17 @@
 <div class="background">
   <br class="clr" />
+
   <div class="panel panel-default shadow">
     <div class="panel-heading">
       <h3 class="panel-title text-center"><%= current_game.name %></h3>
     </div>
     <div class="panel-body">
       <div class="col-xs-2 text-left">
-        <%= image_tag player('white').gravatar_url %>
+        <%= image_tag player('white').gravatar_url if player('white').present? %>
       </div>
       <div class="col-xs-3 text-left">
-        <h5><%= player('white').username %></h5>
+        <h5 class="invisible-text"><%= "?" if player('white').nil? %></h5>
+        <h5><%= player('white').username if player('white').present? %></h5>
         <hr class="hr-style">
         <small>white</small>
       </div>
@@ -17,7 +19,7 @@
         <h1>vs.</h1>
       </div>
       <div class="col-xs-3 text-right">
-        <h5><%= "?" if player('white').nil? %></h5>
+        <h5 class="invisible-text"><%= "?" if player('black').nil? %></h5>
         <h5><%= player('black').username if player('black').present? %></h5>
         <hr class="hr-style">
         <small>black</small>
@@ -30,35 +32,41 @@
 
   <br class="clr" />
 
-  <div class="game-background">
-    <br class="clr" />
-    <div class="chessboard">
-      <% (0..7).each do |y| %>
-        <% (0..7).each do |x| %>
-          <% if (x.even? && y.odd?) || (x.odd? && y.even?) %>
-            <div class="black-tile">
-              <%= link_to "#{render_piece(current_game, x,(y-7).abs)}", game_piece_path(game_id: current_game.id, id: "#{piece_id(x,(y-7).abs)}") %>
-            </div>
-          <% else %>
-            <div class="white-tile">
-              <%= link_to "#{render_piece(current_game, x,(y-7).abs)}", game_piece_path(game_id: current_game.id, id: "#{piece_id(x,(y-7).abs)}") %>
-            </div>
+  <div class="row side-buffer">
+    <div class="col-xs-2 text-right">
+      
+    </div>
+
+    <div class="col-xs-8">
+      <div class="game-background">
+        <br class="clr" />
+        <div class="chessboard">
+          <% (0..7).each do |y| %>
+            <% (0..7).each do |x| %>
+              <% if (x.even? && y.odd?) || (x.odd? && y.even?) %>
+                <div class="black-tile">
+                  <%= link_to "#{render_piece(current_game, x,(y-7).abs)}", game_piece_path(game_id: current_game.id, id: "#{piece_id(x,(y-7).abs)}") %>
+                </div>
+              <% else %>
+                <div class="white-tile">
+                  <%= link_to "#{render_piece(current_game, x,(y-7).abs)}", game_piece_path(game_id: current_game.id, id: "#{piece_id(x,(y-7).abs)}") %>
+                </div>
+              <% end %>
+            <% end %>
           <% end %>
-        <% end %>
-      <% end %>
-      <br class="clr" />
-     </div>
+          <br class="clr" />
+         </div>
+      </div>
+    </div>
+
+    <div class="col-xs-2 text-left">
+      <div class="thumbnail">
+        <%= image_tag player('black').gravatar_url(size: 40) if player('black').present? %>
+        <p>????</p>
+      </div>
+    </div>
+
   </div>
+
   <br class="clr" />
 </div>
-
-
-
-<br class="clr" />
-<p><%= link_to 'Edit/Update', edit_game_path(current_game) %></p>
-<p><%= link_to 'Delete', '#', method: :delete %></p>
-
-<%= current_game.inspect %>
-<br/>
-<%= current_game.pieces.size %>
-<br/>

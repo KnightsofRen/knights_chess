@@ -11,6 +11,11 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.create(game_params)
+    if params[:option] == 'white'
+      @game.update_attributes(player_white_id: current_user.id)
+    else
+      @game.update_attributes(player_black_id: current_user.id)
+    end
     redirect_to game_path(@game)
   end
 

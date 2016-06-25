@@ -1,78 +1,90 @@
+body { 
+  padding-top: 50px; 
+}
+
 .background {
-    background: url("sayagata.png");
-    min-width: 700px;
+  background: url("sayagata.png");
+  min-width: 700px;
 }
 
 .game-background {
-    width: 680px;
-    height: 680px;
-    background: url("bg.png");
-    position: relative;
-    margin: 0 auto;
+  width: 680px;
+  height: 680px;
+  background: url("bg.png");
+  /*position: relative;*/
+  margin: 0 auto;
+  border-radius: 12px;
 }
 .chessboard {
-    width: 640px;
-    height: 640px;
-    margin: 0 auto;
+  width: 640px;
+  height: 640px;
+  margin: 0 auto;
 }
 .black-tile {
-    float: left;
-    width: 80px;
-    height: 80px;
-    background-color: silver;
-    font-size:50px;
-    text-align:center;
-    display: table-cell;
-    vertical-align:middle;
-    
+  float: left;
+  width: 80px;
+  height: 80px;
+  background-color: silver;
+  font-size:50px;
+  text-align:center;
+  display: table-cell;
+  vertical-align:middle;
 }
 
 .highlight-dark {
-    box-shadow:         inset 0 0 10px #000000;
-    -moz-box-shadow:    inset 0 0 10px #000000;
-    -webkit-box-shadow: inset 0 0 10px #000000;
-    color: #1D62D1;  
+  box-shadow:         inset 0 0 10px #000000;
+  -moz-box-shadow:    inset 0 0 10px #000000;
+  -webkit-box-shadow: inset 0 0 10px #000000;
+  color: #1D62D1;  
 }
 
 .highlight-light {
-    box-shadow:         inset 0 0 14px #9dff2c;   
-    -moz-box-shadow:    inset 0 0 14px #9dff2c;
-    -webkit-box-shadow: inset 0 0 14px #9dff2c;
+  box-shadow:         inset 0 0 14px #9dff2c;   
+  -moz-box-shadow:    inset 0 0 14px #9dff2c;
+  -webkit-box-shadow: inset 0 0 14px #9dff2c;
 }
 
 .white-tile {
-    float: left;
-    width: 80px;
-    height: 80px;
-    background-color: white;
-    font-size:50px;
-    text-align:center;
-    display: table-cell;
-    vertical-align:middle;
+  float: left;
+  width: 80px;
+  height: 80px;
+  background-color: white;
+  font-size:50px;
+  text-align:center;
+  display: table-cell;
+  vertical-align:middle;
 }
 
 .black-tile a:link, .black-tile a:visited, .black-tile a:active,  { 
-    color: black;
-    text-decoration: none; 
+  color: black;
+  text-decoration: none; 
 }
 .white-tile a:link, .white-tile a:visited, .white-tile a:active,  { 
-    color: black;
-    text-decoration: none; 
+  color: black;
+  text-decoration: none; 
 }
 .black-tile a:hover { 
-    color: #1D62D1;
-    text-decoration: none; 
+  color: #1D62D1;
+  text-decoration: none; 
 }
 .white-tile a:hover {  
-    color: #1D62D1;
-    text-decoration: none; 
+  color: #1D62D1;
+  text-decoration: none; 
 }
 
 .clr {
-   clear:both;
+  clear:both;
 }
 
 .button {
-    border: none;
-    background: none;
+  border: none;
+  background: none;
+}
+
+.invisible-text {
+  opacity: 0;
+}
+
+.side-buffer {
+  margin: 0 20px;
 }
