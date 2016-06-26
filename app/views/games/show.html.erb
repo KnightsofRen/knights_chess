@@ -1,47 +1,17 @@
-<%= current_game.inspect %>
+<%= current_game.inspect %><br/>
+<%= link_to 'Edit/Update', edit_game_path(current_game) %><br/>
+<%= link_to 'Delete', '#', method: :delete %>
 
-<div class="background">
+<div>
+  <a name="chess-game"><p class="invisible-text">!</p></a>
   <br class="clr" />
 
-  <div class="panel panel-default shadow">
-    <div class="panel-heading">
-      <h3 class="panel-title text-center"><%= current_game.name %></h3>
-    </div>
-    <div class="panel-body">
-      <div class="col-xs-2 text-left">
-        <%= image_tag player('white').gravatar_url if player('white').present? %>
-      </div>
-      <div class="col-xs-3 text-left">
-        <h5 class="invisible-text"><%= "?" if player('white').nil? %></h5>
-        <h5><%= player('white').username if player('white').present? %></h5>
-        <hr class="hr-style">
-        <small>white</small>
-      </div>
-      <div class="col-xs-2 text-center">
-        <h1>vs.</h1>
-      </div>
-      <div class="col-xs-3 text-right">
-        <h5 class="invisible-text"><%= "?" if player('black').nil? %></h5>
-        <h5><%= player('black').username if player('black').present? %></h5>
-        <hr class="hr-style">
-        <small>black</small>
-      </div>
-      <div class="col-xs-2 text-right">
-        <%= image_tag player('black').gravatar_url if player('black').present? %>
-      </div>
-    </div>
-  </div>
-
-  <br class="clr" />
-
-  <div class="row side-buffer">
-    <div class="col-xs-2 text-right">
-      <%-# <%= link_to 'Forfeit', forfeit_game_path, method: :put %>
-    </div>
+  <div class="test col-xs-10 col-xs-offset-1">
 
     <div class="col-xs-8">
       <div class="game-background">
         <br class="clr" />
+
         <div class="chessboard">
           <% (0..7).each do |y| %>
             <% (0..7).each do |x| %>
@@ -61,14 +31,40 @@
       </div>
     </div>
 
-    <div class="col-xs-2 text-left">
-      <div class="thumbnail">
-        <%= image_tag player('black').gravatar_url(size: 40) if player('black').present? %>
-        <p>????</p>
+    <div class="col-xs-4">
+      <br class="clr" />
+      <%-# <%= link_to 'Forfeit', forfeit_game_path, method: :put %>
+      <div class="panel panel-default shadow">
+        <div class="panel-heading">
+          <h3 class="panel-title text-center"><%= current_game.name %></h3>
+        </div>
+        <div class="panel-body">
+          <div>
+            <div class="col-xs-4 text-center">
+              <%= image_tag player('white').gravatar_url if player('white').present? %>
+              <h5 class="invisible-text"><%= "?" if player('white').nil? %></h5>
+              <h5><%= player('white').username if player('white').present? %></h5>
+              <hr class="hr-style">
+              <small>white</small>
+            </div>
+            <div class="col-xs-4 text-center">
+              <h1>vs.</h1>
+            </div>
+            <div class="col-xs-4 text-center">
+              <%= image_tag player('black').gravatar_url if player('black').present? %>
+              <h5 class="invisible-text"><%= "?" if player('black').nil? %></h5>
+              <h5><%= player('black').username if player('black').present? %></h5>
+              <hr class="hr-style">
+              <small>black</small>
+            </div>
+          <div>
+        </div>
       </div>
     </div>
 
   </div>
 
+  <br class="clr" />
+  <br class="clr" />
   <br class="clr" />
 </div>

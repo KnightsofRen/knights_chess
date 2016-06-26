@@ -1,17 +1,16 @@
 body { 
   padding-top: 50px; 
+  background: url("sayagata.png");
 }
 
-.background {
-  background: url("sayagata.png");
-  min-width: 700px;
+.test {
+  min-width: 1080px;
 }
 
 .game-background {
   width: 680px;
   height: 680px;
   background: url("bg.png");
-  /*position: relative;*/
   margin: 0 auto;
   border-radius: 12px;
 }
@@ -88,3 +87,8 @@ body {
 .side-buffer {
   margin: 0 20px;
 }
+
+.alert {
+  margin-bottom: 0;
+}
+

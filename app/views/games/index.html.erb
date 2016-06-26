@@ -1,27 +1,31 @@
-<h2>Create New Game</h2>
-  <% if user_signed_in? %>
-    <%= link_to "New Game", new_game_path %>
-  <% else %>
-    <%= link_to "New Game", new_user_session_path %>
-  <% end %>
-<hr />
-
-<h2>Available Games</h2>
-<% @games.available.each do |game| %>
-    
-      <%= game.name %>
-      <%= simple_form_for game, :url => game_path(game), :method => :put do |f| %>
-        <% game.player_white_id.present? ? color = 'black' : color = 'white' %>
-        
-          <%= f.hidden_field "player_#{color}_id".to_sym, value: current_user.id if user_signed_in? %>
-          <%= f.submit "Join Game (as #{color})", class: "btn btn-primary" %>
- 
+<!-- <div class="col-md-12"> -->
+  <div class="col-md-10 col-md-offset-1">
+    <h2>Create New Game</h2>
+      <% if user_signed_in? %>
+        <%= link_to "New Game", new_game_path %>
+      <% else %>
+        <%= link_to "New Game", new_user_session_path %>
       <% end %>
-    
-<% end %>
-<hr />
+    <hr />
 
-<h2>All Games</h2>
-<% @games.each do |game| %>
-  <p><%= link_to game.name, game_path(game) %></p>
-<% end %>
+    <h2>Available Games</h2>
+    <% @games.available.each do |game| %>
+        
+          <%= game.name %>
+          <%= simple_form_for game, :url => game_path(game), :method => :put do |f| %>
+            <% game.player_white_id.present? ? color = 'black' : color = 'white' %>
+            
+              <%= f.hidden_field "player_#{color}_id".to_sym, value: current_user.id if user_signed_in? %>
+              <%= f.submit "Join Game (as #{color})", class: "btn btn-primary" %>
+     
+          <% end %>
+        
+    <% end %>
+    <hr />
+
+    <h2>All Games</h2>
+    <% @games.each do |game| %>
+      <p><%= link_to game.name, "#{game_path(game)}#chess-game" %></p>
+    <% end %>
+  </div>
+<!-- </div> -->
