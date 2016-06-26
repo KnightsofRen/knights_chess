@@ -2,9 +2,10 @@
 <div>
   <%= simple_form_for @game do |f| %>
     <%= f.input :name %>
-    <%= label_tag 'Play as:' %>
-    <%= select_tag(:option, options_for_select([['white', 1], ['black', 2]], selected: :option)) %>
+    <%= label_tag 'Play as...' %>
     <br/>
+    <%= select_tag :color, options_for_select([['white', 1], ['black', 2]]) %>
+    <br/><br/>
     <%= f.submit 'Create Game' %>
   <% end %>
 </div>

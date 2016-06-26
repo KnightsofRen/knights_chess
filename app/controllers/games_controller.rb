@@ -1,6 +1,8 @@
 class GamesController < ApplicationController
   include GamesHelper
 
+  before_action :authenticate_user!, only: [:new, :create]
+
   def index
     @games = Game.all
   end
@@ -10,11 +12,13 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.create(game_params)
-    if params[:option] == 'white'
-      @game.update_attributes(player_white_id: current_user.id)
+    params[:game][:status] = 'safe'
+    if params[:color].to_i == 1
+      params[:game][:player_white_id] = current_user.id
+      @game = Game.create(game_params)
     else
-      @game.update_attributes(player_black_id: current_user.id)
+      params[:game][:player_black_id] = current_user.id
+      @game = Game.create(game_params)
     end
     redirect_to game_path(@game)
   end
@@ -35,6 +39,11 @@ class GamesController < ApplicationController
     redirect_to root_path
   end
 
+  # def forfeit
+  #   current_game.forfeit(current_user.id)
+  #   redirect_to game_path(current_game)
+  # end
+
   def current_game
     @current_game = Game.find(params[:id])
   end
@@ -43,6 +52,6 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:name, :player_black_id, :player_white_id)
+    params.require(:game).permit(:name, :player_black_id, :player_white_id, :status)
   end
 end

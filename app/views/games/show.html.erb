@@ -1,3 +1,5 @@
+<%= current_game.inspect %>
+
 <div class="background">
   <br class="clr" />
 
@@ -34,7 +36,7 @@
 
   <div class="row side-buffer">
     <div class="col-xs-2 text-right">
-      
+      <%-# <%= link_to 'Forfeit', forfeit_game_path, method: :put %>
     </div>
 
     <div class="col-xs-8">
