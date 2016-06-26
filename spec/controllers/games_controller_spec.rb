@@ -25,17 +25,16 @@ RSpec.describe GamesController, type: :controller do
 
   describe 'games#create action' do
     it 'should require users to be logged in' do
-      post :create, game: { name: "test game"}
+      post :create, game: { name: 'test game' }
       expect(response).to redirect_to new_user_session_path
     end
 
     it 'should ??' do
       sign_in user
-      post :create, game: { name: "test game"}
+      post :create, game: { name: 'test game' }
       game = Game.last
-      #expect(response).to redirect_to game_path(game.id)
-      expect(game.name).to eq "test game"
+      # expect(response).to redirect_to game_path(game.id)
+      expect(game.name).to eq 'test game'
     end
   end
-
 end

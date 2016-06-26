@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem "font-awesome-rails"
+gem 'font-awesome-rails'
 gem 'simple_form'
 
 # gravtastic - a Ruby wrapper for gravatar urls

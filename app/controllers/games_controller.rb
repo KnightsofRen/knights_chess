@@ -12,15 +12,12 @@ class GamesController < ApplicationController
   end
 
   def create
-    #params[:game][:status] = 'safe'
-    #params[:game][:turn] = 'white'
     if params[:color].to_i == 1
       params[:game][:player_white_id] = current_user.id
-      @game = Game.create(game_params)
     else
       params[:game][:player_black_id] = current_user.id
-      @game = Game.create(game_params)
     end
+    @game = Game.create(game_params)
     redirect_to game_path(@game)
   end
 
@@ -33,13 +30,13 @@ class GamesController < ApplicationController
   def update
     if user_signed_in? && current_user.id != current_game.user_id
       current_game.update_attributes(game_params)
-      flash.notice = "You have successfully joined the game!"
+      flash.notice = 'You have successfully joined the game!'
       redirect_to game_path(current_game)
     elsif user_signed_in?
-      flash.alert = "You are the host of this game!"
+      flash.alert = 'You are the host of this game!'
       redirect_to root_path
     else
-      flash.alert = "You must be signed in to join games!"
+      flash.alert = 'You must be signed in to join games!'
       redirect_to root_path
     end
   end
