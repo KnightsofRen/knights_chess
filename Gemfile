@@ -46,6 +46,8 @@ end
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'factory_girl_rails', '~> 4.0'
+  gem 'pry-rails'
+  gem 'byebug'
 end
 
 gem 'travis', '~> 1.8', '>= 1.8.2'
