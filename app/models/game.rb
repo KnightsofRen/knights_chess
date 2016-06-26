@@ -30,11 +30,13 @@ class Game < ActiveRecord::Base
   
   def checkmate?
     pieces.each do |piece| 
-      (0..7).each do |x|
+      (0..7).each do |x|   
         (0.7).each do |y|
-          piece.move_to!(x,y)
-          #check to see if check is still true, waiting for check method
-          false #return false if check becomes false
+          if (piece.valid_move?) #check every possible valid move
+            piece.move_to!(x,y)
+            #check to see if check is still true, waiting for check method
+            false #return false if check becomes false
+          end
         end
       end
     end
