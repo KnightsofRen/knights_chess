@@ -12,7 +12,8 @@ class GamesController < ApplicationController
   end
 
   def create
-    params[:game][:status] = 'safe'
+    #params[:game][:status] = 'safe'
+    #params[:game][:turn] = 'white'
     if params[:color].to_i == 1
       params[:game][:player_white_id] = current_user.id
       @game = Game.create(game_params)
@@ -61,6 +62,6 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:name, :player_black_id, :player_white_id, :status, :user_id)
+    params.require(:game).permit(:name, :player_black_id, :player_white_id, :status, :user_id, :turn)
   end
 end

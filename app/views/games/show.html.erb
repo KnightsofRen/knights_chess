@@ -6,7 +6,7 @@
   <a name="chess-game"><p class="invisible-text">!</p></a>
   <br class="clr" />
 
-  <div class="test col-xs-10 col-xs-offset-1">
+  <div class="game-interface col-xs-10 col-xs-offset-1">
 
     <div class="col-xs-8">
       <div class="game-background">
@@ -17,11 +17,19 @@
             <% (0..7).each do |x| %>
               <% if (x.even? && y.odd?) || (x.odd? && y.even?) %>
                 <div class="black-tile">
-                  <%= link_to "#{render_piece(current_game, x,(y-7).abs)}", game_piece_path(game_id: current_game.id, id: "#{piece_id(x,(y-7).abs)}") %>
+                  <% if piece_color(x, (y-7).abs) == current_game.turn %>
+                    <%= link_to "#{render_piece(current_game, x,(y-7).abs)}", game_piece_path(game_id: current_game.id, id: "#{piece_id(x,(y-7).abs)}") %>
+                  <% else %>
+                    <%= render_piece(current_game, x,(y-7).abs) %>
+                  <% end %>
                 </div>
               <% else %>
                 <div class="white-tile">
-                  <%= link_to "#{render_piece(current_game, x,(y-7).abs)}", game_piece_path(game_id: current_game.id, id: "#{piece_id(x,(y-7).abs)}") %>
+                  <% if piece_color(x, (y-7).abs) == current_game.turn %>
+                    <%= link_to "#{render_piece(current_game, x,(y-7).abs)}", game_piece_path(game_id: current_game.id, id: "#{piece_id(x,(y-7).abs)}") %>
+                  <% else %>
+                    <%= render_piece(current_game, x,(y-7).abs) %>
+                  <% end %>
                 </div>
               <% end %>
             <% end %>
@@ -33,7 +41,6 @@
 
     <div class="col-xs-4">
       <br class="clr" />
-      <%-# <%= link_to 'Forfeit', forfeit_game_path, method: :put %>
       <div class="panel panel-default shadow">
         <div class="panel-heading">
           <h3 class="panel-title text-center"><%= current_game.name %></h3>
@@ -41,7 +48,9 @@
         <div class="panel-body">
           <div>
             <div class="col-xs-4 text-center">
-              <%= image_tag player('white').gravatar_url if player('white').present? %>
+              <div class="<%= gravatar_class('white') %>">   
+                <%= image_tag player('white').gravatar_url if player('white').present? %>
+              </div>
               <h5 class="invisible-text"><%= "?" if player('white').nil? %></h5>
               <h5><%= player('white').username if player('white').present? %></h5>
               <hr class="hr-style">
@@ -51,11 +60,20 @@
               <h1>vs.</h1>
             </div>
             <div class="col-xs-4 text-center">
-              <%= image_tag player('black').gravatar_url if player('black').present? %>
+              <div class="<%= gravatar_class('black') %>">            
+                <%= image_tag player('black').gravatar_url if player('black').present? %>
+              </div>
               <h5 class="invisible-text"><%= "?" if player('black').nil? %></h5>
               <h5><%= player('black').username if player('black').present? %></h5>
               <hr class="hr-style">
               <small>black</small>
+            </div>
+            <br class="clr" /><br/>
+            <div>
+              <%= current_game.turn %>
+              <br/><br/>
+              <%= link_to 'Forfeit', '#chess-game', class: "btn btn-danger", data:  {confirm: "Are you sure you want to forfeit?"} %>
+              <%-#<%= link_to 'Forfeit', forfeit_game_path, method: :put, class: "btn btn-danger" %>
             </div>
           <div>
         </div>
