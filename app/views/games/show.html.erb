@@ -42,7 +42,10 @@
               </div>
             </div>
           <% else %>
-            <div class="white-tile tile" data-x-coordinate="<% x %>" data-y-coordinate="<% y %>">
+            <div class="white-tile tile" data-x-coordinate="<% x %>" data-y-coordinate="<% y %>"> <!-- did I assign x and y properly? someone in the general chat seemed to think not, but I don't see the issue -->
+            
+              <!-- I'm not sure that the update url is correct here. I got it to stop giving me errors so at least the game and piece id are not nil. Also not sure about the current-piece, not sure why it has the (y-7).abs when it gets rendered -->
+              
               <div class="piece" <% if (piece_id(x,y) != nil) %> data-update-url="<% game_piece_path(current_game, piece_id(x,y)) %>" <% end %> data-current-piece="<% current_game.pieces.find_by(x_coordinate: x, y_coordinate: y) %>">
                 <%= render_piece(current_game, x,(y-7).abs) %>
               </div>
@@ -69,12 +72,13 @@
    
     var current_piece = ui.draggable.data('current-piece');
     
+    // I honestly know almost nothing about ajax calls so this could be wrong as well
     function updatePieceLocation() {
       $.ajax({
         type: 'PATCH',
         url: ui.draggable.data('update-url'),
-        dataType: 'json',
-        data: {current_piece: {x_coordinate: ui.droppable.data(x-coordinate), y_coordinate: ui.droppable.data(y-coordinate)}}
+        dataType: 'json', 
+        data: {current_piece: {x_coordinate: ui.droppable.data(x-coordinate), y_coordinate: ui.droppable.data(y-coordinate)}} // did I grab the x and y properly?
       }).done(function( data ) {
         // will have to eventually remove any captured pieces here
       });
