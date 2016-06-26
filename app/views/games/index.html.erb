@@ -8,13 +8,16 @@
 
 <h2>Available Games</h2>
 <% @games.available.each do |game| %>
-    <%= game.name %>
-    <% if user_signed_in? %>
+    
+      <%= game.name %>
       <%= simple_form_for game, :url => game_path(game), :method => :put do |f| %>
-          <%= f.hidden_field :player_black_id, value: current_user.id %>
-          <%= f.submit 'Join Game' %>
+        <% game.player_white_id.present? ? color = 'black' : color = 'white' %>
+        
+          <%= f.hidden_field "player_#{color}_id".to_sym, value: current_user.id if user_signed_in? %>
+          <%= f.submit "Join Game (as #{color})", class: "btn btn-primary" %>
+ 
       <% end %>
-    <% end %>
+    
 <% end %>
 <hr />
 

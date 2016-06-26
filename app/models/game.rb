@@ -2,6 +2,7 @@ class Game < ActiveRecord::Base
   scope :available, -> { where('player_white_id IS NULL OR player_black_id IS NULL') }
   enum status: [:safe, :check, :checkmate, :forfeit]
 
+  belongs_to :user
   has_many :pieces
 
   after_create :populate_board!

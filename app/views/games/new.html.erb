@@ -5,6 +5,7 @@
     <%= label_tag 'Play as...' %>
     <br/>
     <%= select_tag :color, options_for_select([['white', 1], ['black', 2]]) %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
     <br/><br/>
     <%= f.submit 'Create Game' %>
   <% end %>

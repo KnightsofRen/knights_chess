@@ -30,8 +30,17 @@ class GamesController < ApplicationController
   end
 
   def update
-    current_game.update_attributes(game_params)
-    redirect_to game_path(current_game)
+    if user_signed_in? && current_user.id != current_game.user_id
+      current_game.update_attributes(game_params)
+      flash.notice = "You have successfully joined the game!"
+      redirect_to game_path(current_game)
+    elsif user_signed_in?
+      flash.alert = "You are the host of this game!"
+      redirect_to root_path
+    else
+      flash.alert = "You must be signed in to join games!"
+      redirect_to root_path
+    end
   end
 
   def destroy
@@ -52,6 +61,6 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:name, :player_black_id, :player_white_id, :status)
+    params.require(:game).permit(:name, :player_black_id, :player_white_id, :status, :user_id)
   end
 end
