@@ -2,9 +2,13 @@
 <div>
   <%= simple_form_for @game do |f| %>
     <%= f.input :name %>
-    <%= f.hidden_field :player_white_id, value: current_user.id %>
-
+    <%= label_tag 'Play as...' %>
     <br/>
+    <%= select_tag :color, options_for_select([['white', 1], ['black', 2]]) %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= f.hidden_field :status, value: 'safe' %>
+    <%= f.hidden_field :turn, value: 'white' %>
+    <br/><br/>
     <%= f.submit 'Create Game' %>
   <% end %>
 </div>

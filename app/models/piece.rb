@@ -8,6 +8,8 @@ class Piece < ActiveRecord::Base
   def move_to!(x, y)
     destination_piece = game.pieces.find_by(x_coordinate: x, y_coordinate: y)
     destination_piece.delete if destination_piece.present?
+    next_turn = game.turn == 'white' ? 'black' : 'white'
+    game.update_attributes(turn: next_turn)
     update_attributes(x_coordinate: x, y_coordinate: y)
   end
 
