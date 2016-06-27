@@ -37,7 +37,7 @@
         <% (0..7).each do |x| %>
           <% if (x.even? && y.odd?) || (x.odd? && y.even?) %>
             <div class="black-tile tile" data-x-coordinate="<%= x %>" data-y-coordinate="<%= y %>">
-              <div class="piece" <% if (piece_id(x,y) != nil) %> data-update-url="<%= game_piece_path(current_game, piece_id(x,y)) %>" <% end %> data-current-piece="<%= render_piece(current_game, x,(y-7).abs) %>">
+              <div class="piece" <% if (piece_id(x,y) != nil) %> data-update-url="<%= game_piece_path(current_game, piece_id(x,y)) %>" data-current-piece="<%= current_game.pieces.find_by(x_coordinate: x, y_coordinate: y).id %>"  <% end %> >
                 <%= render_piece(current_game, x,(y-7).abs) %>
               </div>
             </div>
@@ -46,7 +46,7 @@
             
               <!-- I'm not sure that the update url is correct here. I got it to stop giving me errors so at least the game and piece id are not nil. Also not sure about the current-piece, not sure why it has the (y-7).abs when it gets rendered -->
               
-              <div class="piece" <% if (piece_id(x,y) != nil) %> data-update-url="<%= game_piece_path(current_game, piece_id(x,y)) %>" <% end %> data-current-piece="<%= current_game.pieces.find_by(x_coordinate: x, y_coordinate: y) %>">
+              <div class="piece" <% if (piece_id(x,y) != nil) %> data-update-url="<%= game_piece_path(current_game, piece_id(x,y)) %>" data-current-piece="<%= current_game.pieces.find_by(x_coordinate: x, y_coordinate: y).id %>" <% end %> >
                 <%= render_piece(current_game, x,(y-7).abs) %>
               </div>
             </div>
