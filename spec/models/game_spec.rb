@@ -61,6 +61,7 @@ RSpec.describe Game, type: :model do
   describe 'in_check?' do
     it 'returns true if game in_check?' do
       game = FactoryGirl.create(:game)
+      game.pieces.delete_all # <-- still returns the same test error
       FactoryGirl.create(:rook, x_coordinate: 4, y_coordinate: 4, color: 1, game_id: game.id)
       FactoryGirl.create(:king, x_coordinate: 4, y_coordinate: 0, game_id: game.id)
 
@@ -69,6 +70,7 @@ RSpec.describe Game, type: :model do
 
     it 'returns false if game NOT in_check?' do
       game = FactoryGirl.create(:game)
+      game.pieces.delete_all
       FactoryGirl.create(:rook, x_coordinate: 4, y_coordinate: 4, color: 1, game_id: game.id)
       FactoryGirl.create(:pawn, x_coordinate: 4, y_coordinate: 1, color: 0, game_id: game.id)
       FactoryGirl.create(:king, x_coordinate: 4, y_coordinate: 0, game_id: game.id)
