@@ -12,10 +12,10 @@ RSpec.describe Rook, type: :model do
       test = 0
       (-1..8).each do |y|
         (-1..8).each do |x|
-          test += 1 if rook.valid_move?(x, y) == true # => 10
+          test += 1 if rook.valid_move?(x, y) == true # => 8
         end
       end
-      expect(test).to eq(10)
+      expect(test).to eq(8)
       expect(rook.valid_move?(4, 4)).to eq false    # destination same as current position
       expect(rook.valid_move?(-3, 4)).to eq false   # off board
       expect(rook.valid_move?(6, 6)).to eq false    # diagonal

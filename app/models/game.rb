@@ -1,6 +1,6 @@
 class Game < ActiveRecord::Base
   scope :available, -> { where('player_white_id IS NULL OR player_black_id IS NULL') }
-  enum status: [:safe, :check, :checkmate]
+  enum status: [:safe, :check, :checkmate, :forfeit]
 
   has_many :pieces
   belongs to :user
@@ -20,12 +20,11 @@ class Game < ActiveRecord::Base
     create_pawn_pieces(1)
   end
 
-  def forfeit
-    @game = Game.find(params[:id])
-      return if active?
-      @game.forfeit(:user_id => current_user.id)
-      if user_id != current_user.id
-      user_id.update_attributes(:user_id => winning_player.id)
+  def forfeit(current_player_id)
+    if current_player_id == player_white_id
+      update_attributes(winning_player_id: player_black_id, status: 'forfeit')
+    else
+      update_attributes(winning_player_id: player_white_id, status: 'forfeit')    
   end
 end
  
@@ -40,11 +39,6 @@ end
 
   private
 
-  helper_method: current_game
-
-  def current_game
-    @current_game ||= Game.find(params[:game_id]) 
-  end
 
   def create_non_pawn_pieces(color)
     non_pawn_pieces = [

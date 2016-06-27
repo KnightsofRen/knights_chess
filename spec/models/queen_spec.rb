@@ -1,46 +1,29 @@
 require 'rails_helper'
 
 RSpec.describe Queen, type: :model do
-  describe 'valid_move' do
-    it 'should return false if no position on board' do
-      current_queen = FactoryGirl.create(:queen)
-      expect(current_queen.position_on_board?(3, 8)).to eq(false)
-    end
-
-    it 'should return true for valid VERTICAL move' do
-      current_queen = FactoryGirl.create(:queen)
-      expect(current_queen.valid_move?(3, 5)).to eq(true)
-    end
-
-    it 'should return true for valid HORIZONTAL move' do
-      current_queen = FactoryGirl.create(:queen)
-      expect(current_queen.valid_move?(7, 0)).to eq(true)
-    end
-
-    it 'should return true for valid DIAGONAL move' do
-      current_queen = FactoryGirl.create(:queen)
-      expect(current_queen.valid_move?(2, 1)).to eq(true)
-    end
-
-    it 'should return true if DIAGONALLY obstructed' do
+  describe 'valid_move?' do
+    it 'should return true if valid, false if invalid' do
       game = FactoryGirl.create(:game)
-      current_queen = FactoryGirl.create(:queen, game_id: game.id)
-      FactoryGirl.create(:piece, x_coordinate: 1, y_coordinate: 2, game_id: game.id)
-      expect(current_queen.obstructed?(0, 3)).to eq(true)
-    end
-
-    it 'should return true if HORIZONTALLY obstructed' do
-      game = FactoryGirl.create(:game)
-      current_queen = FactoryGirl.create(:queen, game_id: game.id)
-      FactoryGirl.create(:piece, x_coordinate: 5, y_coordinate: 0, game_id: game.id)
-      expect(current_queen.obstructed?(7, 0)).to eq(true)
-    end
-
-    it 'should return true if VERTICALLY obstructed' do
-      game = FactoryGirl.create(:game)
-      current_queen = FactoryGirl.create(:queen, game_id: game.id)
-      FactoryGirl.create(:piece, x_coordinate: 3, y_coordinate: 4, game_id: game.id)
-      expect(current_queen.obstructed?(3, 6)).to eq(true)
+      game.pieces.delete_all
+      # queen is at (4, 4), other pieces at (1, 4), (4, 5), (2,2)
+      queen = FactoryGirl.create(:queen, game_id: game.id)
+      FactoryGirl.create(:piece, x_coordinate: 1, y_coordinate: 4, game_id: game.id)
+      FactoryGirl.create(:piece, x_coordinate: 4, y_coordinate: 5, game_id: game.id)
+      FactoryGirl.create(:piece, x_coordinate: 2, y_coordinate: 2, game_id: game.id)
+      test = 0
+      (-1..8).each do |y|
+        (-1..8).each do |x|
+          test += 1 if queen.valid_move?(x, y) == true # => 19
+        end
+      end
+      expect(test).to eq(19)
+      expect(queen.valid_move?(4, 4)).to eq false     # destination same as current position
+      expect(queen.valid_move?(8, 4)).to eq false     # off board
+      expect(queen.valid_move?(5, 2)).to eq false     # not hvd
+      expect(queen.valid_move?(0, 4)).to eq false     # obstructed (horizontal)
+      expect(queen.valid_move?(4, 7)).to eq false     # obstructed (vertical)
+      expect(queen.valid_move?(0, 1)).to eq false     # obstructed (diagonal)
+      expect(queen.valid_move?(6, 2)).to eq true      # valid
     end
   end
 end
