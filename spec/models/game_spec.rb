@@ -101,14 +101,4 @@ RSpec.describe Game, type: :model do
       expect(game.in_check?('black')).to eq(true)
     end
   end
-
-  describe 'opp_color' do
-    it 'returns white if black and vice versa' do
-      game = FactoryGirl.create(:game)
-      FactoryGirl.create(:king, x_coordinate: 4, y_coordinate: 0, game_id: game.id)
-
-      expect(game.opp_color('white')).to eq('black')
-      expect(game.opp_color('black')).to eq('white')
-    end
-  end
 end
