@@ -59,16 +59,19 @@ RSpec.describe Game, type: :model do
   end
 
   describe 'in_check?' do
-    it 'returns true if game in_check?' do
+    it 'game in_check? TRUE for WHITE king' do
       game = FactoryGirl.create(:game)
-      game.pieces.delete_all # <-- still returns the same test error
+      game.pieces.delete_all
       FactoryGirl.create(:rook, x_coordinate: 4, y_coordinate: 4, color: 1, game_id: game.id)
+      FactoryGirl.create(:bishop, x_coordinate: 0, y_coordinate: 4, color: 1, game_id: game.id)
       FactoryGirl.create(:king, x_coordinate: 4, y_coordinate: 0, game_id: game.id)
+
+      game.reload
 
       expect(game.in_check?('white')).to eq(true)
     end
 
-    it 'returns false if game NOT in_check?' do
+    it 'game NOT in_check? FALSE for WHITE king' do
       game = FactoryGirl.create(:game)
       game.pieces.delete_all
       FactoryGirl.create(:rook, x_coordinate: 4, y_coordinate: 4, color: 1, game_id: game.id)
@@ -76,6 +79,26 @@ RSpec.describe Game, type: :model do
       FactoryGirl.create(:king, x_coordinate: 4, y_coordinate: 0, game_id: game.id)
 
       expect(game.in_check?('white')).to eq(false)
+    end
+
+    it 'game in_check? FALSE for BLACK king' do
+      game = FactoryGirl.create(:game)
+      game.pieces.delete_all
+      FactoryGirl.create(:rook, x_coordinate: 7, y_coordinate: 0, color: 0, game_id: game.id)
+      FactoryGirl.create(:king, x_coordinate: 4, y_coordinate: 7, game_id: game.id)
+
+      expect(game.in_check?('black')).to eq(false)
+    end
+
+    it 'game in_check? TRUE for BLACK king' do
+      game = FactoryGirl.create(:game)
+      game.pieces.delete_all
+      FactoryGirl.create(:rook, x_coordinate: 4, y_coordinate: 0, color: 0, game_id: game.id)
+      FactoryGirl.create(:king, x_coordinate: 4, y_coordinate: 7, game_id: game.id)
+
+      game.reload
+
+      expect(game.in_check?('black')).to eq(true)
     end
   end
 
