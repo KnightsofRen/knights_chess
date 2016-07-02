@@ -22,18 +22,18 @@ class GamesController < ApplicationController
   end
 
   def show
-    return render text: 'Game Not Found!', status: :not_found if current_game.blank?
+    return render_not_found if current_game.blank?
   end
 
   def edit
-    return render text: 'Game Not Found!', status: :not_found if current_game.blank?
-    return render text: 'Forbidden!', status: :forbidden if current_user.id != current_game.user_id
+    return render_not_found if current_game.blank?
+    return render_not_found(:forbidden) if current_user.id != current_game.user_id
   end
 
   # to join game as another user, or update game name if user created game
   # rubocop:disable Metrics/AbcSize
   def update
-    return render text: 'Game Not Found!', status: :not_found if current_game.blank?
+    return render_not_found if current_game.blank?
     if current_user.id != current_game.user_id && game_is_open
       current_game.update_attributes(game_params)
       flash.notice = 'You have successfully joined the game!'
@@ -48,14 +48,15 @@ class GamesController < ApplicationController
         redirect_to root_path
       end
     else
-      return render text: 'Forbidden!', status: :forbidden
+      return render_not_found(:forbidden)
     end
   end
   # rubocop:enable Metrics/AbcSize
 
   def destroy
-    return render text: 'Game Not Found!', status: :not_found if current_game.blank?
-    return render text: 'Forbidden!', status: :forbidden if current_user.id != current_game.user_id
+    return render_not_found if current_game.blank?
+    return render_not_found(:forbidden) if current_user.id != current_game.user_id
+    return render_not_found(:forbidden) unless game_is_open
     current_game.destroy
     redirect_to root_path
   end

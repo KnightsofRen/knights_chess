@@ -11,4 +11,8 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:username, :email, :password, :password_confirmation, :remember_me) }
     devise_parameter_sanitizer.permit(:sign_in) { |u| u.permit(:username, :email, :password, :remember_me) }
   end
+
+  def render_not_found(status = :not_found)
+    render text: "#{status.to_s.titleize}!", status: status
+  end
 end

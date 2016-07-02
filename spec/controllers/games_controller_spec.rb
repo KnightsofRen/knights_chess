@@ -154,5 +154,15 @@ RSpec.describe GamesController, type: :controller do
       expect(response).to redirect_to root_path
       expect(Game.find_by_id(test_game.id)).to eq nil
     end
+
+    it 'should not allow the user who created the game to destroy game once another user has joined' do
+      sign_in user2
+      put :update, id: test_game.id, game: { player_black_id: user2.id }
+      sign_out user2
+      sign_in user
+      delete :destroy, id: test_game.id
+      expect(response).to have_http_status(:forbidden)
+      expect(Game.find_by_id(test_game.id)).to be_present
+    end
   end
 end
