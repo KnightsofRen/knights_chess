@@ -137,6 +137,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (3.4.0)
+      byebug (~> 9.0)
+      pry (~> 0.10)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
     pusher-client (0.6.2)
@@ -257,7 +260,6 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-sass (~> 3.3.5.1)
-  byebug
   capybara
   coffee-rails (~> 4.0.0)
   devise (>= 3.2.4)
@@ -268,6 +270,7 @@ DEPENDENCIES
   jquery-rails (~> 3.0)
   jquery-ui-rails
   pg
+  pry-byebug
   pry-rails
   rails (= 4.2.6)
   rails_12factor

@@ -49,7 +49,7 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.0'
   gem 'capybara'
   gem 'pry-rails'
-  gem 'byebug'
+  gem 'pry-byebug'
 end
 
 gem 'travis', '~> 1.8', '>= 1.8.2'
