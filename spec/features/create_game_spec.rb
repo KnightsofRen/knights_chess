@@ -18,15 +18,19 @@ RSpec.feature 'create a new game' do
     click_button 'Log in'
     expect(page).to have_content('Signed in successfully.')
     expect(page).to have_content('user')
+
     click_link 'New Game' # visit '/games/new'
     fill_in 'Name', with: 'Test-Game'
     select('black', from: 'color')
     click_button 'Create Game'
+
     expect(page).to have_content('Test-Game')
     expect(page).to have_content('vs.')
     expect(page).to have_css('div.gravatar-box')
     expect(page).to have_link('Forfeit')
-    # expect(Game.last.player_black_id).to eq User.last.id
+
+    expect(Game.last.player_white_id).to eq nil
     expect(Game.last.player_black_id).to eq User.last.id
+    expect(Game.last.user_id).to eq User.last.id
   end
 end
