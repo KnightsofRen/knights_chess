@@ -3,7 +3,7 @@ class Game < ActiveRecord::Base
   enum status: [:safe, :check, :checkmate, :forfeit]
 
   has_many :pieces
-  belongs to :user
+  belongs_to :user
   after_create :populate_board!
 
   def populate_board!
