@@ -16,6 +16,26 @@ class Game < ActiveRecord::Base
   #   end
   # end
 
+  def in_check?(king)
+    king = pieces.find_by(type: 'King')
+    pieces.each do |piece|
+      return true if piece.valid_move?(king.x_coordinate, king.y_coordinate)
+    end
+    false
+  end
+
+  def stalemate?(king)
+    # if king is not in check and unable to move to a safe square
+    # the King is stalemated and game is drawn
+    king = pieces.find_by(type: 'King')
+    return false if in_check?(king) # king cannot be in check
+    # binding.pry
+    pieces.each do |piece|
+      return false if piece.valid_move?(king.x_coordinate, king.y_coordinate) && !in_check?(king)
+    end
+    true # no valid moves, king not in_chcek stalemate!
+  end
+
   def board_state
     board = []
     pieces.each do |piece|
