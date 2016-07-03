@@ -2,6 +2,7 @@
 <div>
   <%= simple_form_for current_game do |f| %>
     <%= f.input :name %>
+    <%= hidden_field_tag :on_edit_page, 'yes' %>
     <br/>
     <%= f.submit 'Update' %>
   <% end %>

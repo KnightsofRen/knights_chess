@@ -54,4 +54,25 @@ RSpec.describe Piece, type: :model do
       expect(current_piece.obstructed?(3, 5)).to eq(false)
     end
   end
+
+  describe 'putting_king_in_check?' do
+    it 'returns TRUE or FALSE depending if piece is putting_king_in_check?' do
+      game = FactoryGirl.create(:game)
+      game.pieces.delete_all
+      black_king = FactoryGirl.create(:king, x_coordinate: 1, y_coordinate: 7, color: 1, game_id: game.id)
+      black_pawn = FactoryGirl.create(:pawn, x_coordinate: 2, y_coordinate: 6, color: 1, game_id: game.id)
+      black_bishop = FactoryGirl.create(:bishop, x_coordinate: 4, y_coordinate: 7, color: 1, game_id: game.id)
+      FactoryGirl.create(:pawn, x_coordinate: 0, y_coordinate: 6, color: 1, game_id: game.id)
+      FactoryGirl.create(:pawn, x_coordinate: 1, y_coordinate: 6, color: 1, game_id: game.id)
+      FactoryGirl.create(:rook, x_coordinate: 0, y_coordinate: 4, color: 1, game_id: game.id)
+      FactoryGirl.create(:bishop, x_coordinate: 5, y_coordinate: 4, color: 0, game_id: game.id)
+      FactoryGirl.create(:queen, x_coordinate: 6, y_coordinate: 2, color: 0, game_id: game.id)
+
+      game.reload
+
+      expect(black_king.putting_king_in_check?(2, 7)).to eq(true)
+      expect(black_pawn.putting_king_in_check?(2, 5)).to eq(true)
+      expect(black_bishop.putting_king_in_check?(3, 6)).to eq(false)
+    end
+  end
 end

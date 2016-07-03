@@ -1,4 +1,11 @@
 FactoryGirl.define do
+  factory :user do
+    sequence(:email) { |n| "user#{n}@gmail.com" }
+    sequence(:username) { |n| "user#{n}" }
+    password 'password'
+    password_confirmation 'password'
+  end
+
   factory :game do
     status 'safe'
   end
@@ -8,6 +15,7 @@ FactoryGirl.define do
     sequence(:username) { |n| "user#{n}" }
     password 'password'
     password_confirmation 'password'
+    turn 'white'
   end
 
   factory :piece do

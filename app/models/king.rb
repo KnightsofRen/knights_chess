@@ -9,7 +9,6 @@ class King < Piece
     return false unless position_on_board?(x, y)
     return false if same_color_piece_present_at_target_destination?(x, y)
     return false if move_too_far?(x, y)
-    return false if move_into_position_under_attack?(x, y)
     true
   end
 
@@ -26,12 +25,6 @@ class King < Piece
   def move_too_far?(x, y)
     return true if (x_coordinate - x).abs > 1
     return true if (y_coordinate - y).abs > 1
-    false
-  end
-
-  def move_into_position_under_attack?(_x, _y)
-    # return true if ?--> thinking this would be depending on piece and path
-    # example bishop or queen have more range in comparison to the rest of the pieces
     false
   end
 end

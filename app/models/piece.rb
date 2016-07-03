@@ -8,6 +8,8 @@ class Piece < ActiveRecord::Base
   def move_to!(x, y)
     destination_piece = game.pieces.find_by(x_coordinate: x, y_coordinate: y)
     destination_piece.delete if destination_piece.present?
+    next_turn = game.turn == 'white' ? 'black' : 'white'
+    game.update_attributes(turn: next_turn)
     update_attributes(x_coordinate: x, y_coordinate: y)
   end
 
@@ -27,6 +29,24 @@ class Piece < ActiveRecord::Base
              horizontal_and_vertical_path(x_coordinate, y_coordinate, x, y)
            end
     compare_to_board_state(path)
+  end
+
+  def putting_king_in_check?(x, y)
+    # org coordinates to retract to if necessary
+    current_x_pos = x_coordinate
+    current_y_pos = y_coordinate
+
+    # temp piece coordinates updated with destination coordinates to check if move would cause chck
+    update_attributes x_coordinate: x, y_coordinate: y
+
+    king = game.pieces.find_by(type: 'King')
+    game.pieces.each do |piece|
+      return true if piece.valid_move?(king.x_coordinate, king.y_coordinate)
+    end
+
+    update_attributes x_coordinate: current_x_pos, y_coordinate: current_y_pos
+    # if king would not 'put in check', piece coordinates revert for move
+    false
   end
 
   private

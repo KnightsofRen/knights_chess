@@ -1,10 +1,53 @@
 class Game < ActiveRecord::Base
   scope :available, -> { where('player_white_id IS NULL OR player_black_id IS NULL') }
   enum status: [:safe, :check, :checkmate, :forfeit]
+<<<<<<< HEAD
+=======
+  enum turn: [:white, :black, :off]
+>>>>>>> 5ba98f64bd56fa0779fce58b95866bb0773c5bc3
 
+  belongs_to :user
   has_many :pieces
   belongs_to :user
   after_create :populate_board!
+
+  # def forfeit(current_player_id)
+  #   if current_player_id == player_white_id
+  #     update_attributes(winning_player_id: player_black_id, status: 'forfeit')
+  #   else
+  #     update_attributes(winning_player_id: player_white_id, status: 'forfeit')
+  #   end
+  # end
+
+  def in_check?(king)
+    king = pieces.find_by(type: 'King')
+    pieces.each do |piece|
+      return true if piece.valid_move?(king.x_coordinate, king.y_coordinate)
+    end
+    false
+  end
+
+  def stalemate?(king)
+    # if king is not in check and unable to move to a safe square
+    # the King is stalemated and game is drawn
+    king = pieces.find_by(type: 'King')
+    return false if in_check?(king) # king cannot be in check
+    # binding.pry
+    pieces.each do |piece|
+      return false if piece.valid_move?(king.x_coordinate, king.y_coordinate) && !in_check?(king)
+    end
+    true # no valid moves, king not in_chcek stalemate!
+  end
+
+  def board_state
+    board = []
+    pieces.each do |piece|
+      board << [piece.x_coordinate, piece.y_coordinate]
+    end
+    board
+  end
+
+  private
 
   def populate_board!
     # WHITE pieces (bottom)

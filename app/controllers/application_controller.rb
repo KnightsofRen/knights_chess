@@ -5,10 +5,20 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
+  def record_not_found
+    render_not_found
+  end
+
+  def render_not_found(status = :not_found)
+    render text: "#{status.to_s.titleize}!", status: status
+  end
+
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :email, :password, :password_confirmation, :remember_me) }
-    devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:username, :email, :password, :remember_me) }
+    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:username, :email, :password, :password_confirmation, :remember_me) }
+    devise_parameter_sanitizer.permit(:sign_in) { |u| u.permit(:username, :email, :password, :remember_me) }
   end
 end
