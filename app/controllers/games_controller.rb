@@ -9,7 +9,7 @@ class GamesController < ApplicationController
     current_game.forfeit(current_user.id)
     redirect_to game_path(current_game)
   end
-  
+
   def new
     @game = Game.new
   end
@@ -35,13 +35,10 @@ class GamesController < ApplicationController
     redirect_to root_path
   end
 
-
-
   def current_game
     @current_game = Game.find(params[:id])
   end
   helper_method :current_game
-
 
   private
 
