@@ -75,7 +75,7 @@
         type: 'PATCH',
         url: ui.draggable.data('update-url'),
         dataType: 'json',
-        data: {current_piece: {x_coordinate: event.target.dataset["xCoordinate"], y_coordinate: event.target.dataset["yCoordinate"]}} // did I grab the x and y properly?
+        data: {piece: {x_coordinate: event.target.dataset["xCoordinate"], y_coordinate: event.target.dataset["yCoordinate"]}} // did I grab the x and y properly?
       }).done(function( data ) {
         // will have to eventually remove any captured pieces here
       });
