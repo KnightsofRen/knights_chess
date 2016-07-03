@@ -12,10 +12,10 @@ RSpec.describe Bishop, type: :model do
       test = 0
       (-1..8).each do |y|
         (-1..8).each do |x|
-          test += 1 if bishop.valid_move?(x, y) == true # => 9
+          test += 1 if bishop.valid_move?(x, y) == true # => 7
         end
       end
-      expect(test).to eq(9)
+      expect(test).to eq(7)
       expect(bishop.valid_move?(4, 4)).to eq false    # destination same as current position
       expect(bishop.valid_move?(8, 8)).to eq false    # off board
       expect(bishop.valid_move?(7, 4)).to eq false    # horizontal

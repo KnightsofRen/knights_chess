@@ -3,6 +3,9 @@ KnightsChess::Application.routes.draw do
   root 'games#index'
   resources :games do
     resources :pieces, only: [:show, :update]
+    member do
+      put :forfeit
+    end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

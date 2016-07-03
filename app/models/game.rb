@@ -1,9 +1,9 @@
 class Game < ActiveRecord::Base
   scope :available, -> { where('player_white_id IS NULL OR player_black_id IS NULL') }
-  enum status: [:safe, :check, :checkmate]
+  enum status: [:safe, :check, :checkmate, :forfeit]
 
   has_many :pieces
-
+  belongs_to :user
   after_create :populate_board!
 
   def populate_board!
@@ -18,6 +18,14 @@ class Game < ActiveRecord::Base
     create_non_pawn_pieces(1)
     create_pawn_pieces(0)
     create_pawn_pieces(1)
+  end
+
+  def forfeit(current_player_id)
+    if current_player_id == player_white_id
+      update_attributes(winning_player_id: player_black_id, status: 'forfeit')
+    else
+      update_attributes(winning_player_id: player_white_id, status: 'forfeit')
+    end
   end
 
   def board_state

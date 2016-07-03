@@ -7,6 +7,7 @@ class King < Piece
 
   def valid_move?(x, y)
     return false unless position_on_board?(x, y)
+    return false if same_color_piece_present_at_target_destination?(x, y)
     return false if move_too_far?(x, y)
     return false if move_into_position_under_attack?(x, y)
     true

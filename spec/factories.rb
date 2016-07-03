@@ -1,5 +1,13 @@
 FactoryGirl.define do
   factory :game do
+    status 'safe'
+  end
+
+  factory :user do
+    sequence(:email) { |n| "user#{n}@gmail.com" }
+    sequence(:username) { |n| "user#{n}" }
+    password 'password'
+    password_confirmation 'password'
   end
 
   factory :piece do
@@ -16,14 +24,15 @@ FactoryGirl.define do
   end
 
   factory :queen do
-    x_coordinate 3
-    y_coordinate 0
+    x_coordinate 4
+    y_coordinate 4
     association :game
   end
 
   factory :pawn do
     x_coordinate 0
     y_coordinate 1
+    color 'white'
     association :game
   end
 
