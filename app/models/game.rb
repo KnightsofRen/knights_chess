@@ -52,10 +52,10 @@ class Game < ActiveRecord::Base
           old_x = piece.x_coordinate
           old_y = piece.y_coordinate
           piece.move_to!(x, y)
-          if in_check?() == false # check to see if check is still true
+          if in_check? == false # check to see if check is still true
             return false # return false if check becomes false
           end
-          piece.move_to!(old_x,old_y)
+          piece.move_to!(old_x, old_y)
         end
       end
     end
