@@ -1,14 +1,19 @@
-<h1>New Game</h1>
-<div>
-  <%= simple_form_for @game do |f| %>
-    <%= f.input :name %>
-    <%= label_tag 'Play as...' %>
-    <br/>
-    <%= select_tag :color, options_for_select([['white', 1], ['black', 2]]) %>
-    <%= f.hidden_field :user_id, value: current_user.id %>
-    <%= f.hidden_field :status, value: 'safe' %>
-    <%= f.hidden_field :turn, value: 'white' %>
-    <br/><br/>
-    <%= f.submit 'Create Game' %>
-  <% end %>
+<br/>
+<div class="col-md-10 col-md-offset-1">
+  <div class="form-background">
+    <h2>New Game</h2>
+    <div>
+      <%= simple_form_for @game do |f| %>
+        <%= f.input :name %>
+        <%= label_tag 'Play as...' %>
+        <br/>
+        <%= select_tag :color, options_for_select([['white', 1], ['black', 2]]), class: "form-control"  %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <%= f.hidden_field :status, value: 'safe' %>
+        <%= f.hidden_field :turn, value: 'white' %>
+        <br/><br/>
+        <%= f.submit 'Create Game', class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
 </div>
