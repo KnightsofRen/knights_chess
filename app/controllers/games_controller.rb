@@ -36,16 +36,12 @@ class GamesController < ApplicationController
   end
 
 
-#<<<<<<< HEAD
 
-#<<<<<<< HEAD
-
-#=======
   def current_game
     @current_game = Game.find(params[:id])
   end
   helper_method :current_game
-#>>>>>>> fd6eb585143134412c1b655eb9cf2c09ded708d5
+
 
   private
 
