@@ -49,9 +49,13 @@ class Game < ActiveRecord::Base
       (0..7).each do |x|
         (0..7).each do |y|
           next unless piece.valid_move? # check every possible valid move
+          old_x = piece.x_coordinate
+          old_y = piece.y_coordinate
           piece.move_to!(x, y)
-          # check to see if check is still true, waiting for check method
-          false # return false if check becomes false
+          if in_check?() == false # check to see if check is still true
+            return false # return false if check becomes false
+          end
+          piece.move_to!(old_x,old_y)
         end
       end
     end
