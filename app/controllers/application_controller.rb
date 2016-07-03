@@ -5,6 +5,16 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
+  def record_not_found
+    render_not_found
+  end
+
+  def render_not_found(status = :not_found)
+    render text: "#{status.to_s.titleize}!", status: status
+  end
+
   protected
 
   def configure_permitted_parameters
