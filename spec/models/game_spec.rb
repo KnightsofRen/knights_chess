@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
+  describe 'forfeit' do
+    it 'should declare a winner' do
+      game = FactoryGirl.create(:game, player_black_id: 1, player_white_id: 2)
+      game.forfeit(1)
+      expect(game.winning_player_id).to eq(game.player_white_id)
+      expect(game.status).to eq 'forfeit'
+    end
+  end
   describe 'populate_board!' do
     let(:game) { FactoryGirl.create(:game) }
     expected = [

@@ -3,6 +3,28 @@ body {
   background: url("sayagata.png");
 }
 
+h2 {
+  margin-top: 0px;
+  font-size: 25px;
+  color:#3f3f3f;
+}
+
+h3 a{
+  color:#f9f9f9;
+}
+
+h3 a:hover{
+  color:#f3f3f3;  
+}
+
+h4 a{
+  color:#525252;
+}
+
+h4 a:hover{
+  color:#525252;  
+}
+
 .form-background {
   background-color: #fffafa;
   width: 680px;
@@ -132,5 +154,63 @@ body {
   border: 1px solid black;
   border-radius: 20px;
   min-width: 800px;
+}
+
+.bbox {
+  -moz-box-shadow: 1px 1px 2px 0 #d0d0d0;
+  -webkit-box-shadow: 1px 1px 2px 0 #d0d0d0;
+  box-shadow: 1px 1px 2px 0 #d0d0d0;
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  border-color: #e4e4e4 #bebebd #bebebd #e4e4e4;
+  margin-top:50px;
+}
+
+.navbar {
+  box-shadow: 1px 1px 2px 0 #d0d0d0;
+  border-color: #e4e4e4 #bebebd #bebebd #e4e4e4;
+}
+
+.chess_bg {
+  background: url('chess_bg.png')no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height:420px;
+  box-shadow: 0px 3px 8px #2a2a2a;
+}
+
+.frosty h1{
+  font-size: 100px;
+  text-shadow: rgba(0,0,0,0.95) 1px 1px;
+  margin-top:60px;
+}
+
+.frosty h2{
+  text-decoration: underline;
+}
+
+.frosty {
+  background:rbga(0, 0, 0 , 0.5);
+  color:#e5e5e5;
+  margin-top:50px;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active{
+  color:#747474;
+  background-color:#efefef;
+  border-color: #ffffff;
+}
+
+.games-list{
+  margin-top:180px;
+}
+
+.games-list h2{
+  text-decoration:underline;
 }
 

@@ -3,9 +3,9 @@ KnightsChess::Application.routes.draw do
   root 'games#index'
   resources :games do
     resources :pieces, only: [:show, :update]
-    # member do
-    #   put :forfeit
-    # end
+    member do
+      put :forfeit
+    end
   end
   resources :players, only: [:index, :edit, :update, :show] do
     collection do

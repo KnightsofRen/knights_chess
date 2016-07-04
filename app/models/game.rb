@@ -5,16 +5,16 @@ class Game < ActiveRecord::Base
 
   belongs_to :user
   has_many :pieces
-
+  belongs_to :user
   after_create :populate_board!
 
-  # def forfeit(current_player_id)
-  #   if current_player_id == player_white_id
-  #     update_attributes(winning_player_id: player_black_id, status: 'forfeit')
-  #   else
-  #     update_attributes(winning_player_id: player_white_id, status: 'forfeit')
-  #   end
-  # end
+  def forfeit(current_player_id)
+    if current_player_id == player_white_id
+      update_attributes(winning_player_id: player_black_id, status: 'forfeit')
+    else
+      update_attributes(winning_player_id: player_white_id, status: 'forfeit')
+    end
+  end
 
   def in_check?(king)
     king = pieces.find_by(type: 'King')

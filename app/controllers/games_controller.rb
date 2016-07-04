@@ -7,6 +7,11 @@ class GamesController < ApplicationController
     @games = Game.all
   end
 
+  def forfeit
+    current_game.forfeit(current_user.id)
+    redirect_to game_path(current_game)
+  end
+
   def new
     @game = Game.new
   end
@@ -62,11 +67,6 @@ class GamesController < ApplicationController
       redirect_to root_path
     end
   end
-
-  # def forfeit
-  #   current_game.forfeit(current_user.id)
-  #   redirect_to game_path(current_game)
-  # end
 
   private
 
