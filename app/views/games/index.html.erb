@@ -1,31 +1,40 @@
+<div class="chess_bg">
 <!-- <div class="col-md-12"> -->
-  <div class="bbox text-center col-md-8 col-md-offset-2">
-    <h2>Create New Game</h2>
-      <% if user_signed_in? %>
-        <%= link_to "New Game", new_game_path %>
-      <% else %>
-        <%= link_to "New Game", new_user_session_path %>
-      <% end %>
-    <hr />
+    <div class="frosty text-center col-md-8 col-md-offset-2">
+      <h1>KNIGHTS of REN<h1>
+      <!--h2>Create New Game</h2-->
+        <% if user_signed_in? %>
+          <h3><%= link_to "Create New Chess Game", new_game_path %></h4>
+        <% else %>
+          <h3><%= link_to "Create New Chess Game", new_user_session_path %></h4>
+        <% end %>
+      <br />
+    </div>
 
-    <h2>Available Games</h2>
-    <% @games.available.each do |game| %>
-        
-          <%= game.name %>
-          <%= simple_form_for game, :url => game_path(game), :method => :put do |f| %>
-            <% game.player_white_id.present? ? color = 'black' : color = 'white' %>
+    <div class="games-list text-center col-md-8 col-md-offset-2">
+      <div class="col-sm-6">
+        <h2>Available Games</h2>
+        <% @games.available.each do |game| %>
             
-              <%= f.hidden_field "player_#{color}_id".to_sym, value: current_user.id if user_signed_in? %>
-              <%= f.submit "Join Game (as #{color})", class: "btn btn-primary" %>
-     
-          <% end %>
-        
-    <% end %>
-    <hr />
+              <h4><%= game.name %></h4>
+              <%= simple_form_for game, :url => game_path(game), :method => :put do |f| %>
+                <% game.player_white_id.present? ? color = 'black' : color = 'white' %>
+                
+                  <%= f.hidden_field "player_#{color}_id".to_sym, value: current_user.id if user_signed_in? %>
+                  <%= f.submit "Join Game (as #{color})", class: "btn btn-default btn-sm" %>
+              <% end %>    
+        <% end %>
+        <br />
+      </div>
 
-    <h2>All Games</h2>
-    <% @games.each do |game| %>
-      <p><%= link_to game.name, "#{game_path(game)}#chess-game" %></p>
-    <% end %>
-  </div>
-<!-- </div> -->
+      <div class="col-sm-6">
+        <h2>All Games</h2>
+        <% @games.each do |game| %>
+          <h4><%= link_to game.name, "#{game_path(game)}#chess-game" %></h4>
+        <% end %>
+      </div>
+
+    </div>
+    
+  <!-- </div> -->
+</div>

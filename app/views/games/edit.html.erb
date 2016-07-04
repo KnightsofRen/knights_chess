@@ -1,9 +1,13 @@
-<h1>Edit Game</h1>
-<div>
-  <%= simple_form_for current_game do |f| %>
-    <%= f.input :name %>
-    <%= hidden_field_tag :on_edit_page, 'yes' %>
-    <br/>
-    <%= f.submit 'Update' %>
-  <% end %>
+<div class="col-md-8 col-md-offset-2">
+  <div class="bbox text-center form-background">
+    <h1>Edit Game</h1>
+    <div>
+      <%= simple_form_for current_game do |f| %>
+        <%= f.input :name %>
+        <%= hidden_field_tag :on_edit_page, 'yes' %>
+        <br/>
+        <%= f.submit 'Update' %>
+      <% end %>
+    </div>
+  </div>
 </div>
