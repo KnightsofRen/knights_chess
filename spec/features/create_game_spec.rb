@@ -19,7 +19,7 @@ RSpec.feature 'create a new game' do
     expect(page).to have_content('Signed in successfully.')
     expect(page).to have_content('user')
 
-    click_link 'New Game' # visit '/games/new'
+    click_link 'Create New Chess Game' # visit '/games/new'
     fill_in 'Name', with: 'Test-Game'
     select('black', from: 'color')
     click_button 'Create Game'

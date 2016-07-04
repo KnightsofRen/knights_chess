@@ -1,23 +1,20 @@
 class Game < ActiveRecord::Base
   scope :available, -> { where('player_white_id IS NULL OR player_black_id IS NULL') }
   enum status: [:safe, :check, :checkmate, :forfeit]
-<<<<<<< HEAD
-=======
   enum turn: [:white, :black, :off]
->>>>>>> 5ba98f64bd56fa0779fce58b95866bb0773c5bc3
 
   belongs_to :user
   has_many :pieces
   belongs_to :user
   after_create :populate_board!
 
-  # def forfeit(current_player_id)
-  #   if current_player_id == player_white_id
-  #     update_attributes(winning_player_id: player_black_id, status: 'forfeit')
-  #   else
-  #     update_attributes(winning_player_id: player_white_id, status: 'forfeit')
-  #   end
-  # end
+  def forfeit(current_player_id)
+    if current_player_id == player_white_id
+      update_attributes(winning_player_id: player_black_id, status: 'forfeit')
+    else
+      update_attributes(winning_player_id: player_white_id, status: 'forfeit')
+    end
+  end
 
   def in_check?(king)
     king = pieces.find_by(type: 'King')
@@ -62,24 +59,6 @@ class Game < ActiveRecord::Base
     create_pawn_pieces(0)
     create_pawn_pieces(1)
   end
-
-  def forfeit(current_player_id)
-    if current_player_id == player_white_id
-      update_attributes(winning_player_id: player_black_id, status: 'forfeit')
-    else
-      update_attributes(winning_player_id: player_white_id, status: 'forfeit')
-    end
-  end
-
-  def board_state
-    board = []
-    pieces.each do |piece|
-      board << [piece.x_coordinate, piece.y_coordinate]
-    end
-    board
-  end
-
-  private
 
   def create_non_pawn_pieces(color)
     non_pawn_pieces = [
