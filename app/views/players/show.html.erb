@@ -1,0 +1,154 @@
+
+<br class="clr" />
+<div class="user-dashboard col-xs-10 col-xs-offset-1">
+  <% if current_user != nil && current_user.id == @user.id %>
+    <h1>My Dashboard</h1>
+    <hr class="hr-style"/>
+  <% end %>
+  <br class="clr" />
+  <div>
+    <div class="col-xs-4 col-sm-3">
+      <%= image_tag @user.gravatar_url %>
+    </div>
+    <div class="col-xs-8 col-sm-9">
+      <h3><%= @user.username %></h3>
+      <p id="edit-nickname">
+        <% if current_user != nil && current_user.id == @user.id %>
+          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+            Change nickname
+          </button>
+        <% end %>
+      </p>
+    </div>
+  </div>
+  <br class="clr" />
+  <hr class="hr-style"/>
+  <br class="clr" />
+
+  <% draw_win_lose = [ @user.tied_games, @user.won_games, @user.lost_games ] %>
+  <% games_played = draw_win_lose.inject(0, :+) %>
+  <% games_played_as_black = games_played - @user.games_as_white %>
+  <% win_rate = @user.won_games.to_f / games_played.to_f * 100 %>
+  <% win_rate_as_white = @user.won_games_as_white.to_f / @user.games_as_white.to_f * 100 %>
+  <% win_rate_as_black = (@user.won_games - @user.won_games_as_white).to_f / games_played_as_black.to_f * 100 %>
+  <% total_white_black = [ games_played, @user.games_as_white, games_played_as_black ] %>
+
+  <div>
+    <div class="col-xs-12 col-sm-6 col-md-4 text-center">
+      <div class="thumbnail">  
+        <%= image_tag(Gchart.bar(
+          title: 'Games Played',
+          data: total_white_black,
+          labels: ["total (#{games_played})", "white (#{@user.games_as_white})", "black (#{games_played_as_black})"],
+          bar_width_and_spacing: '75,20')) %>
+      </div>
+    </div> 
+    <div class="col-xs-12 col-sm-6 col-md-4 text-center">
+      <div class="thumbnail">
+        <%= image_tag(Gchart.pie(
+          title: 'Wins / Loses / Draws',
+          labels: ["drawn (#{@user.tied_games})", "won (#{@user.won_games})", "lost (#{@user.lost_games})"],
+          data: draw_win_lose)) %>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 text-center">
+      <div class="thumbnail text-left">
+        <div class="stats-box">
+          <% if current_user != nil && current_user.id == @user.id %>
+            <h4>My Stats</h4>
+          <% else %>
+            <h4><%= "#{@user.username}'s stats"%></h4>
+          <% end %>
+          <hr class="hr-style"/>
+          <p>Win rate: &nbsp; <b><%= "#{'%.02f' % win_rate}%"%></b></p>
+          <p>Win rate as white: &nbsp; <b><%= "#{'%.02f' % win_rate_as_white}%"%></b></p>
+          <p>Win rate as black: &nbsp; <b><%= "#{'%.02f' % win_rate_as_black}%"%></b></p>   
+          <p>Games lost via forfeit: &nbsp; <b><%= "#{@user.lost_games_via_forfeit}" %></b> of <%= "#{@user.lost_games}"%></p>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+  <% user_games_as_white = @games.where(player_white_id: @user.id) %>
+  <% user_games_as_black = @games.where(player_black_id: @user.id) %>
+  <br class="clr" />
+  <hr class="hr-style"/>
+  <% if current_user != nil && current_user.id == @user.id %>
+    <h2>My Games</h2>
+  <% else %>
+    <h2><%= "#{@user.username}'s Games"%></h2>
+  <% end %>
+  <br class="clr" />
+    
+  <div class="user-dashboard-games-table">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Opponent</th>
+          <th>Status</th>
+          <th>Winning Player</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% user_games_as_white.each do |game| %>
+          <tr>
+            <td>
+              <%= link_to "#{game.name}", game_path(game) %>
+              <% if current_user.id != nil && game.user_id == current_user.id %>
+                <%= " | " %>
+                <%= link_to 'edit', edit_game_path(game) %>
+                <% if game.status == 'open' %>
+                  <%= " | " %>
+                  <%= link_to 'delete', game_path(game), method: :delete, data: { confirm: "Are you sure you want to delete game #{game.name}?" }%> 
+                <% end %>
+              <% end %>    
+            </td>
+            <td><%= User.find(game.player_black_id).username if game.player_black_id != nil %></td>
+            <td><%= game.status %></td>
+            <td><%= game.winning_player_id %></td>
+          <tr>
+        <% end %>
+        <% user_games_as_black.each do |game| %>
+          <tr>
+            <td>
+              <%= link_to "#{game.name}", game_path(game) %>
+              <% if current_user.id != nil && game.user_id == current_user.id %>
+                <%= " | " %>
+                <%= link_to 'edit', edit_game_path(game) %>
+                <% if game.status == 'open' %>
+                  <%= " | " %>
+                  <%= link_to 'delete', game_path(game), method: :delete, data: { confirm: "Are you sure you want to delete game #{game.name}?" }%> 
+                <% end %>
+              <% end %>  
+            </td>
+            <td><%= User.find(game.player_white_id).username if game.player_white_id != nil %></td>
+            <td><%= game.status %></td>
+            <td><%= User.find(game.winning_player_id).username if game.winning_player_id != nil %></td>
+          <tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <br class="clr" />
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Change nickname</h4>
+      </div>
+      <%= simple_form_for @user, :url => change_nickname_players_path, :method => :put do |f| %>
+        <div class="modal-body">
+          <%= f.input :username, label: 'Nickname' %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%= submit_tag 'Save', class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

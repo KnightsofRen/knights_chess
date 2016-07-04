@@ -7,6 +7,12 @@ KnightsChess::Application.routes.draw do
       put :forfeit
     end
   end
+  resources :players, only: [:index, :edit, :update, :show] do
+    collection do
+      put :delete_user
+      put :change_nickname
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

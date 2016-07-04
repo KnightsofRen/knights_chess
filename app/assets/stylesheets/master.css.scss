@@ -121,6 +121,41 @@ h4 a:hover{
   margin-bottom: 0;
 }
 
+.user-dashboard {
+  background-color:  #F5EACD;
+  border: 2px solid #eeba30;
+  border-radius: 20px;
+}
+
+.user-dashboard-games-table {
+  background-color: white;
+  border-radius: 10px;
+  margin: 0 20px;
+}
+
+#edit-nickname {
+  text-align: right;
+}
+
+.stats-box {
+  padding: 0 10px;
+}
+
+.thumbnail {
+  height: 220px;
+}
+
+.thumbnail > img {
+  padding: 10px;
+}
+
+.manage-users {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 20px;
+  min-width: 800px;
+}
+
 .bbox {
   -moz-box-shadow: 1px 1px 2px 0 #d0d0d0;
   -webkit-box-shadow: 1px 1px 2px 0 #d0d0d0;

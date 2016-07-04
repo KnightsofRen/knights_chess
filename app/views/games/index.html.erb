@@ -15,17 +15,17 @@
       <div class="col-sm-6">
         <h2>Available Games</h2>
         <% @games.available.each do |game| %>
-            
-              <h4><%= game.name %></h4>
-              <%= simple_form_for game, :url => game_path(game), :method => :put do |f| %>
-                <% game.player_white_id.present? ? color = 'black' : color = 'white' %>
-                
-                  <%= f.hidden_field "player_#{color}_id".to_sym, value: current_user.id if user_signed_in? %>
-                  <%= f.submit "Join Game (as #{color})", class: "btn btn-default btn-sm" %>
-              <% end %>    
+          <h4><%= game.name %></h4>
+          <%= simple_form_for game, :url => game_path(game), :method => :put do |f| %>
+              <% game.player_white_id.present? ? color = 'black' : color = 'white' %>
+              <%= f.hidden_field "player_#{color}_id".to_sym, value: current_user.id if user_signed_in? %>
+              <%= f.hidden_field :status, value: 'active' %>
+              <%= f.submit "Join Game (as #{color})", class: "btn btn-default btn-sm" %>
+          <% end %>    
         <% end %>
         <br />
       </div>
+
 
       <div class="col-sm-6">
         <h2>All Games</h2>

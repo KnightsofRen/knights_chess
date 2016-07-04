@@ -1,0 +1,19 @@
+<br/>
+<div class="col-md-10 col-md-offset-1">
+  <div class="form-background">
+    <h1>Edit User</h1>
+    <div>
+      <%= simple_form_for @user, :url => player_path(@user), :method => :put do |f| %>
+        <%= f.input :games_as_white %>
+        <%= f.input :won_games_as_white %>
+        <%= f.input :won_games %>
+        <%= f.input :lost_games %>
+        <%= f.input :tied_games %>
+        <%= f.input :lost_games_via_forfeit %>
+        <%= f.input :admin %>
+        <br/>
+        <%= f.submit 'Update' %>
+      <% end %>
+    </div>
+  </div>
+</div>

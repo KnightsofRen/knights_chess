@@ -57,10 +57,15 @@ class GamesController < ApplicationController
   # rubocop:enable Metrics/AbcSize
 
   def destroy
-    return render_not_found(:forbidden) if current_user.id != current_game.user_id
-    return render_not_found(:forbidden) unless game_is_open
-    current_game.destroy
-    redirect_to root_path
+    if !current_user.nil? && current_user.admin?
+      current_game.destroy
+      redirect_to players_path
+    else
+      return render_not_found(:forbidden) if current_user.id != current_game.user_id
+      return render_not_found(:forbidden) unless game_is_open
+      current_game.destroy
+      redirect_to root_path
+    end
   end
 
   private

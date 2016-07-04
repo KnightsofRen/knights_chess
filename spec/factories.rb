@@ -7,7 +7,6 @@ FactoryGirl.define do
   end
 
   factory :game do
-    status 'safe'
     turn 'white'
   end
 
