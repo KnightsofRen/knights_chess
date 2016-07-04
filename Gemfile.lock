@@ -95,6 +95,7 @@ GEM
       net-http-pipeline
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    googlecharts (1.6.12)
     gravtastic (3.2.6)
     highline (1.7.8)
     hike (1.2.3)
@@ -265,6 +266,7 @@ DEPENDENCIES
   devise (>= 3.2.4)
   factory_girl_rails (~> 4.0)
   font-awesome-rails
+  googlecharts (~> 1.6, >= 1.6.12)
   gravtastic (~> 3.2, >= 3.2.6)
   jbuilder (~> 1.2)
   jquery-rails (~> 3.0)

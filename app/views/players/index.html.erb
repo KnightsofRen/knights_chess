@@ -1,0 +1,68 @@
+<br class="clr"/>
+<div class="manage-users col-xs-10 col-xs-offset-1">
+  <h1>All Users</h1>
+  <div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th> 
+          <th>Email</th>
+          <th>Edit user...</th>  
+          <th>Admin</th>
+          <th>G/w</th>  
+          <th>W/w</th>
+          <th>W</th>  
+          <th>L</th>  
+          <th>D</th>  
+          <th>L/f</th>
+          <th>Delete</th>       
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr> 
+            <td><%= link_to "#{user.id}", player_path(user) %></td>
+            <td><%= user.email %></td> 
+            <td><%= link_to "#{user.username}", edit_player_path(user) %></td>
+            <td><%= user.admin %></td>
+            <td><%= user.games_as_white %></td>
+            <td><%= user.won_games_as_white %></td>
+            <td><%= user.won_games %></td>
+            <td><%= user.lost_games %></td>
+            <td><%= user.tied_games %></td>
+            <td><%= user.lost_games_via_forfeit %></td> 
+            <td><%= render partial: 'players/form', locals: { u: user } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <br class="clr" />
+  <hr class="hr-style"/>
+  <h1>All Games</h1>
+  <div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th> 
+          <th>Name</th> 
+          <th>Status</th>
+          <th>Inspect</th>  
+          <th>Delete</th>      
+        </tr>
+      </thead>
+      <tbody>
+        <% @games.each do |game| %>
+          <tr>
+            <td><%= link_to "#{game.id}", game_path(game) %></td>
+            <td><%= game.name %></td>
+            <td><%= game.status %></td>
+            <td><%= game.inspect %></td>
+            <td><%= link_to 'x', game_path(game), method: :delete, data: { confirm: "Are you sure you want to delete game #{game.name}?" }, class: "btn btn-danger btn-sm"  %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <div>
+  </div>
+</div>

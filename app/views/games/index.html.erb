@@ -16,6 +16,7 @@
             <% game.player_white_id.present? ? color = 'black' : color = 'white' %>
             
               <%= f.hidden_field "player_#{color}_id".to_sym, value: current_user.id if user_signed_in? %>
+              <%= f.hidden_field :status, value: 'active' %>
               <%= f.submit "Join Game (as #{color})", class: "btn btn-primary" %>
      
           <% end %>

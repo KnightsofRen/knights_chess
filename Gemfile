@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'googlecharts', '~> 1.6', '>= 1.6.12'
 gem 'font-awesome-rails'
 gem 'simple_form'
 

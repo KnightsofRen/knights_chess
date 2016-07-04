@@ -3,10 +3,6 @@ body {
   background: url("sayagata.png");
 }
 
-h2 {
-  margin-top: 0px;
-}
-
 .form-background {
   background-color: #fffafa;
   width: 680px;
@@ -101,5 +97,40 @@ h2 {
 
 .alert {
   margin-bottom: 0;
+}
+
+.user-dashboard {
+  background-color:  #F5EACD;
+  border: 2px solid #eeba30;
+  border-radius: 20px;
+}
+
+.user-dashboard-games-table {
+  background-color: white;
+  border-radius: 10px;
+  margin: 0 20px;
+}
+
+#edit-nickname {
+  text-align: right;
+}
+
+.stats-box {
+  padding: 0 10px;
+}
+
+.thumbnail {
+  height: 220px;
+}
+
+.thumbnail > img {
+  padding: 10px;
+}
+
+.manage-users {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 20px;
+  min-width: 800px;
 }
 

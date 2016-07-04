@@ -1,6 +1,6 @@
 class Game < ActiveRecord::Base
   scope :available, -> { where('player_white_id IS NULL OR player_black_id IS NULL') }
-  enum status: [:safe, :check, :checkmate, :forfeit]
+  enum status: [:open, :active, :check, :checkmate, :forfeit, :draw]
   enum turn: [:white, :black, :off]
 
   belongs_to :user
