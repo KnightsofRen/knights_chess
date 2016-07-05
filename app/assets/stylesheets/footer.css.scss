@@ -1,0 +1,36 @@
+  /* Set the fixed height of the footer here */
+  
+  #footer { 
+    color:#e5e5e5;
+    background-color: rgba(36, 32, 33, 0.9);
+    font-family: "Helvetica Neue",Helvetica;
+    padding:10px 0px;
+    margin-top:50px;
+    font-weight:100px;
+  }
+
+   .social-button {
+    width:20px;
+  }
+
+  .social a:hover {
+    text-decoration:none;
+  }
+
+$footer-height-mobile: 650px;
+@media(max-width:750px) {
+  #footer{
+    height:$footer-height-mobile;
+  }
+}
+
+/* Flexbox Sticky Footer CSS */
+.Site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.Site-content {
+  flex: 1;
+}

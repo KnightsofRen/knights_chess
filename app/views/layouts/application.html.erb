@@ -18,7 +18,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <%= link_to 'Chess', root_path, class: "navbar-brand" %>
+          <%= link_to 'Knights of Ren', root_path, class: "navbar-brand" %>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -26,7 +26,7 @@
           <ul class="nav navbar-nav">
             <li>
               <a href="https://github.com/KnightsofRen/knights_chess" >
-                <small>by KnightsofRen</small>
+                <!--small>by KnightsofRen</small-->
                 <i class="fa fa-github"></i>
               </a>
             </li> 
@@ -66,6 +66,23 @@
     <% end %>
     
     <%= yield %>
+
+    <!--- FOOTER -->
+    <br class="clr" />
+
+    <div id="footer">
+      <div class="container">
+        <div class="text-center col-xs-12">
+          <br />
+          Knights of Ren
+          <%= link_to 'https://github.com/KnightsofRen/knights_chess' do %>
+            <%=image_tag 'gitpic.png', class: 'social-button' %>
+          <% end %>
+          <br /><br />
+        </div>
+      </div>
+    </div>
+
 
   </body>
 </html>

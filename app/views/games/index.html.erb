@@ -1,5 +1,6 @@
 <div class="chess_bg">
-<!-- <div class="col-md-12"> -->
+  <div class="container-fluid">
+
     <div class="frosty text-center col-md-8 col-md-offset-2">
       <h1>KNIGHTS of REN<h1>
       <!--h2>Create New Game</h2-->
@@ -14,6 +15,7 @@
     <div class="games-list text-center col-md-8 col-md-offset-2">
       <div class="col-sm-6">
         <h2>Available Games</h2>
+        <br />
         <% @games.available.each do |game| %>
           <h4><%= game.name %></h4>
           <%= simple_form_for game, :url => game_path(game), :method => :put do |f| %>
@@ -29,12 +31,128 @@
 
       <div class="col-sm-6">
         <h2>All Games</h2>
+        <br />
         <% @games.each do |game| %>
           <h4><%= link_to game.name, "#{game_path(game)}#chess-game" %></h4>
         <% end %>
       </div>
+    </div>
+
+    <div class="game-info-section col-md-12">
+      <div class="game-info col-md-8 col-md-offset-2">
+        <br /><br /><br />
+        <h2>Backstory</h2>
+        <br />
+        <p>***INFO GOES HERE***</p>
+        <br /><br /><br />
+
+        <div class="row">
+          <div class="tools col-sm-4">
+            <%= link_to 'https://slack.com/' do %>
+              <%=image_tag 'github.png'%>
+            <% end %>
+          </div>
+
+          <div class="tools col-sm-4">
+            <%= link_to 'https://trello.com/' do %>
+              <%=image_tag 'trello.png'%>
+            <% end %>
+          </div>
+
+           <div class="tools col-sm-4">
+            <%= link_to 'https://github.com/' do %>
+              <%=image_tag 'slack.png'%>
+            <% end %>
+          </div>
+        </div>
+        
+        <br /><br />
+
+          <div class="row">
+           <div class="tools col-sm-4 col-sm-push-4">
+            <%= link_to 'http://batsov.com/rubocop/' do %>
+              <%=image_tag 'rubocop2.png'%>
+            <% end %>
+          </div>
+        </div>
+
+         <br /><br />
+        
+        <div class="row">
+          <div class="tools col-sm-4">
+            <%= link_to 'http://rspec.info/' do %>
+              <%=image_tag 'rspec.png'%>
+            <% end %>
+          </div>
+
+          <div class="tools col-sm-4">
+            <%= link_to 'http://pryrepl.org/' do %>
+              <%=image_tag 'pry.png'%>
+            <% end %>
+          </div>
+
+          <div class="tools col-sm-4">
+            <%= link_to 'https://travis-ci.org/' do %>
+              <%=image_tag 'travis.png'%>
+            <% end %>
+          </div>
+        </div>
+
+        <br /><br /><br/>
+
+      </div>
+    </div>
+
+    <div class="team-info text-center col-md-8 col-md-offset-2">
+      <br /><br /><br />
+      <h2>Behind the Scenes</h2>
+      <br />
+        <div class="row">
+          <div class="team-member col-sm-4">
+            <%= link_to 'https://github.com/ats89' do %>
+              <%=image_tag 'anthony.png'%>
+            <% end %>
+            <p>Anthony Sin</p>
+          </div>
+
+          <div class="team-lead col-sm-4">
+            <p>Team Lead</p>
+            <%= link_to 'https://github.com/mscoutermarsh' do %>
+              <%=image_tag 'mike.jpg'%>
+            <% end %>
+            <p>Mike Coutermarsh</p>
+          </div>
+      
+
+          <div class="team-member col-sm-4">
+            <%= link_to 'https://github.com/Skjamal' do %>
+              <%=image_tag 'satinder.jpg'%>
+            <% end %>
+            <p>Satinder Jamal</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="team-member col-sm-6">
+            <%= link_to 'https://github.com/doyouthunderstand' do %>
+              <%=image_tag 'who.png'%>
+            <% end %>
+            <p>Brandon Gorman</p>
+          </div>
+
+          <div class="team-member col-sm-6">
+            <%= link_to 'https://github.com/rebelcl0ud' do %>
+              <%=image_tag 'who.png'%>
+            <% end %>
+            <p>Jovanka Placeres</p>
+          </div>
+        </div>
 
     </div>
-    
-  <!-- </div> -->
+
+  </div>
 </div>
+
+    
+  
+
