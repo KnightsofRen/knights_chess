@@ -25,12 +25,12 @@ $footer-height-mobile: 650px;
 }
 
 /* Flexbox Sticky Footer CSS */
-.Site {
+.site {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
 }
 
-.Site-content {
+.site-content {
   flex: 1;
 }
