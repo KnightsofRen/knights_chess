@@ -17,13 +17,12 @@ module PiecesHelper
     valid_moves_array = []
     if piece.present? && piece.color == Game.find(game_id).turn
       valid_moves_array = [[piece.x_coordinate, piece.y_coordinate]]
-        (0..7).each do |y_target|
-            (0..7).each do |x_target|
-              valid_moves_array << [x_target, y_target] if piece.valid_move?(x_target, y_target) 
-            end
+      (0..7).each do |y_target|
+        (0..7).each do |x_target|
+          valid_moves_array << [x_target, y_target] if piece.valid_move?(x_target, y_target)
         end
+      end
       valid_moves_array
     end
   end
-
 end
