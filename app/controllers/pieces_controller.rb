@@ -5,18 +5,31 @@ class PiecesController < ApplicationController
   before_action :authenticate_user!, only: [:update]
 
   def show
-    @game = Game.find(params[:game_id])
-    @piece = @game.pieces.find(params[:id]) if @game.present?
-    return render_not_found if @game.blank? || @piece.blank?
+    render text: "#{valid_moves_array(params[:game_id], params[:id])}"
   end
 
   def update
     @game = Game.find(params[:game_id])
     @piece = @game.pieces.find(params[:id]) if @game.present?
+
+    x = params[:x_pos].to_i 
+    y = params[:y_pos].to_i 
+
+    # check if current user is a player of game
     return render_not_found(:forbidden) if current_user.id != @game.player_white_id && current_user.id != @game.player_black_id
-    return render_not_found(:forbidden) unless @piece.color == player_color
-    @piece.move_to!(params[:x_pos], params[:y_pos])
-    redirect_to game_path(@game)
+    
+    # check if current user is correct color 
+    # !! currently disabled !!  
+    # return render_not_found(:forbidden) unless @piece.color == player_color
+
+    # check turn logic
+    return render_not_found(:forbidden) unless @game.turn == @piece.color
+
+    # check valid moves
+    return render_not_found(:forbidden) unless @piece.valid_move?(x, y)
+
+    @piece.move_to!(x, y) 
+    render text: "updated!"
   end
 
   private
@@ -24,4 +37,5 @@ class PiecesController < ApplicationController
   def player_color
     current_user.id == @game.player_white_id ? 'white' : 'black'
   end
+
 end

@@ -42,16 +42,27 @@ module GamesHelper
   end
 
   def piece_id(x, y)
-    piece = current_game.pieces.find_by(x_coordinate: x, y_coordinate: y)
+    piece = find_piece_by_coordinates(x, y)
     return piece.id if piece.present?
   end
 
   def piece_color(x, y)
-    piece = current_game.pieces.find_by(x_coordinate: x, y_coordinate: y)
+    piece = find_piece_by_coordinates(x, y)
     return piece.color if piece.present?
   end
 
   def gravatar_class(color)
     color == current_game.turn ? 'gravatar-box highlight-turn' : 'gravatar-box'
+  end
+
+  # return pieces#show url for a specific piece
+  def update_url(x, y)
+    game_piece_path(current_game, piece_id(x,y)) if piece_id(x,y).present? 
+  end
+
+  private
+  
+  def find_piece_by_coordinates(x, y)
+    current_game.pieces.find_by(x_coordinate: x, y_coordinate: y)
   end
 end
