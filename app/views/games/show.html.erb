@@ -8,32 +8,32 @@
       <div class="game-background">
         <br class="clr" />
 
-        <div class="chessboard">
+        <div class="chessboard board">
           <% (0..7).each do |y| %>
             <% (0..7).each do |x| %>
               <% if (x.even? && y.odd?) || (x.odd? && y.even?) %>
-                <div class="black-tile">
-                  <% if piece_color(x, (y-7).abs) == current_game.turn %>
-                    <%= link_to "#{render_piece(current_game, x,(y-7).abs)}", game_piece_path(game_id: current_game.id, id: "#{piece_id(x,(y-7).abs)}") %>
-                  <% else %>
-                    <%= render_piece(current_game, x,(y-7).abs) %>
-                  <% end %>
+
+                <div class="black-tile tile" data-coordinates="<%= "#{x},#{(y-7).abs}" %>">
+                  <div class="piece" data-update-url="<%= update_url(x,(y-7).abs) %>">
+                      <%= render_piece(current_game, x,(y-7).abs) %>
+                  </div>
                 </div>
+
               <% else %>
-                <div class="white-tile">
-                  <% if piece_color(x, (y-7).abs) == current_game.turn %>
-                    <%= link_to "#{render_piece(current_game, x,(y-7).abs)}", game_piece_path(game_id: current_game.id, id: "#{piece_id(x,(y-7).abs)}") %>
-                  <% else %>
+
+                <div class="white-tile tile" data-coordinates="<%= "#{x},#{(y-7).abs}" %>"> 
+                  <div class="piece" data-update-url="<%= update_url(x,(y-7).abs) %>">
                     <%= render_piece(current_game, x,(y-7).abs) %>
-                  <% end %>
+                  </div>
                 </div>
               <% end %>
             <% end %>
           <% end %>
           <br class="clr" />
-         </div>
+        </div> <!-- chessboard -->
       </div>
     </div>
+
 
     <div class="col-xs-4">
       <br class="clr" />
@@ -44,7 +44,7 @@
         <div class="panel-body">
           <div>
             <div class="col-xs-4 text-center">
-              <div class="<%= gravatar_class('white') %>">   
+              <div id="portrait1" class="<%= gravatar_class('white') %>">   
                 <%= image_tag player('white').gravatar_url if player('white').present? %>
               </div>
               <h5 class="invisible-text"><%= "?" if player('white').nil? %></h5>
@@ -56,7 +56,7 @@
               <h1>vs.</h1>
             </div>
             <div class="col-xs-4 text-center">
-              <div class="<%= gravatar_class('black') %>">            
+              <div id="portrait2" class="<%= gravatar_class('black') %>">            
                 <%= image_tag player('black').gravatar_url if player('black').present? %>
               </div>
               <h5 class="invisible-text"><%= "?" if player('black').nil? %></h5>
@@ -66,19 +66,117 @@
             </div>
             <br class="clr" /><br/>
             <div>
-              <%= current_game.turn %>
-              <br/><br/>
-              <%= link_to 'Forfeit', '#chess-game', class: "btn btn-danger", data:  {confirm: "Are you sure you want to forfeit?"} %>
-              <%-#<%= link_to 'Forfeit', forfeit_game_path, method: :put, class: "btn btn-danger" %>
+              <p><%= current_game.status %></p>
+              <p id="game-turn" class="turn text-center"><%= current_game.turn.capitalize %> player's turn!</p>
+              <br/>
+              <button type="button" class="btn btn-danger">Forfeit</button>
+              <!--%= link_to 'Forfeit', forfeit_game_path(current_game), method: :put, class: "btn btn-danger", data:  {confirm: "Are you sure you want to forfeit?"} %> -->
             </div>
           <div>
         </div>
       </div>
     </div>
-
   </div>
 
   <br class="clr" />
   <br class="clr" />
   <br class="clr" />
 </div>
+
+<!-- -->
+
+<script>
+  $(function(){
+    $('.board').css('cursor', 'pointer');
+    $('.piece').addClass('can-be-captured'); // add class to piece to indicate it can be removed
+
+    $('.piece').draggable({
+      containment: '.board',
+      cursorAt: { top: 60, left: 56 },
+      snap: '.tile', 
+      revert: 'invalid',
+      start: function(event, ui) {
+        drag_position = ui.position;
+        
+        // ajax --> pieces#show (renders text of valid moves) --> highlight those moves
+        $.ajax({
+          type: 'GET',
+          url: $(this).data('update-url'),
+        }).done(function(r) {
+          valid_moves = JSON.parse(r);
+          var target;
+          var arrayLength = valid_moves.length;
+          for (var i = 0; i < arrayLength; i++) {
+            target = valid_moves[i].toString();
+            $('.tile[data-coordinates="'+ target +'"]').addClass('highlight-light');
+
+            // droppable
+            $('.tile[data-coordinates="'+ target +'"]').droppable({
+              drop: function(event, ui) {
+                ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
+                updatePieceLocation(event, ui); 
+                $(this).droppable('destroy');
+              }
+            });
+            //
+          }
+        }).fail(function (x, t, e) {
+          console.log(e);
+        });
+      }, //start
+      stop: function() {
+        $('.tile').removeClass('highlight-light');
+        // $(this).addClass('can-be-captured');  // enable removal of draggable for future events
+      }   
+    }); 
+    
+    function updatePieceLocation(event, ui) {
+      var x = event.target.dataset.coordinates[0];
+      var y = event.target.dataset.coordinates[2];
+      // ajax ==> pieces#update
+      $.ajax({
+        type: 'PUT',
+        url: ui.draggable.data('update-url'),
+        dataType: 'text',
+        data: { x_pos: x, y_pos: y }
+      }).done(function(r) {
+        // piece removal
+        ui.draggable.removeClass('can-be-captured');  // "disable" piece from being removed
+        ui.draggable.addClass(x+y);   // add class to piece to indicate current location
+        $('.can-be-captured'+'.'+x+y).remove();  // remove previously dragged piece 
+        $(event.target).find('div.can-be-captured').remove();  // remove pre-rendered piece
+        ui.draggable.addClass('can-be-captured'); // "re-enable" piece for future removal
+        // update turn on page
+        $('#portrait1,#portrait2').toggleClass('highlight-turn');
+        $('#game-turn').text($('#game-turn').text() == "White player's turn!" ? "Black player's turn!" : "White player's turn!");
+      }).fail(function (x, t, e) {
+        // revert draggable (piece) on ajax call failure 
+        ui.draggable.css({
+          'left': drag_position.left,
+          'top': drag_position.top
+        });
+      });
+    } // updatePieceLocation
+
+    //
+    $('.btn-danger').click(function(){
+      if (confirm('Are you sure you want to forfeit?')) {
+        $.ajax({
+          type: 'PUT',
+          url: "<%= forfeit_game_path(current_game) %>",
+          success: function(r) {
+            $('#game-turn').removeClass('turn');
+            $('#game-turn').addClass('forfeit');
+            $('#game-turn').text(r);
+          },
+          error: function() {
+            alert("You cannot forfeit a game that has status: <%= current_game.status %>!");
+          }
+        });
+      };
+    });
+    //
+
+  }); // function
+
+</script>

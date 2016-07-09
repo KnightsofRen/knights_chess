@@ -30,8 +30,6 @@ require 'capybara/rspec'
 ActiveRecord::Migration.check_pending!
 
 RSpec.configure do |config|
-  config.include Devise::TestHelpers, type: :controller
-
   config.include Devise::Test::ControllerHelpers, type: :controller
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
