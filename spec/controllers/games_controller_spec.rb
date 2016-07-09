@@ -151,7 +151,7 @@ RSpec.describe GamesController, type: :controller do
       sign_out user2
       sign_in user
       delete :destroy, id: test_game.id
-      expect(response).to redirect_to root_path
+      expect(response).to redirect_to player_path(user)
       expect(Game.find_by_id(test_game.id)).to eq nil
     end
 

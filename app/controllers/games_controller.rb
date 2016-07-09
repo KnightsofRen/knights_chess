@@ -8,8 +8,11 @@ class GamesController < ApplicationController
   end
 
   def forfeit
+    return render_not_found(:forbidden) if current_user.id != current_game.player_white_id && current_user.id != current_game.player_black_id
+    return render_not_found(:forbidden) if game_is_open
     current_game.forfeit(current_user.id)
-    redirect_to game_path(current_game)
+    render text: "Game forfeit by #{current_user.username} --  #{User.find(current_game.winning_player_id).username} wins!"
+    # redirect_to game_path(current_game)
   end
 
   def new
@@ -64,7 +67,7 @@ class GamesController < ApplicationController
       return render_not_found(:forbidden) if current_user.id != current_game.user_id
       return render_not_found(:forbidden) unless game_is_open
       current_game.destroy
-      redirect_to root_path
+      redirect_to player_path(current_user)
     end
   end
 

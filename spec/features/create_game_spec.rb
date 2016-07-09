@@ -27,7 +27,6 @@ RSpec.feature 'create a new game' do
     expect(page).to have_content('Test-Game')
     expect(page).to have_content('vs.')
     expect(page).to have_css('div.gravatar-box')
-    expect(page).to have_link('Forfeit')
 
     expect(Game.last.player_white_id).to eq nil
     expect(Game.last.player_black_id).to eq User.last.id
