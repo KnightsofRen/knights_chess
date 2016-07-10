@@ -13,12 +13,11 @@ class Piece < ActiveRecord::Base
     update_attributes(x_coordinate: x, y_coordinate: y)
   end
 
-  def promote_pawn!(x, y, choice)
+  def promote_pawn!(x, y, choice = 'Queen')
     # check if piece is white pawn moving to top row (y = 7) or black pawn moving to bottom row (y = 0)
     if (type == 'Pawn' && color == 'white' && y == 7) || (type == 'Pawn' && color == 'black' && y == 0)
       move_to!(x, y)
-      game.pieces.create(type: choice, color: color, x_coordinate: x, y_coordinate: y)
-      delete
+      update_attributes(type: choice)
       'Promoted'
     else
       'Error'

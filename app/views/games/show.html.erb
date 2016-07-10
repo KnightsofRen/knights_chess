@@ -14,7 +14,7 @@
               <% if (x.even? && y.odd?) || (x.odd? && y.even?) %>
 
                 <div class="black-tile tile" data-coordinates="<%= "#{x},#{(y-7).abs}" %>">
-                  <div class="piece" data-update-url="<%= update_url(x,(y-7).abs) %>">
+                  <div class="piece" data-piece-type="<%= piece_type(x,(y-7).abs) %>" data-piece-color="<%= piece_color(x,(y-7).abs) %>" data-update-url="<%= update_url(x,(y-7).abs) %>">
                       <%= render_piece(current_game, x,(y-7).abs) %>
                   </div>
                 </div>
@@ -22,7 +22,7 @@
               <% else %>
 
                 <div class="white-tile tile" data-coordinates="<%= "#{x},#{(y-7).abs}" %>"> 
-                  <div class="piece" data-update-url="<%= update_url(x,(y-7).abs) %>">
+                  <div class="piece" data-piece-type="<%= piece_type(x,(y-7).abs) %>" data-piece-color="<%= piece_color(x,(y-7).abs) %>" data-update-url="<%= update_url(x,(y-7).abs) %>">
                     <%= render_piece(current_game, x,(y-7).abs) %>
                   </div>
                 </div>
@@ -85,31 +85,31 @@
 
 <br class="clr" />
 <div id="dialog-black">
-  <div class="dialog-tile">
+  <div class="dialog-tile queen">
     <%= "\u265B".encode('utf-8') %>
   </div>
-  <div class="dialog-tile">
+  <div class="dialog-tile rook">
     <%= "\u265C".encode('utf-8') %>
   </div>
-  <div class="dialog-tile">
+  <div class="dialog-tile bishop">
     <%= "\u265D".encode('utf-8') %>
   </div>
-  <div class="dialog-tile">
+  <div class="dialog-tile knight">
     <%= "\u265E".encode('utf-8') %>
   </div>
 </div>
 
 <div id="dialog-white">
-  <div class="dialog-tile">
+  <div class="dialog-tile queen">
     <%= "\u2655".encode('utf-8') %>
   </div>
-  <div class="dialog-tile">
+  <div class="dialog-tile rook">
     <%= "\u2656".encode('utf-8') %>
   </div>
-  <div class="dialog-tile">
+  <div class="dialog-tile bishop">
     <%= "\u2657".encode('utf-8') %>
   </div>
-  <div class="dialog-tile">
+  <div class="dialog-tile knight">
     <%= "\u2658".encode('utf-8') %>
   </div>
 </div>
@@ -118,7 +118,8 @@
 
 <script>
   $(function(){
-    $('.board').css('cursor', 'pointer');
+    $('.piece').css('cursor', 'pointer');
+    $('.dialog-tile').css('cursor', 'pointer');
     // add class to piece to indicate it can be removed (can-be-captured) and that it is pre-rendered (static)
     $('.piece').addClass('can-be-captured static'); 
 
@@ -141,7 +142,7 @@
             arrayLength = valid_moves.length;
             for (var i = 0; i < arrayLength; i++) {
               target = valid_moves[i].toString();
-              $('.tile[data-coordinates="'+ target +'"]').addClass('highlight-light');
+              $('.tile[data-coordinates="'+ target +'"]').addClass('highlight-light')
 
               // droppable
               $('.tile[data-coordinates="'+ target +'"]').droppable({
@@ -165,25 +166,75 @@
     function updatePieceLocation(event, ui) {
       x = event.target.dataset.coordinates[0];
       y = event.target.dataset.coordinates[2];
+      promotion_choice = 'Queen';
       
       //
-      
-      // $('#dialog-black').dialog({
-      //   resizable: false,
-      //   width: 360,
-      //   position: { of: ui.draggable, my: 'left+12 top', at: 'left top-96' },
-      // }); // dialog
-      // $(".ui-dialog-titlebar").hide();
-      // $(".ui-dialog-buttonpane").hide();
-      // $(".ui-dialog").css({'background': '#f5eacd', 'border': '1px solid #293e6a'});
-      // $(".ui-dialog-content").css('background', '#f5eacd');
+      if (ui.draggable.data('piece-type') == 'Pawn' && ui.draggable.data('piece-color') == 'white' && y == 7) {
+        displayWhiteDialogBox(ui);
+       $('.queen').click( function() { 
+          promotion_choice = 'Queen';
+          ajaxPiecesUpdateCall(event, ui);
+          $('.piece').draggable( 'enable' );
+          $('#dialog-white').dialog('close');
+        });
+        $('.rook').click( function() { 
+          promotion_choice = 'Rook';
+          ajaxPiecesUpdateCall(event, ui);
+          $('.piece').draggable( 'enable' );
+          $('#dialog-white').dialog('close');
+        });
+        $('.bishop').click( function() { 
+          promotion_choice = 'Bishop';
+          ajaxPiecesUpdateCall(event, ui);
+          $('.piece').draggable( 'enable' );
+          $('#dialog-white').dialog('close');
+        });
+        $('.knight').click( function() { 
+          promotion_choice = 'Knight';
+          ajaxPiecesUpdateCall(event, ui);
+          $('.piece').draggable( 'enable' );
+          $('#dialog-white').dialog('close');
+        });
+      }
+      else if (ui.draggable.data('piece-type') == 'Pawn' && ui.draggable.data('piece-color') == 'black' && y == 0) {
+        displayBlackDialogBox(ui);
+        $('.queen').click( function() { 
+          promotion_choice = 'Queen';
+          ajaxPiecesUpdateCall(event, ui);
+          $('.piece').draggable( 'enable' );
+          $('#dialog-black').dialog('close');
+        });
+        $('.rook').click( function() { 
+          promotion_choice = 'Rook';
+          ajaxPiecesUpdateCall(event, ui);
+          $('.piece').draggable( 'enable' );
+          $('#dialog-black').dialog('close');
+        });
+        $('.bishop').click( function() { 
+          promotion_choice = 'Bishop';
+          ajaxPiecesUpdateCall(event, ui);
+          $('.piece').draggable( 'enable' );
+          $('#dialog-black').dialog('close');
+        });
+        $('.knight').click( function() { 
+          promotion_choice = 'Knight';
+          ajaxPiecesUpdateCall(event, ui);
+          $('.piece').draggable( 'enable' );
+          $('#dialog-black').dialog('close');
+        });
+      }
+      else {
+        ajaxPiecesUpdateCall(event, ui)
+      }       
+    } // updatePieceLocation
 
-      // ajax ==> pieces#update
+    // ajax ==> pieces#update
+    function ajaxPiecesUpdateCall(event, ui) {
       $.ajax({
         type: 'PUT',
         url: ui.draggable.data('update-url'),
         dataType: 'text',
-        data: { x_pos: x, y_pos: y, choice: 'Knight' }
+        data: { x_pos: x, y_pos: y, choice: promotion_choice }
       }).done(function(r) {
         // "reset" piece (can be captured, static, & any added prior location class removed)
         ui.draggable.attr('class', 'piece ui-draggable ui-draggable-handle') 
@@ -196,6 +247,11 @@
         // update turn on page
         $('#portrait1,#portrait2').toggleClass('highlight-turn');
         $('#game-turn').text($('#game-turn').text() == "White player's turn!" ? "Black player's turn!" : "White player's turn!");
+        // update pawn piece to reflect pawn promotion 
+        if (r[0] == 'p') {
+          ui.draggable.data('piece-type', r.substring(3));
+          ui.draggable.text(r[2]);
+        }
       }).fail(function (x, t, e) {
         // revert draggable (piece) on ajax call failure 
         ui.draggable.css({
@@ -203,9 +259,45 @@
           'top': drag_position.top
         });
       });
-    } // updatePieceLocation
+    } // ajaxPiecesUpdateCall
+    
+    function displayBlackDialogBox(ui) {
+      $('#dialog-black').dialog({
+        resizable: false,
+        width: 360,
+        minHeight: 90,
+        position: { of: ui.draggable, my: 'left+12 top', at: 'left top-96' }
+      }); 
+      $(".ui-dialog-titlebar").hide();
+      $(".ui-dialog-buttonpane").hide();
+      $(".ui-dialog").css({'background': '#f5eacd', 'border': '1px solid #293e6a'});
+      $(".ui-dialog-content").css('background', '#f5eacd');
+      $('.piece').draggable( 'disable' ); // temporarily disable dragging pieces 
+    } // displayBlackDialogBox
 
-    //
+    function displayWhiteDialogBox(ui) {
+      $('#dialog-white').dialog({
+        resizable: false,
+        width: 360,
+        minHeight: 90,
+        position: { of: ui.draggable, my: 'left+12 top', at: 'left bottom' }
+      }); 
+      $(".ui-dialog-titlebar").hide();
+      $(".ui-dialog-buttonpane").hide();
+      $(".ui-dialog").css({'background': '#f5eacd', 'border': '1px solid #293e6a'});
+      $(".ui-dialog-content").css('background', '#f5eacd');
+      $('.piece').draggable( 'disable' ); // temporarily disable dragging pieces 
+    } // displayWhiteDialogBox
+ 
+    $('.dialog-tile').hover(
+      function() {
+        $( this ).addClass( 'highlight-dark' );
+      }, function() {
+        $( this ).removeClass( 'highlight-dark' );
+      }
+    );
+
+    // Forfeit 
     $('.btn-danger').click(function(){
       if (confirm('Are you sure you want to forfeit?')) {
         $.ajax({
@@ -222,7 +314,6 @@
         });
       };
     });
-    //
 
   }); // function
 
