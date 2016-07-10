@@ -79,7 +79,10 @@ class GamesController < ApplicationController
   helper_method :current_game
 
   def game_params
-    params.require(:game).permit(:name, :player_black_id, :player_white_id, :status, :user_id, :turn)
+    params.require(:game).permit(
+      :name, :player_black_id, :player_white_id, :status, :user_id, :turn, 
+      :can_castle_w_ks, :can_castle_w_qs, :can_castle_b_ks, :can_castle_b_qs
+    )
   end
 
   def game_is_open

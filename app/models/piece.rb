@@ -7,10 +7,52 @@ class Piece < ActiveRecord::Base
 
   def move_to!(x, y)
     destination_piece = game.pieces.find_by(x_coordinate: x, y_coordinate: y)
-    destination_piece.delete if destination_piece.present?
+    if type == 'King' && castle_move?(x, y)  
+      update_castle_statuses(destination_piece)   
+      castle!(x,y)
+    else
+      update_castle_statuses(destination_piece)   
+      destination_piece.delete if destination_piece.present?
+      update_attributes(x_coordinate: x, y_coordinate: y)
+    end
     next_turn = game.turn == 'white' ? 'black' : 'white'
     game.update_attributes(turn: next_turn)
+  end
+
+  def update_castle_statuses(dp)
+    game.update_attributes(can_castle_w_ks: 1) if type == 'Rook' && color == 'white' && x_coordinate == 7 && y_coordinate == 0
+    game.update_attributes(can_castle_w_qs: 1) if type == 'Rook' && color == 'white' && x_coordinate == 0 && y_coordinate == 0
+    game.update_attributes(can_castle_w_ks: 1, can_castle_w_qs: 1) if type == 'King' && color == 'white' && x_coordinate == 4 && y_coordinate == 0
+    game.update_attributes(can_castle_b_ks: 1) if type == 'Rook' && color == 'black' && x_coordinate == 7 && y_coordinate == 7
+    game.update_attributes(can_castle_b_qs: 1) if type == 'Rook' && color == 'black' && x_coordinate == 0 && y_coordinate == 7
+    game.update_attributes(can_castle_b_ks: 1, can_castle_b_qs: 1) if type == 'King' && color == 'black' && x_coordinate == 4 && y_coordinate == 7
+
+    if dp.present?
+      game.update_attributes(can_castle_w_ks: 1) if dp.type == 'Rook' && dp.color == 'white' && dp.x_coordinate == 7 && dp.y_coordinate == 0
+      game.update_attributes(can_castle_w_qs: 1) if dp.type == 'Rook' && dp.color == 'white' && dp.x_coordinate == 0 && dp.y_coordinate == 0
+      game.update_attributes(can_castle_b_ks: 1) if dp.type == 'Rook' && dp.color == 'black' && dp.x_coordinate == 7 && dp.y_coordinate == 7
+      game.update_attributes(can_castle_b_qs: 1) if dp.type == 'Rook' && dp.color == 'black' && dp.x_coordinate == 0 && dp.y_coordinate == 7
+    end
+  end
+
+  def castle!(x,y)
     update_attributes(x_coordinate: x, y_coordinate: y)
+    # white king, king side castling
+    if color == 'white' && x > 4
+      game.pieces.find_by(x_coordinate: 7, y_coordinate: 0).update_attributes(x_coordinate: 5)
+    end
+    # white king, queen side castling
+    if color == 'white' && x < 4
+      game.pieces.find_by(x_coordinate: 0, y_coordinate: 0).update_attributes(x_coordinate: 3)
+    end
+    # black king, king side castling
+    if color == 'black' && x > 4
+      game.pieces.find_by(x_coordinate: 7, y_coordinate: 7).update_attributes(x_coordinate: 5)
+    end
+    # black king, queen side castling
+    if color == 'black' && x < 4 
+      game.pieces.find_by(x_coordinate: 0, y_coordinate: 7).update_attributes(x_coordinate: 3)
+    end
   end
 
   def promote_pawn!(x, y, choice = 'Queen')

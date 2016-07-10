@@ -7,7 +7,9 @@ RSpec.describe GamesController, type: :controller do
   let(:test_game) { FactoryGirl.create(:game, name: 'hello', player_white_id: user.id, user_id: user.id) }
   let(:params) do
     {
-      game: { name: 'game #1', user_id: user.id, status: 'open', turn: 'white' },
+      game: { name: 'game #1', user_id: user.id, status: 'open', turn: 'white',
+        can_castle_w_ks: 0, can_castle_w_qs: 0, can_castle_b_ks: 0, can_castle_b_qs: 0
+      },
       color: '1'
     }
   end
@@ -61,6 +63,10 @@ RSpec.describe GamesController, type: :controller do
       expect(game.status).to eq 'open'
       expect(game.turn).to eq 'white'
       expect(game.winning_player_id).to eq nil
+      expect(game.can_castle_w_ks).to eq 0
+      expect(game.can_castle_w_qs).to eq 0
+      expect(game.can_castle_b_ks).to eq 0
+      expect(game.can_castle_b_qs).to eq 0
       expect(response).to redirect_to game_path(game)
     end
   end
