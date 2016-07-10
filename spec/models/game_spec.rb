@@ -130,4 +130,53 @@ RSpec.describe Game, type: :model do
       expect(game.stalemate?('white')).to eq(false)
     end
   end
+  
+  describe 'checkmate?' do
+    it 'game in checkmate? TRUE for WHITE king' do
+      game = FactoryGirl.create(:game)
+      game.pieces.delete_all
+      FactoryGirl.create(:rook, x_coordinate: 2, y_coordinate: 2, color: 1, game_id: game.id)
+      FactoryGirl.create(:rook, x_coordinate: 1, y_coordinate: 0, color: 1, game_id: game.id)
+      FactoryGirl.create(:queen, x_coordinate: 4, y_coordinate: 2, color: 1, game_id: game.id)
+      FactoryGirl.create(:king, x_coordinate: 3, y_coordinate: 0, game_id: game.id)
+
+      game.reload
+
+      expect(game.checkmate?('white')).to eq(true)
+    end
+
+    it 'game in checkmate? FALSE for WHITE king' do
+      game = FactoryGirl.create(:game)
+      game.pieces.delete_all
+      FactoryGirl.create(:rook, x_coordinate: 2, y_coordinate: 2, color: 1, game_id: game.id)
+      FactoryGirl.create(:rook, x_coordinate: 1, y_coordinate: 0, color: 1, game_id: game.id)
+      FactoryGirl.create(:king, x_coordinate: 3, y_coordinate: 0, game_id: game.id)
+
+      game.reload
+
+      expect(game.checkmate?('white')).to eq(false)
+    end
+
+    it 'game in checkmate? FALSE for BLACK king' do
+      game = FactoryGirl.create(:game)
+      game.pieces.delete_all
+      FactoryGirl.create(:rook, x_coordinate: 1, y_coordinate: 7, color: 0, game_id: game.id)
+      FactoryGirl.create(:rook, x_coordinate: 2, y_coordinate: 5, color: 0, game_id: game.id)
+      FactoryGirl.create(:king, x_coordinate: 3, y_coordinate: 7, game_id: game.id)
+      expect(game.checkmate?('black')).to eq(false)
+    end
+
+    it 'game in checkmate? TRUE for BLACK king' do
+      game = FactoryGirl.create(:game)
+      game.pieces.delete_all
+      FactoryGirl.create(:rook, x_coordinate: 1, y_coordinate: 7, color: 0, game_id: game.id)
+      FactoryGirl.create(:rook, x_coordinate: 2, y_coordinate: 5, color: 0, game_id: game.id)
+      FactoryGirl.create(:queen, x_coordinate: 4, y_coordinate: 5, color: 0, game_id: game.id)
+      FactoryGirl.create(:king, x_coordinate: 3, y_coordinate: 7, game_id: game.id)
+
+      game.reload
+
+      expect(game.checkmate?('black')).to eq(true)
+    end
+  end
 end
