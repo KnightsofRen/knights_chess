@@ -13,8 +13,6 @@ class King < Piece
     true
   end
 
-  private
-
   # return true if castling is valid move
   def castle_move?(x, y)
     return false unless x_coordinate == 4
@@ -29,6 +27,8 @@ class King < Piece
     return true if color == 'black' && x == 2 && y == 7 && y_coordinate == 7 && game.can_castle_b_qs == 0 && !obstructed?(0,7)
     false
   end
+
+  private
 
   def position_on_board?(x, y)
     return false if x >= 8
