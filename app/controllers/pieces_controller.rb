@@ -15,6 +15,7 @@ class PiecesController < ApplicationController
 
     x = params[:x_pos].to_i
     y = params[:y_pos].to_i
+    choice = params[:choice]
 
     # check if current user is a player of game
     return render_not_found(:forbidden) if current_user.id != @game.player_white_id && current_user.id != @game.player_black_id
@@ -29,8 +30,13 @@ class PiecesController < ApplicationController
     # check valid moves
     return render_not_found(:forbidden) unless @piece.valid_move?(x, y)
 
-    @piece.move_to!(x, y)
-    render text: 'updated!'
+    # pawn promotion, moving, capturing
+    if @piece.promote_pawn!(x, y, choice) == 'Promoted'
+      render text: "pp#{render_piece(@game, x, y)}#{@piece.type}"
+    else
+      @piece.move_to!(x, y)
+      render text: 'updated!'
+    end
   end
   # rubocop:enable Metrics/AbcSize
 

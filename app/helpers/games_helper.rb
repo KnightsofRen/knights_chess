@@ -51,6 +51,11 @@ module GamesHelper
     return piece.color if piece.present?
   end
 
+  def piece_type(x, y)
+    piece = find_piece_by_coordinates(x, y)
+    return piece.type if piece.present?
+  end
+
   def gravatar_class(color)
     color == current_game.turn ? 'gravatar-box highlight-turn' : 'gravatar-box'
   end

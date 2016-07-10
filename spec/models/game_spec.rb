@@ -37,14 +37,6 @@ RSpec.describe Game, type: :model do
       expect(white_expected == white_pieces && black_expected == black_pieces).to eq(true)
     end
 
-    it 'should create pieces that are not captured' do
-      test = 0
-      game.pieces.each do |piece|
-        test += 1 if piece.captured? == false
-      end
-      expect(test).to eq(32)
-    end
-
     it 'should create pieces with correct type at correct coordinates' do
       test = 0
       [1, 6].each do |y|

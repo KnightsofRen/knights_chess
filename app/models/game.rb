@@ -73,11 +73,11 @@ class Game < ActiveRecord::Base
     ]
     if color == 0
       non_pawn_pieces.each do |piece|
-        piece.update_attributes(y_coordinate: 0, color: color, captured: false)
+        piece.update_attributes(y_coordinate: 0, color: color)
       end
     elsif color == 1
       non_pawn_pieces.each do |piece|
-        piece.update_attributes(y_coordinate: 7, color: color, captured: false)
+        piece.update_attributes(y_coordinate: 7, color: color)
       end
     end
   end
@@ -89,11 +89,11 @@ class Game < ActiveRecord::Base
     end
     if color == 0
       pawn_pieces.each do |piece|
-        piece.update_attributes(y_coordinate: 1, color: color, captured: false)
+        piece.update_attributes(y_coordinate: 1, color: color)
       end
     elsif color == 1
       pawn_pieces.each do |piece|
-        piece.update_attributes(y_coordinate: 6, color: color, captured: false)
+        piece.update_attributes(y_coordinate: 6, color: color)
       end
     end
   end
