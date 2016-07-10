@@ -25,12 +25,12 @@
   <hr class="hr-style"/>
   <br class="clr" />
 
-  <% draw_win_lose = [ @user.tied_games, @user.won_games, @user.lost_games ] %>
+  <% draw_win_lose = [ @user.tied_games, @user.won_games, @user.lost_games ].map! { |x| if x.nil? then x = 0 end } %>
   <% games_played = draw_win_lose.inject(0, :+) %>
-  <% games_played_as_black = games_played - @user.games_as_white %>
+  <% games_played_as_black = games_played - @user.games_as_white.to_i %>
   <% win_rate = @user.won_games.to_f / games_played.to_f * 100 %>
   <% win_rate_as_white = @user.won_games_as_white.to_f / @user.games_as_white.to_f * 100 %>
-  <% win_rate_as_black = (@user.won_games - @user.won_games_as_white).to_f / games_played_as_black.to_f * 100 %>
+  <% win_rate_as_black = (@user.won_games.to_i - @user.won_games_as_white.to_i).to_f / games_played_as_black.to_f * 100 %>
   <% total_white_black = [ games_played, @user.games_as_white, games_played_as_black ] %>
 
   <div>
