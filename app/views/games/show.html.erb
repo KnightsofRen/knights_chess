@@ -146,10 +146,11 @@
 
               // droppable
               $('.tile[data-coordinates="'+ target +'"]').droppable({
+                // accept: $('.piece'),  // 
                 drop: function(event, ui) {
                   ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
                   updatePieceLocation(event, ui); 
-                  $(this).droppable('destroy');
+                  // $('.tile').removeClass('ui-droppable');  //
                 }
               });
             } // for
@@ -168,10 +169,13 @@
       y = event.target.dataset.coordinates[2];
       promotion_choice = 'Queen';
       
-      //
-      if (ui.draggable.data('piece-type') == 'Pawn' && ui.draggable.data('piece-color') == 'white' && y == 7) {
+      // (1) BUG! - dialog displays when pawn is dragged to a tile with correct y location 
+      // ( --> want it only to display when dragged to valid move x, y location)
+      // (2) code below can probably be refactored
+
+      if (ui.draggable.data('piece-type') == 'Pawn' && ui.draggable.data('piece-color') == 'white' && y == 7 && $('#game-turn').text()[0] == 'W') {
         displayWhiteDialogBox(ui);
-       $('.queen').click( function() { 
+        $('.queen').click( function() { 
           promotion_choice = 'Queen';
           ajaxPiecesUpdateCall(event, ui);
           $('.piece').draggable( 'enable' );
@@ -196,7 +200,7 @@
           $('#dialog-white').dialog('close');
         });
       }
-      else if (ui.draggable.data('piece-type') == 'Pawn' && ui.draggable.data('piece-color') == 'black' && y == 0) {
+      else if (ui.draggable.data('piece-type') == 'Pawn' && ui.draggable.data('piece-color') == 'black' && y == 0 && $('#game-turn').text()[0] == 'B') {
         displayBlackDialogBox(ui);
         $('.queen').click( function() { 
           promotion_choice = 'Queen';
@@ -254,10 +258,16 @@
         }
       }).fail(function (x, t, e) {
         // revert draggable (piece) on ajax call failure 
-        ui.draggable.css({
-          'left': drag_position.left,
-          'top': drag_position.top
-        });
+        // (3) The 4 lines below are important for reverting piece back to where it was when player tries to
+        //     drag it around when it's not their turn, not a valid move, or otherwise forbidden move
+        //     However, it causes massive visual bugs when when a 2nd pawn piece is promoted...
+        //     All previous ui-draggable appear to reset their position relative to tile of that promotion
+        // (4) Disabling the lines below prevents the visual bugs caused by 2nd+ pawn promotion, but leaves
+        //     game vulnerable to player randoming moving pieces anywhere 
+        // ui.draggable.css({
+        //   'left': drag_position.left,
+        //   'top': drag_position.top
+        // });
       });
     } // ajaxPiecesUpdateCall
     
