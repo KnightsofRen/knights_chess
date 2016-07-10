@@ -83,12 +83,44 @@
   <br class="clr" />
 </div>
 
+<br class="clr" />
+<div id="dialog-black">
+  <div class="dialog-tile">
+    <%= "\u265B".encode('utf-8') %>
+  </div>
+  <div class="dialog-tile">
+    <%= "\u265C".encode('utf-8') %>
+  </div>
+  <div class="dialog-tile">
+    <%= "\u265D".encode('utf-8') %>
+  </div>
+  <div class="dialog-tile">
+    <%= "\u265E".encode('utf-8') %>
+  </div>
+</div>
+
+<div id="dialog-white">
+  <div class="dialog-tile">
+    <%= "\u2655".encode('utf-8') %>
+  </div>
+  <div class="dialog-tile">
+    <%= "\u2656".encode('utf-8') %>
+  </div>
+  <div class="dialog-tile">
+    <%= "\u2657".encode('utf-8') %>
+  </div>
+  <div class="dialog-tile">
+    <%= "\u2658".encode('utf-8') %>
+  </div>
+</div>
+
 <!-- -->
 
 <script>
   $(function(){
     $('.board').css('cursor', 'pointer');
-    $('.piece').addClass('can-be-captured'); // add class to piece to indicate it can be removed
+    // add class to piece to indicate it can be removed (can-be-captured) and that it is pre-rendered (static)
+    $('.piece').addClass('can-be-captured static'); 
 
     $('.piece').draggable({
       containment: '.board',
@@ -103,49 +135,64 @@
           type: 'GET',
           url: $(this).data('update-url'),
         }).done(function(r) {
-          valid_moves = JSON.parse(r);
-          var target;
-          var arrayLength = valid_moves.length;
-          for (var i = 0; i < arrayLength; i++) {
-            target = valid_moves[i].toString();
-            $('.tile[data-coordinates="'+ target +'"]').addClass('highlight-light');
+          if ( r.length > 0 ) {
+            valid_moves = JSON.parse(r);
+            var target;
+            arrayLength = valid_moves.length;
+            for (var i = 0; i < arrayLength; i++) {
+              target = valid_moves[i].toString();
+              $('.tile[data-coordinates="'+ target +'"]').addClass('highlight-light');
 
-            // droppable
-            $('.tile[data-coordinates="'+ target +'"]').droppable({
-              drop: function(event, ui) {
-                ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
-                updatePieceLocation(event, ui); 
-                $(this).droppable('destroy');
-              }
-            });
-            //
-          }
+              // droppable
+              $('.tile[data-coordinates="'+ target +'"]').droppable({
+                drop: function(event, ui) {
+                  ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
+                  updatePieceLocation(event, ui); 
+                  $(this).droppable('destroy');
+                }
+              });
+            } // for
+          } // if
         }).fail(function (x, t, e) {
           console.log(e);
         });
       }, //start
       stop: function() {
         $('.tile').removeClass('highlight-light');
-        // $(this).addClass('can-be-captured');  // enable removal of draggable for future events
       }   
     }); 
     
     function updatePieceLocation(event, ui) {
-      var x = event.target.dataset.coordinates[0];
-      var y = event.target.dataset.coordinates[2];
+      x = event.target.dataset.coordinates[0];
+      y = event.target.dataset.coordinates[2];
+      
+      //
+      
+      // $('#dialog-black').dialog({
+      //   resizable: false,
+      //   width: 360,
+      //   position: { of: ui.draggable, my: 'left+12 top', at: 'left top-96' },
+      // }); // dialog
+      // $(".ui-dialog-titlebar").hide();
+      // $(".ui-dialog-buttonpane").hide();
+      // $(".ui-dialog").css({'background': '#f5eacd', 'border': '1px solid #293e6a'});
+      // $(".ui-dialog-content").css('background', '#f5eacd');
+
       // ajax ==> pieces#update
       $.ajax({
         type: 'PUT',
         url: ui.draggable.data('update-url'),
         dataType: 'text',
-        data: { x_pos: x, y_pos: y }
+        data: { x_pos: x, y_pos: y, choice: 'Knight' }
       }).done(function(r) {
-        // piece removal
-        ui.draggable.removeClass('can-be-captured');  // "disable" piece from being removed
+        // "reset" piece (can be captured, static, & any added prior location class removed)
+        ui.draggable.attr('class', 'piece ui-draggable ui-draggable-handle') 
         ui.draggable.addClass(x+y);   // add class to piece to indicate current location
-        $('.can-be-captured'+'.'+x+y).remove();  // remove previously dragged piece 
-        $(event.target).find('div.can-be-captured').remove();  // remove pre-rendered piece
-        ui.draggable.addClass('can-be-captured'); // "re-enable" piece for future removal
+        // piece removal 
+        $('.can-be-captured'+'.'+x+y).remove();  // remove any previously dragged piece at this location
+        $(event.target).find('div.can-be-captured.static').remove();  // remove pre-rendered piece 
+        // "re-enable" piece for future removal
+        ui.draggable.addClass('can-be-captured'); 
         // update turn on page
         $('#portrait1,#portrait2').toggleClass('highlight-turn');
         $('#game-turn').text($('#game-turn').text() == "White player's turn!" ? "Black player's turn!" : "White player's turn!");

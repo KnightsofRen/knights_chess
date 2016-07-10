@@ -1,6 +1,33 @@
 require 'rails_helper'
 
 RSpec.describe Piece, type: :model do
+  describe 'promote_pawn! method' do
+    let(:game) { FactoryGirl.create(:game) }
+
+    it 'should replace pawn with a new piece if piece can be promoted' do
+      game.pieces.delete_all
+      black_pawn = FactoryGirl.create(:pawn, x_coordinate: 4, y_coordinate: 1, color: 'black', game_id: game.id)
+      white_pawn = FactoryGirl.create(:pawn, x_coordinate: 1, y_coordinate: 6, game_id: game.id)
+      FactoryGirl.create(:piece, x_coordinate: 2, y_coordinate: 7, color: 'black', game_id: game.id)
+      FactoryGirl.create(:piece, x_coordinate: 5, y_coordinate: 0, game_id: game.id)
+      expect(game.pieces.count).to eq 4
+
+      expect(black_pawn.promote_pawn!(5, 0, 'Knight')).to eq 'Promoted'
+      expect(game.pieces.count).to eq 3
+      promoted_black_piece = game.pieces.find_by(x_coordinate: 5, y_coordinate: 0)
+      expect(promoted_black_piece.type).to eq 'Knight'
+
+      expect(white_pawn.promote_pawn!(2, 7, 'Rook')).to eq 'Promoted'
+      expect(game.pieces.count).to eq 2
+      promoted_white_piece = game.pieces.find_by(x_coordinate: 2, y_coordinate: 7)
+      expect(promoted_white_piece.type).to eq 'Rook'
+    end
+    it 'should return error if piece is not able to be promoted' do
+      queen = FactoryGirl.create(:queen, game_id: game.id)
+      expect(queen.promote_pawn!(0, 7, 'Knight')).to eq 'Error'
+    end
+  end
+
   describe 'move_to! method' do
     let(:game) { FactoryGirl.create(:game) }
 
