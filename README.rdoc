@@ -1,28 +1,7 @@
-== README
+== Knights of Ren
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Knights of Ren is a Ruby on Rails chess app that follows the same principles and rules as an in-person game. As a player you have the ability to create a game or join one of the available games listed on the homepage. 
 
-Things you may want to cover:
+If you'd like to check it out click on the link below :)
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+https://knights-chess.herokuapp.com
