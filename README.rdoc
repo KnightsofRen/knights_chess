@@ -4,4 +4,5 @@ Knights of Ren is a Ruby on Rails chess app that follows the same principles and
 
 If you'd like to check it out click on the link below :)
 
-https://knights-chess.herokuapp.com
+KnightsOfRen[https://knights-chess.herokuapp.com]
+
