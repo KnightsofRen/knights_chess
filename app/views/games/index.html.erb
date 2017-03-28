@@ -1,168 +1,167 @@
-<div class="chess_bg">
-  
-
-    <div class="frosty text-center col-md-8 col-md-offset-2">
-      <h1>KNIGHTS of REN<h1>
-      <!--h2>Create New Game</h2-->
-        <% if user_signed_in? %>
-          <h3><%= link_to "Create New Chess Game", new_game_path %></h4>
-        <% else %>
-          <h3><%= link_to "Create New Chess Game", new_user_session_path %></h4>
-        <% end %>
-      <br />
-    </div>
-
-    <div class="games-list text-center col-md-8 col-md-offset-2">
-      <div class="col-sm-6">
-        <h2>Available Games</h2>
-        <br />
-        <% @games.available.each do |game| %>
-          <h4><%= game.name %></h4>
-          <%= simple_form_for game, :url => game_path(game), :method => :put do |f| %>
-              <% game.player_white_id.present? ? color = 'black' : color = 'white' %>
-              <%= f.hidden_field "player_#{color}_id".to_sym, value: current_user.id if user_signed_in? %>
-              <%= f.hidden_field :status, value: 'active' %>
-              <%= f.submit "Join Game (as #{color})", class: "btn btn-default btn-sm" %>
-          <% end %>    
-        <% end %>
+  <div class="chess_bg">
+    
+      <div class="frosty text-center col-md-8 col-md-offset-2">
+        <h1>KNIGHTS of REN<h1>
+        <!--h2>Create New Game</h2-->
+          <% if user_signed_in? %>
+            <h3><%= link_to "Create New Chess Game", new_game_path %></h4>
+          <% else %>
+            <h3><%= link_to "Create New Chess Game", new_user_session_path %></h4>
+          <% end %>
         <br />
       </div>
 
-
-      <div class="col-sm-6">
-        <h2>All Games</h2>
-        <br />
-        <% @games.each do |game| %>
-          <h4><%= link_to game.name, "#{game_path(game)}#chess-game" %></h4>
-        <% end %>
-      </div>
-    </div>
-
-    <div class="game-info-section col-md-12">
-      <div class="game-info col-md-8 col-md-offset-2">
-        <br /><br /><br />
-        <h2>Backstory</h2>
-        <br />
-        <p>Some time ago we all decided to code and as we did we ended up making some pretty cool stuff. For the most part, the venture was a solo trek until we each decided to take the opportunity to join a few others on the same journey and make a chess app.<br /><br />
-        
-        Why Chess?<br /><br />
-
-        <i>You pick up a pawn. Do you move it one square or two? Wait, is it your first move or second? Oh, there's an opposing piece in a diagonal spot. Will you capture it? But, hold on would that move put your king in check?</i><br /><br />
-        If you've ever played Chess-- you get it. If you haven't-- <a href="http://www.chesscorner.com/tutorial/learn.htm" >check this out</a>.<br /><br />
-        [TL;DR] Chess has alot going on and the logic it requires made it the perfect choice to continue forging those Ruby skills of ours. And so, *drumroll* we present to you-- Knights of Ren.<br /><br />
-
-        Knights of Ren is a Ruby on Rails chess app led into creation using <i>"red/green/refactor"</i> Test Driven Development (TDD). With the team spanning across the states we kept it agile making excellent use of Trello and Slack in order to keep everyone on the same page regarding tasks. We kept our code seamless in structure thanks to Rubocop, swatted bugs with Pry, collaborated with Git pull requests, and (of course) made sure to <i>"ship early, ship often".</i></p>
-        <br /><br /><br />
-
-      <div class="game-tools-section col-md-10 col-md-offset-1">
-        <div class="row">
-          <div class="tools col-sm-4">
-            <%= link_to 'https://github.com/' do %>
-              <%=image_tag 'github.png'%>
-            <% end %>
-          </div>
-
-          <div class="tools col-sm-4">
-            <%= link_to 'https://trello.com/' do %>
-              <%=image_tag 'trello.png'%>
-            <% end %>
-          </div>
-
-           <div class="tools col-sm-4">
-            <%= link_to 'https://slack.com/' do %>
-              <%=image_tag 'slack.png'%>
-            <% end %>
-          </div>
+      <div class="games-list text-center col-md-8 col-md-offset-2">
+        <div class="col-sm-6">
+          <h2>Available Games</h2>
+          <br />
+          <% @games.available.each do |game| %>
+            <h4><%= game.name %></h4>
+            <%= simple_form_for game, :url => game_path(game), :method => :put do |f| %>
+                <% game.player_white_id.present? ? color = 'black' : color = 'white' %>
+                <%= f.hidden_field "player_#{color}_id".to_sym, value: current_user.id if user_signed_in? %>
+                <%= f.hidden_field :status, value: 'active' %>
+                <%= f.submit "Join Game (as #{color})", class: "btn btn-default btn-sm" %>
+            <% end %>    
+          <% end %>
+          <br />
         </div>
+
+
+        <div class="col-sm-6">
+          <h2>All Games</h2>
+          <br />
+          <% @games.each do |game| %>
+            <h4><%= link_to game.name, "#{game_path(game)}#chess-game" %></h4>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="game-info-section col-md-12">
+        <div class="game-info col-md-8 col-md-offset-2">
+          <br /><br /><br />
+          <h2>Backstory</h2>
+          <br />
+          <p>Some time ago we all decided to code and as we did we ended up making some pretty cool stuff. For the most part, the venture was a solo trek until we each decided to take the opportunity to join a few others on the same journey and make a chess app.<br /><br />
+          
+          Why Chess?<br /><br />
+
+          <i>You pick up a pawn. Do you move it one square or two? Wait, is it your first move or second? Oh, there's an opposing piece in a diagonal spot. Will you capture it? But, hold on would that move put your king in check?</i><br /><br />
+          If you've ever played Chess-- you get it. If you haven't-- <a href="http://www.chesscorner.com/tutorial/learn.htm" >check this out</a>.<br /><br />
+          [TL;DR] Chess has alot going on and the logic it requires made it the perfect choice to continue forging those Ruby skills of ours. And so, *drumroll* we present to you-- Knights of Ren.<br /><br />
+
+          Knights of Ren is a Ruby on Rails chess app led into creation using <i>"red/green/refactor"</i> Test Driven Development (TDD). With the team spanning across the states we kept it agile making excellent use of Trello and Slack in order to keep everyone on the same page regarding tasks. We kept our code seamless in structure thanks to Rubocop, swatted bugs with Pry, collaborated with Git pull requests, and (of course) made sure to <i>"ship early, ship often".</i></p>
+          <br /><br /><br />
+
+        <div class="game-tools-section col-md-10 col-md-offset-1">
+          <div class="row">
+            <div class="tools col-sm-4">
+              <%= link_to 'https://github.com/' do %>
+                <%=image_tag 'github.png'%>
+              <% end %>
+            </div>
+
+            <div class="tools col-sm-4">
+              <%= link_to 'https://trello.com/' do %>
+                <%=image_tag 'trello.png'%>
+              <% end %>
+            </div>
+
+             <div class="tools col-sm-4">
+              <%= link_to 'https://slack.com/' do %>
+                <%=image_tag 'slack.png'%>
+              <% end %>
+            </div>
+          </div>
+          
+          <br /><br />
+
+            <div class="row">
+             <div class="tools col-sm-4 col-sm-push-4">
+              <%= link_to 'http://batsov.com/rubocop/' do %>
+                <%=image_tag 'rubocop2.png'%>
+              <% end %>
+            </div>
+          </div>
+
+           <br /><br />
+          
+          <div class="row">
+            <div class="tools col-sm-4">
+              <%= link_to 'http://rspec.info/' do %>
+                <%=image_tag 'rspec.png'%>
+              <% end %>
+            </div>
+
+            <div class="tools col-sm-4">
+              <%= link_to 'http://pryrepl.org/' do %>
+                <%=image_tag 'pry.png'%>
+              <% end %>
+            </div>
+
+            <div class="tools col-sm-4">
+              <%= link_to 'https://travis-ci.org/' do %>
+                <%=image_tag 'travis.png'%>
+              <% end %>
+            </div>
+          </div>
+
+          <br /><br /><br/>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="team-info text-center col-md-8 col-md-offset-2">
+        <br /><br /><br />
+        <h2>Behind the Scenes</h2>
+        <br />
+          <div class="row">
+            <div class="team-member col-sm-4">
+              <%= link_to 'https://github.com/ats89' do %>
+                <%=image_tag 'anthony.png'%>
+              <% end %>
+              <p>Anthony Sin</p>
+            </div>
+
+            <div class="team-member col-sm-4">
+              <p>Team Lead</p>
+              <%= link_to 'https://github.com/mscoutermarsh' do %>
+                <%=image_tag 'mike.jpg'%>
+              <% end %>
+              <p>Mike Coutermarsh</p>
+            </div>
         
-        <br /><br />
+
+            <div class="team-member col-sm-4">
+              <%= link_to 'https://github.com/Skjamal' do %>
+                <%=image_tag 'satinder.jpg'%>
+              <% end %>
+              <p>Satinder Jamal</p>
+            </div>
+          </div>
 
           <div class="row">
-           <div class="tools col-sm-4 col-sm-push-4">
-            <%= link_to 'http://batsov.com/rubocop/' do %>
-              <%=image_tag 'rubocop2.png'%>
-            <% end %>
-          </div>
-        </div>
+            <div class="team-member col-sm-6">
+              <%= link_to 'https://github.com/doyouthunderstand' do %>
+                <%=image_tag 'brandon.png'%>
+              <% end %>
+              <p>Brandon Gorman</p>
+            </div>
 
-         <br /><br />
-        
-        <div class="row">
-          <div class="tools col-sm-4">
-            <%= link_to 'http://rspec.info/' do %>
-              <%=image_tag 'rspec.png'%>
-            <% end %>
-          </div>
-
-          <div class="tools col-sm-4">
-            <%= link_to 'http://pryrepl.org/' do %>
-              <%=image_tag 'pry.png'%>
-            <% end %>
+            <div class="team-member col-sm-6">
+              <%= link_to 'https://github.com/rebelcl0ud' do %>
+                <%=image_tag 'jovanka.png'%>
+              <% end %>
+              <p>Jovanka Placeres</p>
+            </div>
           </div>
 
-          <div class="tools col-sm-4">
-            <%= link_to 'https://travis-ci.org/' do %>
-              <%=image_tag 'travis.png'%>
-            <% end %>
-          </div>
-        </div>
-
-        <br /><br /><br/>
       </div>
 
-      </div>
-    </div>
+  </div>
 
-    <div class="team-info text-center col-md-8 col-md-offset-2">
-      <br /><br /><br />
-      <h2>Behind the Scenes</h2>
-      <br />
-        <div class="row">
-          <div class="team-member col-sm-4">
-            <%= link_to 'https://github.com/ats89' do %>
-              <%=image_tag 'anthony.png'%>
-            <% end %>
-            <p>Anthony Sin</p>
-          </div>
-
-          <div class="team-member col-sm-4">
-            <p>Team Lead</p>
-            <%= link_to 'https://github.com/mscoutermarsh' do %>
-              <%=image_tag 'mike.jpg'%>
-            <% end %>
-            <p>Mike Coutermarsh</p>
-          </div>
-      
-
-          <div class="team-member col-sm-4">
-            <%= link_to 'https://github.com/Skjamal' do %>
-              <%=image_tag 'satinder.jpg'%>
-            <% end %>
-            <p>Satinder Jamal</p>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="team-member col-sm-6">
-            <%= link_to 'https://github.com/doyouthunderstand' do %>
-              <%=image_tag 'brandon.png'%>
-            <% end %>
-            <p>Brandon Gorman</p>
-          </div>
-
-          <div class="team-member col-sm-6">
-            <%= link_to 'https://github.com/rebelcl0ud' do %>
-              <%=image_tag 'jovanka.png'%>
-            <% end %>
-            <p>Jovanka Placeres</p>
-          </div>
-        </div>
-
-    </div>
-
-
-</div>
-
+<br class="clr" />
     
   
 

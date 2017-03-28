@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width">
     <title>KnightsChess</title>
     <%= stylesheet_link_tag    "application", media: "all" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
   </head>
-  <body class="site">
-  <div class="site-content">  
+  
+  <body>
+  
+  <div id="wrap">  
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -24,14 +25,14 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
+          <!--ul class="nav navbar-nav">
             <li>
               <a href="https://github.com/KnightsofRen/knights_chess" >
                 <!--small>by KnightsofRen</small-->
-                <i class="fa fa-github"></i>
+                <!--i class="fa fa-github"></i>
               </a>
             </li> 
-          </ul>
+          </ul-->
           <ul class="nav navbar-nav navbar-right">
             <% if user_signed_in? %>
               <li class="dropdown">
@@ -67,7 +68,7 @@
     <% end %>
     
     <%= yield %>
-
+  </div>
  
 
     <!--- FOOTER -->
@@ -75,7 +76,7 @@
 
     <div id="footer">
       <div class="container">
-        <div class="text-center col-xs-12">
+        <div class="text-center">
           <br />
           Knights of Ren
           <%= link_to 'https://github.com/KnightsofRen/knights_chess' do %>
@@ -86,6 +87,6 @@
       </div>
     </div>
 
- </div>
+ 
   </body>
 </html>
