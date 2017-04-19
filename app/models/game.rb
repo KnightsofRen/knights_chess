@@ -44,6 +44,41 @@ class Game < ActiveRecord::Base
     board
   end
 
+  def checkmate?(color)
+    if color == 'black'
+      pieces.black.each do |piece|
+        (0..7).each do |x|
+          (0..7).each do |y|
+            next unless piece.valid_move? # check every possible valid move
+            old_x = piece.x_coordinate
+            old_y = piece.y_coordinate
+            piece.move_to!(x, y)
+            if in_check?(black) == false # check to see if check is still true
+              return false # return false if check becomes false
+            end
+            piece.move_to!(old_x, old_y)
+          end
+        end
+      end
+    elsif color == 'white'
+      pieces.white.each do |piece|
+        (0..7).each do |x|
+          (0..7).each do |y|
+            next unless piece.valid_move? # check every possible valid move
+            old_x = piece.x_coordinate
+            old_y = piece.y_coordinate
+            piece.move_to!(x, y)
+            if in_check?(white) == false # check to see if check is still true
+              return false # return false if check becomes false
+            end
+            piece.move_to!(old_x, old_y)
+          end
+        end
+      end
+    end
+    true # return true if no move could remove check
+  end
+
   private
 
   def populate_board!
