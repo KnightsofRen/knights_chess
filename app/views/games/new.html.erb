@@ -11,6 +11,10 @@
         <%= f.hidden_field :user_id, value: current_user.id %>
         <%= f.hidden_field :status, value: 'open' %>
         <%= f.hidden_field :turn, value: 'white' %>
+        <%= f.hidden_field :can_castle_w_ks, value: 0 %>
+        <%= f.hidden_field :can_castle_w_qs, value: 0 %>
+        <%= f.hidden_field :can_castle_b_ks, value: 0 %>
+        <%= f.hidden_field :can_castle_b_qs, value: 0 %>
         <br/><br/>
         <%= f.submit 'Create Game', class: "btn btn-primary" %>
       <% end %>

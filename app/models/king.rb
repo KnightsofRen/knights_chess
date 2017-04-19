@@ -8,8 +8,24 @@ class King < Piece
   def valid_move?(x, y)
     return false unless position_on_board?(x, y)
     return false if same_color_piece_present_at_target_destination?(x, y)
+    return true unless !castle_move?(x, y)
     return false if move_too_far?(x, y)
     true
+  end
+
+  # return true if castling is valid move
+  def castle_move?(x, y)
+    return false unless x_coordinate == 4
+    # white king, king side castling
+    return true if color == 'white' && x == 6 && y == 0 && y_coordinate == 0 && game.can_castle_w_ks == 0 && !obstructed?(7,0)
+    # white king, queen side castling
+    return true if color == 'white' && x == 2 && y == 0 && y_coordinate == 0 && game.can_castle_w_qs == 0 && !obstructed?(0,0)
+
+    # black king, king side castling
+    return true if color == 'black' && x == 6 && y == 7 && y_coordinate == 7 && game.can_castle_b_ks == 0 && !obstructed?(7,7)
+    # black king, queen side castling
+    return true if color == 'black' && x == 2 && y == 7 && y_coordinate == 7 && game.can_castle_b_qs == 0 && !obstructed?(0,7)
+    false
   end
 
   private

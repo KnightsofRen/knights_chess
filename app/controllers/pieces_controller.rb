@@ -30,9 +30,12 @@ class PiecesController < ApplicationController
     # check valid moves
     return render_not_found(:forbidden) unless @piece.valid_move?(x, y)
 
-    # pawn promotion, moving, capturing
+    # pawn promotion (pp), castling (cm), moving, capturing
     if @piece.promote_pawn!(x, y, choice) == 'Promoted'
       render text: "pp#{render_piece(@game, x, y)}#{@piece.type}"
+    elsif @piece.type == 'King' && @piece.castle_move?(x,y)
+      @piece.move_to!(x, y)
+      render text: "cm!"
     else
       @piece.move_to!(x, y)
       render text: 'updated!'

@@ -256,6 +256,13 @@
           ui.draggable.data('piece-type', r.substring(3));
           ui.draggable.text(r[2]);
         }
+        // update static rook pieces to reflect castling
+        if (r[0] == 'c') {
+          if (x == '6' && y == '0') { $('.tile[data-coordinates="7,0"]').find('div.static').css({left: -160}) }
+          if (x == '6' && y == '7') { $('.tile[data-coordinates="7,7"]').find('div.static').css({left: -160}) }
+          if (x == '2' && y == '0') { $('.tile[data-coordinates="0,0"]').find('div.static').css({left: +240}) }
+          if (x == '2' && y == '7') { $('.tile[data-coordinates="0,7"]').find('div.static').css({left: +240}) }
+        }
       }).fail(function (x, t, e) {
         // revert draggable (piece) on ajax call failure 
         // (3) The 4 lines below are important for reverting piece back to where it was when player tries to
